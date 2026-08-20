@@ -1,0 +1,4261 @@
+{% load static %}
+<!doctype html>
+<html lang="th" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>สาขาวิชาวิทยาการคอมพิวเตอร์ มหาวิทยาลัยราชภัฏศรีสะเกษ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            boxShadow: {
+              "glow-amber":
+                "0 0 20px -2px rgba(245, 158, 11, 0.25), 0 0 8px -2px rgba(245, 158, 11, 0.2)",
+              "glow-amber-lg":
+                "0 0 30px -4px rgba(245, 158, 11, 0.4), 0 0 12px -2px rgba(245, 158, 11, 0.25)",
+            },
+          },
+        },
+      };
+    </script>
+    <!-- Google Fonts: Prompt -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Prompt", sans-serif;
+      }
+
+      /* สไตล์การ์ดเรืองแสงขอบทอง-ส้มอำพัน */
+      .glow-card {
+        box-shadow:
+          0 4px 20px -2px rgba(245, 158, 11, 0.15),
+          0 0 10px 0 rgba(245, 158, 11, 0.1);
+        border-color: rgba(245, 158, 11, 0.3);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .glow-card:hover {
+        box-shadow:
+          0 10px 30px -4px rgba(245, 158, 11, 0.3),
+          0 0 18px 2px rgba(245, 158, 11, 0.2);
+        border-color: rgba(245, 158, 11, 0.6);
+        transform: translateY(-4px);
+      }
+
+      /* Premium Modern + Glow UI */
+      .glow-card {
+        position: relative;
+        isolation: isolate;
+        box-shadow:
+          0 8px 28px -8px rgba(15, 23, 42, 0.12),
+          0 0 18px -4px rgba(245, 158, 11, 0.2),
+          inset 0 0 0 1px rgba(245, 158, 11, 0.08);
+        border-color: rgba(245, 158, 11, 0.28);
+      }
+      .glow-card::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.55;
+        background: radial-gradient(
+          circle at 50% 0%,
+          rgba(245, 158, 11, 0.1),
+          transparent 55%
+        );
+      }
+      .glow-card:hover {
+        box-shadow:
+          0 18px 40px -12px rgba(15, 23, 42, 0.18),
+          0 0 28px -4px rgba(245, 158, 11, 0.28),
+          inset 0 0 0 1px rgba(245, 158, 11, 0.12);
+        border-color: rgba(245, 158, 11, 0.55);
+        transform: translateY(-5px);
+      }
+      .faculty-card {
+        overflow: hidden;
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(245, 158, 11, 0.13),
+            transparent 42%
+          ),
+          linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 1),
+            rgba(248, 250, 252, 0.96)
+          );
+      }
+      .dark .faculty-card {
+        background:
+          radial-gradient(
+            circle at 50% -10%,
+            rgba(245, 158, 11, 0.14),
+            transparent 42%
+          ),
+          linear-gradient(145deg, rgba(15, 23, 42, 1), rgba(11, 14, 23, 1));
+      .faculty-avatar {
+        box-shadow:
+          0 0 0 4px rgba(245, 158, 11, 0.08),
+          0 0 24px rgba(245, 158, 11, 0.18);
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+      .faculty-card:hover .faculty-avatar {
+        transform: scale(1.05);
+        box-shadow:
+          0 0 0 5px rgba(245, 158, 11, 0.12),
+          0 0 32px rgba(245, 158, 11, 0.3);
+      }
+      .path-option {
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease,
+          background 0.25s ease;
+      }
+      .path-option::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 15% 0%,
+          rgba(245, 158, 11, 0.13),
+          transparent 45%
+        );
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        pointer-events: none;
+      }
+      .path-option:hover::before,
+      .path-option.selected::before {
+        opacity: 1;
+      }
+      .path-option.selected {
+        transform: translateY(-3px);
+        border-color: rgba(245, 158, 11, 0.85);
+        box-shadow:
+          0 0 26px -5px rgba(245, 158, 11, 0.35),
+          inset 0 0 0 1px rgba(245, 158, 11, 0.15);
+      }
+      .path-result-enter {
+        animation: pathResultIn 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      @keyframes pathResultIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px) scale(0.985);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .glow-card,
+        .faculty-avatar,
+        .path-option,
+        .path-result-enter {
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+
+      /* ===== Premium v2: softer dark mode + ambient depth ===== */
+      html {
+        background: #f8fafc;
+      }
+      body {
+        background:
+          radial-gradient(
+            circle at 12% 8%,
+            rgba(245, 158, 11, 0.055),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 88% 30%,
+            rgba(251, 146, 60, 0.045),
+            transparent 30%
+          ),
+          #f8fafc;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -2;
+        background-image:
+          linear-gradient(rgba(148, 163, 184, 0.055) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(148, 163, 184, 0.055) 1px,
+            transparent 1px
+          );
+        background-size: 48px 48px;
+        mask-image: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.5),
+          transparent 70%
+        );
+      }
+      body::after {
+        content: "";
+        position: fixed;
+        width: 520px;
+        height: 520px;
+        right: -240px;
+        top: 16%;
+        border-radius: 999px;
+        pointer-events: none;
+        z-index: -1;
+        background: radial-gradient(
+          circle,
+          rgba(245, 158, 11, 0.1),
+          transparent 68%
+        );
+        filter: blur(12px);
+      }
+
+      /* Dark mode is navy/charcoal rather than pure black */
+      html.dark body {
+        background:
+          radial-gradient(
+            circle at 10% 4%,
+            rgba(245, 158, 11, 0.085),
+            transparent 26%
+          ),
+          radial-gradient(
+            circle at 90% 24%,
+            rgba(249, 115, 22, 0.055),
+            transparent 28%
+          ),
+          linear-gradient(180deg, #0b1118 0%, #0d141c 46%, #0a1017 100%);
+      }
+      html.dark body::before {
+        background-image:
+          linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(148, 163, 184, 0.035) 1px,
+            transparent 1px
+          );
+        opacity: 0.7;
+      }
+      html.dark body::after {
+        background: radial-gradient(
+          circle,
+          rgba(245, 158, 11, 0.075),
+          transparent 68%
+        );
+      }
+
+      /* Cards: less heavy, more layered */
+      html.dark .glow-card {
+        background-color: #141d27 !important;
+        border-color: rgba(245, 158, 11, 0.22) !important;
+        box-shadow:
+          0 16px 36px -18px rgba(0, 0, 0, 0.72),
+          0 0 20px -7px rgba(245, 158, 11, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.035) !important;
+      }
+      html.dark .glow-card:hover {
+        background-color: #18222e !important;
+        box-shadow:
+          0 22px 46px -18px rgba(0, 0, 0, 0.8),
+          0 0 30px -6px rgba(245, 158, 11, 0.23),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+      }
+      html.dark .path-option {
+        background: #111a24 !important;
+      }
+      html.dark .path-option:hover,
+      html.dark .path-option.selected {
+        background: #18222d !important;
+      }
+
+      /* Make sections feel like intentional layers */
+      #careers,
+      #faculty {
+        position: relative;
+      }
+      #careers::before,
+      #faculty::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 8%;
+        width: min(760px, 90vw);
+        height: 260px;
+        transform: translateX(-50%);
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse,
+          rgba(245, 158, 11, 0.045),
+          transparent 68%
+        );
+        filter: blur(8px);
+        z-index: -1;
+      }
+
+      /* Career selector becomes the visual focal point */
+      #career-path-options .path-option {
+        min-height: 92px;
+      }
+      #career-path-result {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(245, 158, 11, 0.28);
+        border-radius: 1.5rem;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 251, 235, 0.92),
+          rgba(255, 255, 255, 0.96)
+        );
+        box-shadow: 0 18px 48px -24px rgba(245, 158, 11, 0.34);
+      }
+      #career-path-result::before {
+        content: "";
+        position: absolute;
+        width: 240px;
+        height: 240px;
+        right: -90px;
+        top: -100px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(245, 158, 11, 0.18),
+          transparent 68%
+        );
+      }
+      html.dark #career-path-result {
+        background: linear-gradient(135deg, #19232e, #131c26);
+        border-color: rgba(245, 158, 11, 0.28);
+        box-shadow:
+          0 22px 52px -24px rgba(0, 0, 0, 0.75),
+          0 0 24px -10px rgba(245, 158, 11, 0.18);
+      }
+
+      /* Success stories get a subtle editorial accent */
+      #careers article.glow-card {
+        overflow: hidden;
+      }
+      #careers article.glow-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(180deg, #f59e0b, rgba(245, 158, 11, 0));
+        opacity: 0.8;
+      }
+
+      /* Faculty feels like a profile deck */
+      .faculty-card {
+        min-height: 330px;
+        justify-content: flex-start;
+      }
+      .faculty-card:hover {
+        transform: translateY(-8px);
+      }
+
+      /* Better readability for dark muted text */
+      html.dark .text-slate-500 {
+        color: #a7b3c2 !important;
+      }
+      html.dark .text-slate-400 {
+        color: #91a0b2 !important;
+      }
+      html.dark .text-slate-300 {
+        color: #c4ced9 !important;
+      }
+
+      @media (max-width: 640px) {
+        body::before {
+          background-size: 36px 36px;
+          opacity: 0.45;
+        }
+        body::after {
+          width: 360px;
+          height: 360px;
+          right: -180px;
+        }
+        .faculty-card {
+          min-height: 0;
+        }
+      }
+
+      /* ===== v3: finished product polish ===== */
+      html.dark .bg-white,
+      html.dark .bg-white\/90 {
+        background-color: #141d27 !important;
+      }
+      html.dark .bg-slate-900 {
+        background-color: #141d27 !important;
+      }
+      html.dark .bg-slate-950 {
+        background-color: #0d151e !important;
+      }
+      html.dark .border-slate-800 {
+        border-color: rgba(71, 85, 105, 0.48) !important;
+      }
+      html.dark .text-slate-400 {
+        color: #a8b3c2 !important;
+      }
+      html.dark .text-slate-500 {
+        color: #8f9bab !important;
+      }
+      .tech-chip,
+      .journey-tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.42rem 0.7rem;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 600;
+        border: 1px solid rgba(245, 158, 11, 0.22);
+        background: rgba(245, 158, 11, 0.07);
+        color: #a16207;
+      }
+      html.dark .tech-chip,
+      html.dark .journey-tag {
+        color: #fbbf24;
+        background: rgba(245, 158, 11, 0.08);
+        border-color: rgba(245, 158, 11, 0.25);
+      }
+      .journey-btn {
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease,
+          background 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .journey-btn:hover {
+        transform: translateY(-4px);
+      }
+      .journey-btn.active {
+        border-color: rgba(245, 158, 11, 0.75);
+        background: linear-gradient(
+          145deg,
+          rgba(245, 158, 11, 0.1),
+          transparent
+        );
+        box-shadow: 0 12px 30px -16px rgba(245, 158, 11, 0.55);
+      }
+      html.dark .journey-btn.active {
+        background: linear-gradient(
+          145deg,
+          rgba(245, 158, 11, 0.13),
+          rgba(20, 29, 39, 0.95)
+        );
+      }
+      @media (max-width: 767px) {
+        #learning-journey,
+        #why-comsci {
+          scroll-margin-top: 80px;
+        }
+      }
+      @keyframes float-1 {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+      }
+      @keyframes float-2 {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-12px); }
+      }
+      @keyframes float-3 {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+      }
+      .animate-float-1 {
+        animation: float-1 4s ease-in-out infinite;
+      }
+      .animate-float-2 {
+        animation: float-2 5s ease-in-out infinite;
+      }
+      .animate-float-3 {
+        animation: float-3 4.5s ease-in-out infinite;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 dark:bg-[#0b0e17] dark:text-slate-100 transition-colors duration-300"
+  >
+    <!-- Navbar -->
+    <nav
+      class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-[#0f172a]/90 border-b border-amber-500/20 px-6 py-3.5 transition-colors"
+    >
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="#hero" class="flex items-center gap-3">
+          <!-- TODO: เพื่อนใส่แท็ก <img> รูปโลโก้ตรงนี้ -->
+          <div
+            class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-500/50 flex items-center justify-center text-amber-700 dark:text-amber-400 font-bold text-xs shadow-[0_0_12px_rgba(245,158,11,0.3)]"
+          >
+            CS
+          </div>
+          <span
+            class="font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg tracking-tight"
+            >วิทยาการคอมพิวเตอร์</span
+          >
+        </a>
+
+        <div
+          class="hidden lg:flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300"
+        >
+          <a
+            href="#hero"
+            class="nav-link px-3 py-1.5 rounded-xl border border-transparent text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+            >หน้าแรก</a
+          >
+          <a
+            href="#about"
+            class="nav-link px-3 py-1.5 rounded-xl border border-transparent text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+            >เกี่ยวกับเรา</a
+          >
+          <a
+            href="#courses"
+            class="nav-link px-3 py-1.5 rounded-xl border border-transparent text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+            >หลักสูตร</a
+          >
+          <a
+            href="#study-plan"
+            class="nav-link px-3 py-1.5 rounded-xl border border-transparent text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+            >แผนการเรียน</a
+          >
+          <a
+            href="#careers"
+            class="nav-link px-3 py-1.5 rounded-xl border border-transparent text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+            >เส้นทางอาชีพ</a
+          >
+          <a
+            href="#faculty"
+            class="nav-link px-3 py-1.5 rounded-xl border border-transparent text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+            >คณาจารย์</a
+          >
+          <a
+            href="#download"
+            class="nav-link px-3 py-1.5 rounded-xl border border-transparent text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+            >ดาวน์โหลด</a
+          >
+          <a
+            href="#contact"
+            class="nav-link px-3 py-1.5 rounded-xl border border-transparent text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+            >ติดต่อเรา</a
+          >
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button
+            id="theme-toggle"
+            class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+            aria-label="Toggle Theme"
+          >
+            <span id="theme-icon">🌙</span>
+          </button>
+
+          <!-- Hamburger Button (mobile only) -->
+          <button
+            id="mobile-menu-btn"
+            class="lg:hidden p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            aria-label="Toggle Mobile Menu"
+          >
+            <svg
+              id="hamburger-icon"
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+            <svg
+              id="close-icon"
+              class="w-5 h-5 hidden"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-x-0 top-20 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 z-40 hidden flex-col px-6 py-6 space-y-1.5 shadow-xl transition-all duration-300 transform -translate-y-4 opacity-0"
+    >
+      <a
+        href="#hero"
+        class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+        >หน้าแรก</a
+      >
+      <a
+        href="#about"
+        class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+        >เกี่ยวกับเรา</a
+      >
+      <a
+        href="#courses"
+        class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+        >หลักสูตร</a
+      >
+      <a
+        href="#study-plan"
+        class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+        >แผนการเรียน</a
+      >
+      <a
+        href="#careers"
+        class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+        >เส้นทางอาชีพ</a
+      >
+      <a
+        href="#faculty"
+        class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+        >คณาจารย์</a
+      >
+      <a
+        href="#download"
+        class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+        >ดาวน์โหลด</a
+      >
+      <a
+        href="#contact"
+        class="mobile-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-amber-600 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all duration-200"
+        >ติดต่อเรา</a
+      >
+    </div>
+
+    <!-- 1. Hero Section -->
+    <section id="hero" class="max-w-7xl mx-auto px-6 pt-12 pb-20">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <!-- ข้อมูลแนะนำสาขา -->
+        <div class="lg:col-span-7 text-center lg:text-left order-2 lg:order-1">
+          <span
+            class="inline-block px-4 py-1 text-xs font-semibold bg-amber-50 text-amber-800 dark:bg-amber-500/10 dark:text-amber-400 rounded-full border border-amber-300 dark:border-amber-500/20 mb-6 shadow-sm"
+          >
+            ✨ มุ่งสู่วิชาชีพไอทีและผู้นำนวัตกรรมเทคโนโลยี
+          </span>
+          <h1
+            class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.2] mb-6"
+          >
+            สาขาวิชาวิทยาการ<br />คอมพิวเตอร์<br /><span
+              class="bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-600 dark:from-amber-400 dark:to-yellow-300 bg-clip-text text-transparent"
+              >มรภ.ศรีสะเกษ</span
+            >
+          </h1>
+          <p
+            class="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed mb-8 max-w-xl"
+          >
+            "ก้าวสู่อนาคตทางเทคโนโลยี สร้างสรรค์ซอฟต์แวร์แห่งนวัตกรรม"
+            หลักสูตรที่มุ่งผลิตนักวิทยาศาสตร์คอมพิวเตอร์ โปรแกรมเมอร์
+            และนักวิเคราะห์ข้อมูล เพื่อเข้าสู่ตลาดงานยุคดิจิทัลระดับโลก
+          </p>
+          <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-12">
+            <a
+              href="https://www.oass.sskru.ac.th/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-bold rounded-xl transition shadow-lg shadow-amber-500/30 flex items-center gap-2"
+            >
+              🎓 สมัครเข้าศึกษาต่อ
+            </a>
+            <a
+              href="#courses"
+              class="px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 text-slate-700 dark:text-slate-200 font-medium rounded-xl transition shadow-sm flex items-center gap-2"
+            >
+              📖 ข้อมูลวิชาหลักสูตร
+            </a>
+          </div>
+
+          <!-- Quick Stats พร้อมขอบ Glow -->
+          <div
+            class="grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-slate-200 dark:border-slate-800/80 pt-8"
+          >
+            <div class="p-3 bg-white dark:bg-slate-900/80 rounded-xl glow-card">
+              <div
+                class="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400"
+              >
+                4 ปี
+              </div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                ระยะเวลาหลักสูตร
+              </div>
+            </div>
+            <div class="p-3 bg-white dark:bg-slate-900/80 rounded-xl glow-card">
+              <div
+                class="text-2xl sm:text-3xl font-bold text-orange-600 dark:text-orange-400"
+              >
+                133
+              </div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                หน่วยกิตขั้นต่ำ
+              </div>
+            </div>
+            <div class="p-3 bg-white dark:bg-slate-900/80 rounded-xl glow-card">
+              <div
+                class="text-2xl sm:text-3xl font-bold text-yellow-600 dark:text-yellow-400"
+              >
+                100%
+              </div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                โอกาสมีงานทำ
+              </div>
+            </div>
+            <div class="p-3 bg-white dark:bg-slate-900/80 rounded-xl glow-card">
+              <div
+                class="text-2xl sm:text-3xl font-bold text-amber-700 dark:text-amber-300"
+              >
+                500+
+              </div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                จำนวนศิษย์เก่า
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card โลโก้ พร้อมแท็กและขอบ Glow -->
+        <div
+          class="lg:col-span-5 flex justify-center items-center relative py-6 order-1 lg:order-2"
+        >
+          <div
+            class="relative w-72 sm:w-80 h-72 sm:h-80 bg-white dark:bg-slate-900 rounded-3xl glow-card flex items-center justify-center p-6 transition-transform hover:scale-[1.02] duration-300"
+          >
+            <!-- TODO: เพื่อนนำภาพโลโก้มาใส่ตรงนี้แทนกรอบ dashed -->
+            <div
+              class="w-52 h-52 sm:w-60 sm:h-60 border-2 border-dashed border-amber-400/60 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center text-center p-4 bg-amber-50/40 dark:bg-slate-950/40"
+            >
+              <span class="text-3xl mb-2">🖼️</span>
+              <span
+                class="text-xs font-semibold text-amber-800 dark:text-amber-300"
+                >[ ใส่รูปตราสัญลักษณ์สาขาที่นี่ ]</span
+              >
+              <span class="text-[10px] text-slate-400 dark:text-slate-500 mt-1"
+                >ขนาดแนะนำ ~250x250 px</span
+              >
+            </div>
+
+            <div
+              class="absolute -top-3 -left-6 sm:-left-8 bg-white dark:bg-slate-800 border border-amber-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(245,158,11,0.25)] flex items-center gap-1.5 text-xs font-semibold text-amber-800 dark:text-amber-300 animate-float-1"
+            >
+              <span>&lt;/&gt;</span> Software Dev
+            </div>
+
+            <div
+              class="absolute top-1/3 -right-6 sm:-right-8 bg-white dark:bg-slate-800 border border-orange-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(249,115,22,0.25)] flex items-center gap-1.5 text-xs font-semibold text-orange-800 dark:text-orange-300 animate-float-2"
+            >
+              <span>📊</span> Data Science
+            </div>
+
+            <div
+              class="absolute -bottom-3 -left-4 sm:-left-6 bg-white dark:bg-slate-800 border border-yellow-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(234,179,8,0.25)] flex items-center gap-1.5 text-xs font-semibold text-yellow-800 dark:text-yellow-300 animate-float-3"
+            >
+              <span>🤖</span> Artificial Intelligence
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Goal Structure & Philosophy Section -->
+    <section
+      id="about"
+      class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
+    >
+      <div class="text-center mb-10">
+        <span
+          class="px-3 py-1 text-xs bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 rounded-full font-medium"
+          >ข้อมูลรายละเอียดหลักสูตรเชิงกลยุทธ์</span
+        >
+        <h2
+          class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-3"
+        >
+          โครงสร้างเชิงเป้าหมาย & ผลลัพธ์การเรียนรู้
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-2">
+          ผสานทิศทางเพื่อสร้างผลลัพธ์การเรียนรู้เชิงทักษะและคุณธรรมจริยธรรมที่สอดคล้องกับมาตรฐานระดับประเทศ
+        </p>
+      </div>
+
+      <!-- ปุ่มเลือกแท็บ -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8">
+        <button
+          id="goal-tab-1"
+          onclick="switchGoalTab(1)"
+          class="px-4 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow-[0_0_12px_rgba(245,158,11,0.3)] transition"
+        >
+          💡 ปรัชญาของหลักสูตร
+        </button>
+        <button
+          id="goal-tab-2"
+          onclick="switchGoalTab(2)"
+          class="px-4 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition"
+        >
+          🧭 วิสัยทัศน์ & พันธกิจ
+        </button>
+        <button
+          id="goal-tab-3"
+          onclick="switchGoalTab(3)"
+          class="px-4 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition"
+        >
+          📋 วัตถุประสงค์หลักสูตร
+        </button>
+        <button
+          id="goal-tab-4"
+          onclick="switchGoalTab(4)"
+          class="px-4 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition"
+        >
+          🎓 ผลลัพธ์การเรียนรู้ (PLOs)
+        </button>
+      </div>
+
+      <!-- แท็บ 1: ปรัชญา (การ์ด Glow) -->
+      <div
+        id="goal-content-1"
+        class="p-8 bg-white dark:bg-slate-900 rounded-3xl text-center glow-card"
+      >
+        <p
+          class="text-lg md:text-2xl font-bold text-amber-900 dark:text-amber-300"
+        >
+          "เชี่ยวชาญด้านวิทยาการคอมพิวเตอร์ มีคุณธรรม
+          นำนวัตกรรมเพื่อพัฒนาท้องถิ่น"
+        </p>
+        <p
+          class="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-4 leading-relaxed max-w-3xl mx-auto"
+        >
+          ปรัชญานี้สะท้อนอัตลักษณ์สำคัญ 3 ด้าน ได้แก่
+          ความเชี่ยวชาญในวิชาชีพคอมพิวเตอร์ · การมีคุณธรรมจริยธรรมวิชาชีพ · และ
+          การพัฒนานวัตกรรมนำไปใช้พัฒนาท้องถิ่น
+          ซึ่งเชื่อมโยงโดยตรงกับวิสัยทัศน์พันธกิจเพื่อการร่วมขับเคลื่อนสังคมท้องถิ่นของมหาวิทยาลัยราชภัฏ
+        </p>
+      </div>
+
+      <!-- แท็บ 2: วิสัยทัศน์ & พันธกิจ -->
+      <div id="goal-content-2" class="hidden space-y-6">
+        <div class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card">
+          <h4
+            class="font-bold text-sm md:text-base text-amber-900 dark:text-amber-300 flex items-center gap-2 mb-2"
+          >
+            <span>👁️</span> วิสัยทัศน์ที่เกี่ยวข้อง
+          </h4>
+          <p
+            class="text-xs md:text-sm text-slate-700 dark:text-slate-300 leading-relaxed"
+          >
+            มุ่งร่วมเป็นกำลังสำคัญขับเคลื่อนมหาวิทยาลัยให้เป็น
+            "สถาบันอุดมศึกษาแห่งการเรียนรู้ตลอดชีวิต" (Lifelong Learning
+            Institute)
+            โดยการผสานจัดกระบวนการศึกษาและวิจัยเพื่อสร้างสรรค์นวัตกรรม
+            บูรณาการเรียนการสอนเข้ากับการลงมือทำงานจริงเพื่อความเจริญเติบโตอย่างยั่งยืนของท้องถิ่น
+          </p>
+        </div>
+
+        <div>
+          <h5
+            class="text-xs font-bold text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-1.5"
+          >
+            <span>🎯</span> พันธกิจของหลักสูตร (4 มิติแห่งการผลักดัน)
+          </h5>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-xl glow-card">
+              <h6
+                class="font-bold text-xs md:text-sm text-slate-900 dark:text-white flex items-center gap-1.5"
+              >
+                🎓 ผลิตบัณฑิตคุณภาพ
+              </h6>
+              <p
+                class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+              >
+                สร้างสรรค์บัณฑิตที่มีทักษะความรู้ด้านวิทยาการคอมพิวเตอร์และเทคโนโลยีขั้นสูง
+                พร้อมตอบโจทย์การปฏิบัติงานจริงในทุกองค์กรยุคใหม่ได้อย่างมืออาชีพ
+              </p>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-xl glow-card">
+              <h6
+                class="font-bold text-xs md:text-sm text-slate-900 dark:text-white flex items-center gap-1.5"
+              >
+                💡 วิจัยและนวัตกรรม
+              </h6>
+              <p
+                class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+              >
+                ส่งเสริมวิชาการ ค้นคว้าวิจัยประยุกต์
+                และพัฒนานวัตกรรมผลิตภัณฑ์ทางด้านคอมพิวเตอร์ที่สอดคล้องกับแนวทางการแก้ปัญหาทางเทคโนโลยีของท้องถิ่น
+              </p>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-xl glow-card">
+              <h6
+                class="font-bold text-xs md:text-sm text-slate-900 dark:text-white flex items-center gap-1.5"
+              >
+                👥 บริการวิชาการท้องถิ่น
+              </h6>
+              <p
+                class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+              >
+                พัฒนาสมรรถนะนักศึกษาในการเรียนรู้ร่วมกับสังคม
+                ก้าวสู่การเป็นนักพัฒนาเทคโนโลยีและวิศวกรสังคมที่มีหัวใจมุ่งรับใช้และช่วยเหลือชุมชน
+              </p>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-xl glow-card">
+              <h6
+                class="font-bold text-xs md:text-sm text-slate-900 dark:text-white flex items-center gap-1.5"
+              >
+                🛡️ คุณธรรมและกฎหมาย
+              </h6>
+              <p
+                class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+              >
+                หล่อหลอมความซื่อสัตย์สุจริต การเคารพในกฎหมายทรัพย์สินทางปัญญา
+                ลิขสิทธิ์ซอฟต์แวร์
+                และปฏิบัติตามจรรยาบรรณวิชาชีพนักไอทีอย่างมั่นคง
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- แท็บ 3: วัตถุประสงค์ -->
+      <div
+        id="goal-content-3"
+        class="hidden p-6 bg-white dark:bg-slate-900 rounded-3xl glow-card"
+      >
+        <div
+          class="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800"
+        >
+          <span class="text-amber-600 dark:text-amber-400 text-lg">📋</span>
+          <div>
+            <h4
+              class="font-bold text-sm md:text-base text-slate-900 dark:text-white"
+            >
+              วัตถุประสงค์หลักของหลักสูตร
+            </h4>
+            <p class="text-[11px] text-slate-400">
+              หมวด 2 ข้อ 2 — เพื่อการบ่มเพาะบัณฑิตสู่ผลลัพธ์การเรียนรู้เชิงทักษะ
+              4 มิติ
+            </p>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950/60 rounded-xl flex items-start gap-3 border border-amber-200/40 dark:border-slate-800/60"
+          >
+            <span
+              class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-xs shrink-0 shadow-sm"
+              >1</span
+            >
+            <p
+              class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed"
+            >
+              มีความรู้ความเชี่ยวชาญและทักษะเฉพาะด้านในสาขาวิชาวิทยาการคอมพิวเตอร์อย่างลึกซึ้ง
+              สามารถออกแบบ พัฒนา
+              และบำรุงรักษาระบบซอฟต์แวร์เชิงประยุกต์ทั้งรูปแบบออนไลน์และออฟไลน์ได้อย่างดีเลิศ
+            </p>
+          </div>
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950/60 rounded-xl flex items-start gap-3 border border-amber-200/40 dark:border-slate-800/60"
+          >
+            <span
+              class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-xs shrink-0 shadow-sm"
+              >2</span
+            >
+            <p
+              class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed"
+            >
+              มีทักษะในการประยุกต์ใช้วิธีวิทยาและเทคโนโลยีในการพัฒนางานวิจัย
+              โครงงานนวัตกรรม
+              และแอปพลิเคชันรูปแบบใหม่ที่ช่วยเสริมสร้างศักยภาพและการเพิ่มมูลค่าทางเศรษฐกิจให้แก่ชุมชนท้องถิ่น
+            </p>
+          </div>
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950/60 rounded-xl flex items-start gap-3 border border-amber-200/40 dark:border-slate-800/60"
+          >
+            <span
+              class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-xs shrink-0 shadow-sm"
+              >3</span
+            >
+            <p
+              class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed"
+            >
+              มีความเป็นเลิศในการวิเคราะห์และประมวลองค์ความรู้ทางเทคนิคแบบบูรณาการ
+              เพื่อการวางแผนจัดสรรกระบวนการทางคอมพิวเตอร์และสารสนเทศแก้ปัญหายากเชิงซ้อนภายในองค์กรได้อย่างมีขั้นตอน
+            </p>
+          </div>
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950/60 rounded-xl flex items-start gap-3 border border-amber-200/40 dark:border-slate-800/60"
+          >
+            <span
+              class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-xs shrink-0 shadow-sm"
+              >4</span
+            >
+            <p
+              class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed"
+            >
+              ยึดมั่นในการประพฤติตนเป็นคนดีมีระเบียบวินัย
+              ปฏิบัติตามหลักจรรยาบรรณวิชาชีพนักวิทย์คอม
+              พร้อมทั้งมีมนุษยสัมพันธ์และทักษะการทำงานร่วมกับผู้อื่นได้อย่างสร้างสรรค์ประณีต
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- แท็บ 4: PLOs -->
+      <div
+        id="goal-content-4"
+        class="hidden p-6 bg-white dark:bg-slate-900 rounded-3xl glow-card"
+      >
+        <div
+          class="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800"
+        >
+          <span class="text-amber-600 dark:text-amber-400 text-lg">🎖️</span>
+          <div>
+            <h4
+              class="font-bold text-sm md:text-base text-slate-900 dark:text-white"
+            >
+              ผลลัพธ์การเรียนรู้ระดับหลักสูตร (PLOs)
+            </h4>
+            <p class="text-[11px] text-slate-400">
+              หมวด 2 ข้อ 3 — Program Learning Outcomes
+              ทักษะเชิงทฤษฎี-ปฏิบัติที่บ่มเพาะผ่านรายวิชา
+            </p>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950/60 rounded-xl flex flex-col sm:flex-row sm:items-center gap-3 border border-amber-200/40 dark:border-slate-800/60"
+          >
+            <span
+              class="px-3 py-1 bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 text-[11px] font-bold rounded-lg shrink-0 w-fit"
+              >PLO1 • K3</span
+            >
+            <p class="text-xs text-slate-700 dark:text-slate-300">
+              ประยุกต์ใช้ความรู้ด้านวิทยาการคอมพิวเตอร์เพื่อแก้ปัญหาและสนับสนุนการทำงานด้วยระบบคอมพิวเตอร์ได้อย่างถูกต้องตามสถานการณ์ของปัญหา
+            </p>
+          </div>
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950/60 rounded-xl flex flex-col sm:flex-row sm:items-center gap-3 border border-orange-200/40 dark:border-slate-800/60"
+          >
+            <span
+              class="px-3 py-1 bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300 text-[11px] font-bold rounded-lg shrink-0 w-fit"
+              >PLO2 • K4, S3</span
+            >
+            <p class="text-xs text-slate-700 dark:text-slate-300">
+              พัฒนาระบบด้วยโปรแกรมภาษาต่าง ๆ ในรูปแบบออฟไลน์และออนไลน์
+              ตามกระบวนการวิเคราะห์และออกแบบระบบได้อย่างถูกต้องตามเกณฑ์มาตรฐานสากล
+            </p>
+          </div>
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950/60 rounded-xl flex flex-col sm:flex-row sm:items-center gap-3 border border-yellow-200/40 dark:border-slate-800/60"
+          >
+            <span
+              class="px-3 py-1 bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-300 text-[11px] font-bold rounded-lg shrink-0 w-fit"
+              >PLO3 • K4, S3</span
+            >
+            <p class="text-xs text-slate-700 dark:text-slate-300">
+              พัฒนาแอปพลิเคชันที่ทำงานบนโมบายอุปกรณ์พกพาได้ถูกต้องตรงตามความต้องการและเกิดประสบการณ์ที่ดีกับผู้ใช้งานจริง
+            </p>
+          </div>
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950/60 rounded-xl flex flex-col sm:flex-row sm:items-center gap-3 border border-amber-200/40 dark:border-slate-800/60"
+          >
+            <span
+              class="px-3 py-1 bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 text-[11px] font-bold rounded-lg shrink-0 w-fit"
+              >PLO4 • K4, S3</span
+            >
+            <p class="text-xs text-slate-700 dark:text-slate-300">
+              ทดสอบคุณภาพการทำงานของซอฟต์แวร์ตามกระบวนการตรวจสอบแบบ Black Box
+              Testing และ White Box Testing ได้อย่างถูกต้องและได้มาตรฐานเทคนิค
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Why Choose CS SSKRU Section -->
+    <section
+      class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
+    >
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+          <div
+            class="col-span-2 p-6 bg-slate-900 text-white rounded-2xl glow-card"
+          >
+            <div
+              class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-amber-400 mb-4"
+            >
+              💻
+            </div>
+            <h4 class="font-bold text-base">หลักสูตรวิทยาศาสตรบัณฑิต</h4>
+            <p class="text-xs text-slate-400 mt-2">
+              เน้นเรียนรู้จากการทำงานจริง โครงงานนวัตกรรม
+              และสหกิจศึกษาร่วมกับบริษัทเทคโนโลยีระดับแถวหน้าของประเทศ
+            </p>
+          </div>
+          <div class="p-5 bg-amber-500 text-slate-950 rounded-2xl shadow-md">
+            <div class="text-2xl mb-2">🎖️</div>
+            <h4 class="font-bold text-sm">คณาจารย์ผู้เชี่ยวชาญ</h4>
+            <p class="text-[11px] text-amber-950/80 mt-1 font-medium">
+              คอยดูแลและให้คำปรึกษาอย่างใกล้ชิด
+            </p>
+          </div>
+          <div class="p-5 bg-orange-600 text-white rounded-2xl shadow-md">
+            <div class="text-2xl mb-2">⚙️</div>
+            <h4 class="font-bold text-sm">โครงงานวิจัยสมัยใหม่</h4>
+            <p class="text-[11px] text-orange-100 mt-1">
+              แล็บเทคโนโลยีวิทย์คอมที่ล้ำสมัย
+            </p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7">
+          <h3
+            class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white"
+          >
+            ทำไมต้องเรียนวิทยาการคอมพิวเตอร์ ?
+          </h3>
+          <p
+            class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-3 mb-6"
+          >
+            หลักสูตรและสาขาวิชาฯ มุ่งเตรียมความพร้อมเพื่อพัฒนาทักษะแห่งอนาคต
+            ผสานทฤษฎีเทคโนโลยีขั้นสูงเข้ากับการลงมือปฏิบัติการจริง
+            เพื่อสร้างเส้นทางอาชีพไอทีที่เติบโตและมั่นคงของตัวคุณเอง
+          </p>
+
+          <div class="space-y-4">
+            <div
+              class="p-4 bg-white dark:bg-slate-900 rounded-xl flex items-start gap-3 glow-card"
+            >
+              <div class="text-amber-500 mt-0.5 font-bold">✔</div>
+              <div>
+                <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                  งานที่ตอบโจทย์อนาคตและโอกาสการเติบโตสูง
+                </h5>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  โอกาสกว้างขวางในตลาดงานไอที เช่น การพัฒนาซอฟต์แวร์,
+                  เว็บไซต์แบบ Full-stack, ระบบคลาวด์ และโครงสร้างข้อมูลขนาดใหญ่
+                </p>
+              </div>
+            </div>
+            <div
+              class="p-4 bg-white dark:bg-slate-900 rounded-xl flex items-start gap-3 glow-card"
+            >
+              <div class="text-amber-500 mt-0.5 font-bold">✔</div>
+              <div>
+                <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                  ความต้องการแรงงานอันดับหนึ่งพร้อมผลตอบแทนมั่นคง
+                </h5>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  สายอาชีพดิจิทัลและเทคโนโลยีมีอัตราเงินเดือนเริ่มต้นและอัตราการเติบโตเฉลี่ยที่สูงกว่าวิชาชีพอื่นอย่างเด่นชัด
+                </p>
+              </div>
+            </div>
+            <div
+              class="p-4 bg-white dark:bg-slate-900 rounded-xl flex items-start gap-3 glow-card"
+            >
+              <div class="text-amber-500 mt-0.5 font-bold">✔</div>
+              <div>
+                <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                  ความยืดหยุ่นในการทำงานและอิสรภาพทางการเงิน
+                </h5>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  สามารถเลือกรูปแบบทำงานออนไลน์จากทุกมุมโลก (Remote Work)
+                  ประกอบอาชีพฟรีแลนซ์ หรือก้าวสู่นักธุรกิจสตาร์ทอัป
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Course Curriculum -->
+    <section
+      id="courses"
+      class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
+    >
+      <div class="text-center mb-8">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white"
+        >
+          โครงสร้างหลักสูตรและวิชาเรียน
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-2">
+          ข้อมูลรายละเอียดวิชาเรียนในสาขาวิชาฯ
+          เพื่อปูทางให้เกิดทักษะความชำนาญเฉพาะด้านตามความต้องการของตลาดไอที
+        </p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-2 mb-10">
+        <button
+          id="course-tab-1"
+          onclick="switchCourseTab(1)"
+          class="px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow-[0_0_12px_rgba(245,158,11,0.3)] transition"
+        >
+          วิทยาการคอมพิวเตอร์หลัก
+        </button>
+        <button
+          id="course-tab-2"
+          onclick="switchCourseTab(2)"
+          class="px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition"
+        >
+          เทคโนโลยีซอฟต์แวร์
+        </button>
+        <button
+          id="course-tab-3"
+          onclick="switchCourseTab(3)"
+          class="px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition"
+        >
+          ปัญญาประดิษฐ์ & วิทยาการข้อมูล
+        </button>
+      </div>
+
+      <!-- แท็บ 1: Core CS -->
+      <div
+        id="course-content-1"
+        class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 glow-card"
+      >
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-amber-500 font-bold">💻</span>
+          <h4 class="font-bold text-lg text-slate-900 dark:text-white">
+            วิทยาการคอมพิวเตอร์หลัก (Core CS)
+          </h4>
+          <span
+            class="px-2.5 py-0.5 text-[11px] bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 rounded-full font-medium"
+            >4 วิชาเด่น</span
+          >
+        </div>
+        <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-6">
+          มุ่งเน้นการปูพื้นฐานทฤษฎีทางคอมพิวเตอร์ โครงสร้างระบบ การเขียนโปรแกรม
+          และความมั่นคงปลอดภัยไซเบอร์
+          เพื่อสร้างนักคอมพิวเตอร์ที่รอบรู้และพร้อมพัฒนาเทคโนโลยีใหม่ๆ
+        </p>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                โครงข่ายคอมพิวเตอร์
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                เรียนรู้เกี่ยวกับการออกแบบ ติดตั้ง และบำรุงรักษาระบบเครือข่าย
+                ทั้งแบบสายและไร้สายเพื่อการสื่อสารในองค์กร
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+              <span
+                class="bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded text-[10px]"
+                >มีห้องแล็บ</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                ความปลอดภัยของข้อมูล
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                การป้องกันและควบคุมความปลอดภัยของข้อมูลในระบบคอมพิวเตอร์
+                การเข้ารหัสลับ และการตรวจจับผู้บุกรุก
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+            </div>
+          </div>
+
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                ภูมิคุ้มกันและความเสียหายทางคอมฯ
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                การสืบสวนและวิเคราะห์ข้อมูลที่ถูกโจมตีทางไซเบอร์
+                การสืบค้นพยานหลักฐานดิจิทัล และกฎหมายคอมพิวเตอร์
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+              <span
+                class="bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded text-[10px]"
+                >มีห้องแล็บ</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                การออกแบบและพัฒนาระบบฐานข้อมูล
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                การออกแบบ ติดตั้ง และบำรุงรักษาระบบฐานข้อมูล รวมถึงเรียนรู้ SQL
+                ซึ่งเป็นภาษาคิวรีสำหรับฐานข้อมูล
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+              <span
+                class="bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded text-[10px]"
+                >มีห้องแล็บ</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- แท็บ 2: Software Tech -->
+      <div
+        id="course-content-2"
+        class="hidden bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 glow-card"
+      >
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-amber-500 font-bold">&lt;/&gt;</span>
+          <h4 class="font-bold text-lg text-slate-900 dark:text-white">
+            เทคโนโลยีซอฟต์แวร์ (Software Tech)
+          </h4>
+          <span
+            class="px-2.5 py-0.5 text-[11px] bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 rounded-full font-medium"
+            >4 วิชาเด่น</span
+          >
+        </div>
+        <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-6">
+          เน้นการพัฒนาโปรแกรมประยุกต์ การวิเคราะห์ความต้องการ
+          ระบบสารสนเทศขนาดใหญ่
+          ตลอดจนการจัดการโครงงานซอฟต์แวร์ตามมาตรฐานสากลเพื่อป้อนสู่ตลาดแรงงานยุคดิจิทัล
+        </p>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                การสร้างซอฟต์แวร์ (Software Engineering)
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                เรียนรู้เกี่ยวกับกระบวนการสร้างซอฟต์แวร์
+                การวิเคราะห์และออกแบบระบบซอฟต์แวร์
+                การทดสอบซอฟต์แวร์อย่างเป็นระบบและการบำรุงรักษา
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+            </div>
+          </div>
+
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                การพัฒนาเว็บแอปพลิเคชันสมัยใหม่
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                การเรียนรู้เชิงปฏิบัติด้วยการเขียนโปรแกรมฝั่งไคลเอนต์และเซิร์ฟเวอร์โดยใช้เฟรมเวิร์กยอดนิยม
+                เช่น React, Next.js และ Node.js
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+              <span
+                class="bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded text-[10px]"
+                >มีห้องแล็บ</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                การประมวลผลภาพดิจิทัล (Image Processing)
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                เรียนรู้เกี่ยวกับการประมวลผลภาพดิจิทัลและวิเคราะห์ภาพ เช่น
+                การปรับแต่งภาพ การค้นหาวัตถุ และการสกัดคุณลักษณะจากภาพ
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+              <span
+                class="bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded text-[10px]"
+                >มีห้องแล็บ</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                ระบบสารสนเทศภูมิศาสตร์ (GIS)
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                เรียนรู้เกี่ยวกับการประยุกต์ใช้เทคโนโลยีสารสนเทศในการวิเคราะห์
+                แสดงผลข้อมูล และแผนที่ทางภูมิศาสตร์ขั้นสูง
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+              <span
+                class="bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded text-[10px]"
+                >มีห้องแล็บ</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- แท็บ 3: AI & Data Science -->
+      <div
+        id="course-content-3"
+        class="hidden bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 glow-card"
+      >
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-amber-500 font-bold">🤖</span>
+          <h4 class="font-bold text-lg text-slate-900 dark:text-white">
+            ปัญญาประดิษฐ์และวิทยาการข้อมูล (AI & Data Science)
+          </h4>
+          <span
+            class="px-2.5 py-0.5 text-[11px] bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 rounded-full font-medium"
+            >4 วิชาเด่น</span
+          >
+        </div>
+        <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-6">
+          ความเชี่ยวชาญระดับแนวหน้า เรียนรู้ระบบวิเคราะห์ข้อมูลขนาดใหญ่
+          การพยากรณ์เชิงสถิติ และการสร้างโมเดล Machine/Deep Learning
+          ที่ชาญฉลาดสำหรับนวัตกรรมแห่งอนาคต
+        </p>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                ภูมิปัญญาประดิษฐ์ (Artificial Intelligence)
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                เรียนรู้เกี่ยวกับการพัฒนาโปรแกรมและเทคโนโลยีที่ใช้ในการจำลองความเป็นมนุษย์ของระบบคอมพิวเตอร์
+                เช่น การประมวลผลภาษาธรรมชาติ
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+            </div>
+          </div>
+
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                วิทยาการข้อมูล (Data Science)
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                เรียนรู้เกี่ยวกับการทำงานกับข้อมูลขนาดใหญ่
+                การวิเคราะห์แสดงผลข้อมูลเชิงลึก
+                และการประยุกต์ใช้เทคโนโลยีในการดำเนินงานเชิงธุรกิจ
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+              <span
+                class="bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded text-[10px]"
+                >มีห้องแล็บ</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                การเรียนรู้ของเครื่อง (Machine Learning)
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                การสร้างและประเมินประสิทธิภาพของโมเดลการเรียนรู้ เช่น Supervised
+                และ Unsupervised Learning เพื่อการพยากรณ์ข้อมูล
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+              <span
+                class="bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded text-[10px]"
+                >มีห้องแล็บ</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl flex flex-col justify-between border border-amber-200/40 dark:border-slate-800"
+          >
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                การเขียนโปรแกรมสำหรับวิทยาการข้อมูล
+              </h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                ปฏิบัติการเขียนโค้ดด้วยภาษา Python และ R เพื่อการสกัดดึงข้อมูล
+                จัดการโครงสร้างข้อมูล และทำ Data Cleansing ขั้นสูง
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800"
+            >
+              <span>3 หน่วยกิต</span>
+              <span
+                class="bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded text-[10px]"
+                >มีห้องแล็บ</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Complete Study Plan + Real-time Course Search -->
+    <section
+      id="study-plan"
+      class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
+    >
+      <div class="text-center mb-8">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white"
+        >
+          แผนการศึกษาและตารางวิชาเรียน
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-2">
+          ตัวอย่างตารางวิชาหลักในการเรียนในแต่ละชั้นปีการศึกษา
+          (หน่วยกิตรวมไม่น้อยกว่า 133 หน่วยกิต)
+        </p>
+      </div>
+
+      <!-- 🔍 กล่องค้นหารายวิชา -->
+      <div class="max-w-md mx-auto mb-8 relative">
+        <div class="relative flex items-center">
+          <input
+            type="text"
+            id="course-search-input"
+            oninput="filterCourses()"
+            placeholder="🔍 ค้นหารายวิชา เช่น Python, Java, AI, ฐานข้อมูล, CS101..."
+            class="w-full pl-4 pr-10 py-2.5 text-xs bg-white dark:bg-slate-900 border border-amber-300/50 dark:border-slate-800 rounded-xl focus:outline-none focus:border-amber-500 shadow-sm transition"
+          />
+          <button
+            onclick="clearSearch()"
+            id="clear-search-btn"
+            class="absolute right-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs hidden"
+          >
+            ✕
+          </button>
+        </div>
+        <p
+          id="search-status"
+          class="text-[11px] text-amber-700 dark:text-amber-400 mt-1.5 text-center hidden font-medium"
+        ></p>
+      </div>
+
+      <div id="year-toggle-container" class="flex justify-center gap-3 mb-8">
+        <button
+          id="btn-tab-1"
+          onclick="switchYear(1)"
+          class="px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow-[0_0_12px_rgba(245,158,11,0.3)] transition"
+        >
+          ปีที่ 1 และ ปีที่ 2
+        </button>
+        <button
+          id="btn-tab-2"
+          onclick="switchYear(2)"
+          class="px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition"
+        >
+          ปีที่ 3 และ ปีที่ 4
+        </button>
+      </div>
+
+      <!-- Year 1 & 2 Container -->
+      <div id="year-1-2" class="grid md:grid-cols-2 gap-6">
+        <div
+          class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
+        >
+          <div
+            class="bg-amber-50 dark:bg-slate-800/80 px-4 py-3 border-b border-amber-200/50 dark:border-slate-700 font-bold text-sm text-amber-900 dark:text-amber-400 flex items-center gap-2"
+          >
+            <span>🕒</span> ชั้นปีที่ 1 - ภาคเรียนที่ 1
+          </div>
+          <table class="w-full text-left text-xs">
+            <thead
+              class="bg-slate-50 dark:bg-slate-950/50 text-slate-500 border-b border-slate-200 dark:border-slate-800"
+            >
+              <tr>
+                <th class="p-3">รหัสวิชา</th>
+                <th class="p-3">ชื่อรายวิชาเรียน</th>
+                <th class="p-3">หมวดหมู่</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS101</td>
+                <td class="p-3">พื้นฐานวิทยาการคอมพิวเตอร์</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS102</td>
+                <td class="p-3">การเขียนโปรแกรมเบื้องต้น (Python)</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">MA111</td>
+                <td class="p-3">คณิตศาสตร์ดิสครีต</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">GE101</td>
+                <td class="p-3">ภาษาอังกฤษเพื่อการสื่อสาร</td>
+                <td class="p-3 text-slate-400">วิชาศึกษาทั่วไป</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
+        >
+          <div
+            class="bg-amber-50 dark:bg-slate-800/80 px-4 py-3 border-b border-amber-200/50 dark:border-slate-700 font-bold text-sm text-amber-900 dark:text-amber-400 flex items-center gap-2"
+          >
+            <span>🕒</span> ชั้นปีที่ 1 - ภาคเรียนที่ 2
+          </div>
+          <table class="w-full text-left text-xs">
+            <thead
+              class="bg-slate-50 dark:bg-slate-950/50 text-slate-500 border-b border-slate-200 dark:border-slate-800"
+            >
+              <tr>
+                <th class="p-3">รหัสวิชา</th>
+                <th class="p-3">ชื่อรายวิชาเรียน</th>
+                <th class="p-3">หมวดหมู่</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS103</td>
+                <td class="p-3">การเขียนโปรแกรมเชิงวัตถุ (Java)</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS104</td>
+                <td class="p-3">โครงสร้างข้อมูลและอัลกอริทึม</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">MA112</td>
+                <td class="p-3">สถิติและคณิตศาสตร์สัญกรณ์</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">GE102</td>
+                <td class="p-3">ทักษะชีวิตและความเป็นพลเมือง</td>
+                <td class="p-3 text-slate-400">วิชาศึกษาทั่วไป</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
+        >
+          <div
+            class="bg-amber-50 dark:bg-slate-800/80 px-4 py-3 border-b border-amber-200/50 dark:border-slate-700 font-bold text-sm text-amber-900 dark:text-amber-400 flex items-center gap-2"
+          >
+            <span>🕒</span> ชั้นปีที่ 2 - ภาคเรียนที่ 1
+          </div>
+          <table class="w-full text-left text-xs">
+            <thead
+              class="bg-slate-50 dark:bg-slate-950/50 text-slate-500 border-b border-slate-200 dark:border-slate-800"
+            >
+              <tr>
+                <th class="p-3">รหัสวิชา</th>
+                <th class="p-3">ชื่อรายวิชาเรียน</th>
+                <th class="p-3">หมวดหมู่</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS201</td>
+                <td class="p-3">สถาปัตยกรรมคอมพิวเตอร์และระบบปฏิบัติการ</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS202</td>
+                <td class="p-3">ระบบฐานข้อมูลและการออกแบบ</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS203</td>
+                <td class="p-3">วิศวกรรมซอฟต์แวร์เบื้องต้น</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS204</td>
+                <td class="p-3">โครงข่ายคอมพิวเตอร์และการสื่อสาร</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
+        >
+          <div
+            class="bg-amber-50 dark:bg-slate-800/80 px-4 py-3 border-b border-amber-200/50 dark:border-slate-700 font-bold text-sm text-amber-900 dark:text-amber-400 flex items-center gap-2"
+          >
+            <span>🕒</span> ชั้นปีที่ 2 - ภาคเรียนที่ 2
+          </div>
+          <table class="w-full text-left text-xs">
+            <thead
+              class="bg-slate-50 dark:bg-slate-950/50 text-slate-500 border-b border-slate-200 dark:border-slate-800"
+            >
+              <tr>
+                <th class="p-3">รหัสวิชา</th>
+                <th class="p-3">ชื่อรายวิชาเรียน</th>
+                <th class="p-3">หมวดหมู่</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS205</td>
+                <td class="p-3">การพัฒนาเว็บแอปพลิเคชัน</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS206</td>
+                <td class="p-3">การวิเคราะห์และออกแบบระบบเชิงวัตถุ</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS207</td>
+                <td class="p-3">ความมั่นคงปลอดภัยสารสนเทศพื้นฐาน</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS208</td>
+                <td class="p-3">คณิตศาสตร์และเครื่องมือสถิติสำหรับ AI</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Year 3 & 4 Container -->
+      <div id="year-3-4" class="hidden grid md:grid-cols-2 gap-6">
+        <div
+          class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
+        >
+          <div
+            class="bg-amber-50 dark:bg-slate-800/80 px-4 py-3 border-b border-amber-200/50 dark:border-slate-700 font-bold text-sm text-amber-900 dark:text-amber-400 flex items-center gap-2"
+          >
+            <span>🕒</span> ชั้นปีที่ 3 - ภาคเรียนที่ 1
+          </div>
+          <table class="w-full text-left text-xs">
+            <thead
+              class="bg-slate-50 dark:bg-slate-950/50 text-slate-500 border-b border-slate-200 dark:border-slate-800"
+            >
+              <tr>
+                <th class="p-3">รหัสวิชา</th>
+                <th class="p-3">ชื่อรายวิชาเรียน</th>
+                <th class="p-3">หมวดหมู่</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS301</td>
+                <td class="p-3">ภูมิปัญญาประดิษฐ์เชิงทฤษฎีและการประยุกต์</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS302</td>
+                <td class="p-3">วิทยาการข้อมูลและการวิเคราะห์ Big Data</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS303</td>
+                <td class="p-3">ภูมิสารสนเทศศาสตร์เบื้องต้น</td>
+                <td class="p-3 text-slate-400">วิชาเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS3XX</td>
+                <td class="p-3">วิชาเลือกเฉพาะทางสาขาวิชา (1)</td>
+                <td class="p-3 text-slate-400">วิชาเลือกเฉพาะสาขา</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
+        >
+          <div
+            class="bg-amber-50 dark:bg-slate-800/80 px-4 py-3 border-b border-amber-200/50 dark:border-slate-700 font-bold text-sm text-amber-900 dark:text-amber-400 flex items-center gap-2"
+          >
+            <span>🕒</span> ชั้นปีที่ 3 - ภาคเรียนที่ 2
+          </div>
+          <table class="w-full text-left text-xs">
+            <thead
+              class="bg-slate-50 dark:bg-slate-950/50 text-slate-500 border-b border-slate-200 dark:border-slate-800"
+            >
+              <tr>
+                <th class="p-3">รหัสวิชา</th>
+                <th class="p-3">ชื่อรายวิชาเรียน</th>
+                <th class="p-3">หมวดหมู่</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS304</td>
+                <td class="p-3">การเตรียมพร้อมฝึกประสบการณ์วิชาชีพ</td>
+                <td class="p-3 text-slate-400">วิชาฝึกทักษะ</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS305</td>
+                <td class="p-3">โครงงานวิทยาการคอมพิวเตอร์ 1</td>
+                <td class="p-3 text-slate-400">วิชาทำโครงงาน</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS3XX</td>
+                <td class="p-3">วิชาเลือกเฉพาะทางสาขาวิชา (2)</td>
+                <td class="p-3 text-slate-400">วิชาเลือกเฉพาะสาขา</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS3XX</td>
+                <td class="p-3">วิชาเลือกเสรีองค์กรไอที</td>
+                <td class="p-3 text-slate-400">วิชาเลือกเสรี</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
+        >
+          <div
+            class="bg-amber-50 dark:bg-slate-800/80 px-4 py-3 border-b border-amber-200/50 dark:border-slate-700 font-bold text-sm text-amber-900 dark:text-amber-400 flex items-center gap-2"
+          >
+            <span>🕒</span> ชั้นปีที่ 4 - ภาคเรียนที่ 1
+          </div>
+          <table class="w-full text-left text-xs">
+            <thead
+              class="bg-slate-50 dark:bg-slate-950/50 text-slate-500 border-b border-slate-200 dark:border-slate-800"
+            >
+              <tr>
+                <th class="p-3">รหัสวิชา</th>
+                <th class="p-3">ชื่อรายวิชาเรียน</th>
+                <th class="p-3">หมวดหมู่</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS401</td>
+                <td class="p-3">
+                  สหกิจศึกษาทางวิทยาการคอมพิวเตอร์ / การฝึกประสบการณ์
+                </td>
+                <td class="p-3 text-slate-400">ปฏิบัติงานในสถานประกอบการ</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
+        >
+          <div
+            class="bg-amber-50 dark:bg-slate-800/80 px-4 py-3 border-b border-amber-200/50 dark:border-slate-700 font-bold text-sm text-amber-900 dark:text-amber-400 flex items-center gap-2"
+          >
+            <span>🕒</span> ชั้นปีที่ 4 - ภาคเรียนที่ 2
+          </div>
+          <table class="w-full text-left text-xs">
+            <thead
+              class="bg-slate-50 dark:bg-slate-950/50 text-slate-500 border-b border-slate-200 dark:border-slate-800"
+            >
+              <tr>
+                <th class="p-3">รหัสวิชา</th>
+                <th class="p-3">ชื่อรายวิชาเรียน</th>
+                <th class="p-3">หมวดหมู่</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS402</td>
+                <td class="p-3">สัมมนาและเทคโนโลยีไอทีเกิดใหม่</td>
+                <td class="p-3 text-slate-400">สัมมนาทัศนคติ</td>
+              </tr>
+              <tr class="course-row">
+                <td class="p-3 font-semibold">CS403</td>
+                <td class="p-3">โครงงานวิทยาการคอมพิวเตอร์ 2 (จบการศึกษา)</td>
+                <td class="p-3 text-slate-400">วิชาทำโครงงาน</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Premium Addition: Why + Learning Journey + Student Experience -->
+    <section
+      id="why-comsci"
+      class="max-w-7xl mx-auto px-6 py-16 border-t border-slate-200/80 dark:border-slate-800/80 relative overflow-hidden"
+    >
+      <div
+        class="absolute -top-32 -right-24 w-80 h-80 rounded-full bg-amber-400/10 blur-3xl pointer-events-none"
+      ></div>
+      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-10 items-center relative">
+        <div>
+          <span
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 text-[11px] font-bold border border-amber-300/50 dark:border-amber-700/40"
+            >WHY COMPUTER SCIENCE?</span
+          >
+          <h2
+            class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-4 leading-tight"
+          >
+            ไม่ได้เรียนแค่เขียนโค้ด<br /><span
+              class="text-amber-600 dark:text-amber-400"
+              >แต่เรียนรู้การสร้างระบบ</span
+            >
+          </h2>
+          <p
+            class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mt-4 max-w-xl"
+          >
+            หลักสูตรครอบคลุมตั้งแต่พื้นฐานวิทยาการคอมพิวเตอร์ การเขียนโปรแกรม
+            ฐานข้อมูล เครือข่าย ความปลอดภัย ไปจนถึง Web, AI และ Data
+            เพื่อให้ต่อยอดเป็นทักษะเฉพาะทางได้
+          </p>
+          <div class="flex flex-wrap gap-2 mt-5">
+            <span class="tech-chip">Programming</span
+            ><span class="tech-chip">Database</span
+            ><span class="tech-chip">Web</span
+            ><span class="tech-chip">AI & Data</span
+            ><span class="tech-chip">Cybersecurity</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="glow-card rounded-2xl p-5 bg-white/90 dark:bg-[#141d27]">
+            <div
+              class="w-11 h-11 rounded-xl bg-amber-100 dark:bg-amber-950/50 flex items-center justify-center text-xl"
+            >
+              🧠
+            </div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
+              คิดเป็นระบบ
+            </h3>
+            <p
+              class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              ฝึกวิเคราะห์ปัญหา ออกแบบขั้นตอน และเลือกเทคโนโลยีให้เหมาะกับงาน
+            </p>
+          </div>
+          <div class="glow-card rounded-2xl p-5 bg-white/90 dark:bg-[#141d27]">
+            <div
+              class="w-11 h-11 rounded-xl bg-orange-100 dark:bg-orange-950/50 flex items-center justify-center text-xl"
+            >
+              🛠️
+            </div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
+              ลงมือทำจริง
+            </h3>
+            <p
+              class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              เชื่อมทฤษฎีกับแล็บ โครงงานนวัตกรรม
+              และการทำงานที่ใกล้เคียงสถานการณ์จริง
+            </p>
+          </div>
+          <div class="glow-card rounded-2xl p-5 bg-white/90 dark:bg-[#141d27]">
+            <div
+              class="w-11 h-11 rounded-xl bg-yellow-100 dark:bg-yellow-950/50 flex items-center justify-center text-xl"
+            >
+              🚀
+            </div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
+              ต่อยอดได้หลายสาย
+            </h3>
+            <p
+              class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              จาก Software Development ไปจนถึง AI, Data, Network และ
+              Cybersecurity
+            </p>
+          </div>
+          <div class="glow-card rounded-2xl p-5 bg-white/90 dark:bg-[#141d27]">
+            <div
+              class="w-11 h-11 rounded-xl bg-amber-100 dark:bg-amber-950/50 flex items-center justify-center text-xl"
+            >
+              🌏
+            </div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
+              พร้อมโลกดิจิทัล
+            </h3>
+            <p
+              class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              สร้างพื้นฐานสำหรับการทำงานด้านเทคโนโลยีและการเรียนรู้เครื่องมือใหม่ในอนาคต
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="learning-journey"
+      class="max-w-7xl mx-auto px-6 py-16 border-t border-slate-200/80 dark:border-slate-800/80 relative"
+    >
+      <div class="text-center mb-10">
+        <span
+          class="text-[11px] font-bold tracking-[.2em] text-amber-600 dark:text-amber-400"
+          >4-YEAR LEARNING JOURNEY</span
+        >
+        <h2
+          class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-2"
+        >
+          จากพื้นฐาน → ความเชี่ยวชาญ → โครงงาน
+        </h2>
+        <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-2">
+          มองภาพรวมการเติบโตของทักษะตลอด 4 ปีได้ในไม่กี่คลิก
+        </p>
+      </div>
+      <div class="grid md:grid-cols-4 gap-4">
+        <button
+          type="button"
+          onclick="showJourney(1)"
+          id="journey-btn-1"
+          class="journey-btn active rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-amber-300/50 dark:border-amber-700/40 glow-card"
+        >
+          <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400"
+            >YEAR 01</span
+          >
+          <h3 class="font-bold text-lg text-slate-900 dark:text-white mt-2">
+            Foundation
+          </h3>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-2">
+            พื้นฐาน CS · Python · Java · Discrete Math
+          </p>
+        </button>
+        <button
+          type="button"
+          onclick="showJourney(2)"
+          id="journey-btn-2"
+          class="journey-btn rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-slate-200 dark:border-slate-800 glow-card"
+        >
+          <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400"
+            >YEAR 02</span
+          >
+          <h3 class="font-bold text-lg text-slate-900 dark:text-white mt-2">
+            Core Skills
+          </h3>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-2">
+            Database · Software · Network · Web · Security
+          </p>
+        </button>
+        <button
+          type="button"
+          onclick="showJourney(3)"
+          id="journey-btn-3"
+          class="journey-btn rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-slate-200 dark:border-slate-800 glow-card"
+        >
+          <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400"
+            >YEAR 03</span
+          >
+          <h3 class="font-bold text-lg text-slate-900 dark:text-white mt-2">
+            Specialization
+          </h3>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-2">
+            ต่อยอดสายที่สนใจ + ทำงานกับโจทย์จริง
+          </p>
+        </button>
+        <button
+          type="button"
+          onclick="showJourney(4)"
+          id="journey-btn-4"
+          class="journey-btn rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-slate-200 dark:border-slate-800 glow-card"
+        >
+          <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400"
+            >YEAR 04</span
+          >
+          <h3 class="font-bold text-lg text-slate-900 dark:text-white mt-2">
+            Project & Career
+          </h3>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-2">
+            สหกิจ/ฝึกประสบการณ์ · โครงงาน · เตรียมสู่การทำงาน
+          </p>
+        </button>
+      </div>
+      <div
+        id="journey-detail"
+        class="mt-5 rounded-3xl border border-amber-400/25 bg-gradient-to-br from-amber-50/80 to-white dark:from-amber-950/20 dark:to-[#111923] p-6 md:p-8 glow-card path-result-enter"
+      >
+        <div
+          class="flex flex-col md:flex-row md:items-center md:justify-between gap-5"
+        >
+          <div>
+            <span
+              class="text-[10px] font-bold text-amber-700 dark:text-amber-400"
+              >YEAR 01 · FOUNDATION</span
+            >
+            <h3
+              id="journey-title"
+              class="text-xl font-bold text-slate-900 dark:text-white mt-1"
+            >
+              สร้างพื้นฐานให้แน่นก่อนเลือกทาง
+            </h3>
+            <p
+              id="journey-text"
+              class="text-xs text-slate-600 dark:text-slate-400 mt-2 max-w-2xl leading-relaxed"
+            >
+              เริ่มจากพื้นฐานวิทยาการคอมพิวเตอร์ การเขียนโปรแกรม Python/Java
+              และคณิตศาสตร์ที่ใช้ต่อยอดในวิชาเฉพาะทาง
+            </p>
+          </div>
+          <div id="journey-tags" class="flex flex-wrap gap-2 md:max-w-sm">
+            <span class="journey-tag">Python</span
+            ><span class="journey-tag">Java</span
+            ><span class="journey-tag">Discrete Math</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Career Paths Section -->
+    <section
+      id="careers"
+      class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
+    >
+      <div class="text-center mb-12">
+        <span
+          class="px-3 py-1 text-xs bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 rounded-full font-medium"
+          >🎯 เส้นทางสู่อนาคตวิชาชีพ</span
+        >
+        <h2
+          class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-3"
+        >
+          เรียนวิทย์คอม SSKRU จบไปทำอะไรได้บ้าง ?
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-2">
+          ตลาดงานระดับสากลเปิดกว้าง
+          พร้อมทักษะที่ตอบโจทย์อุตสาหกรรมเทคโนโลยีแห่งอนาคต
+        </p>
+      </div>
+
+      <!-- Interactive Career Path Selector -->
+      <div
+        class="mb-12 rounded-[2rem] border border-amber-400/30 bg-white dark:bg-slate-900/90 p-5 md:p-8 glow-card"
+      >
+        <div class="grid lg:grid-cols-[1fr_1.15fr] gap-8 items-start">
+          <div>
+            <span
+              class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-[11px] font-bold border border-amber-300/50"
+            >
+              ✦ CAREER PATH SELECTOR
+            </span>
+            <h3
+              class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mt-4"
+            >
+              ลองค้นหาสายที่เหมาะกับคุณ
+            </h3>
+            <p
+              class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              เลือกสิ่งที่คุณชอบมากที่สุด
+              แล้วระบบจะจับคู่กับสายการเรียนและวิชาที่เกี่ยวข้องจากข้อมูลหลักสูตรบนเว็บไซต์
+            </p>
+            <div
+              class="mt-5 p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-800/40"
+            >
+              <p
+                class="text-[11px] text-amber-800 dark:text-amber-300 font-medium"
+              >
+                💡 Tip
+              </p>
+              <p class="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
+                ไม่ต้องเลือกให้ถูกทุกข้อ เลือกจากสิ่งที่คุณ “อยากทำ”
+                มากที่สุดก็พอ
+              </p>
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-3" id="career-path-options">
+            <button
+              type="button"
+              data-path="data"
+              onclick="selectCareerPath('data')"
+              class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
+            >
+              <span class="relative z-10 flex items-center gap-3">
+                <span
+                  class="w-11 h-11 rounded-xl bg-amber-100 dark:bg-amber-950/60 flex items-center justify-center text-xl"
+                  >📊</span
+                >
+                <span
+                  ><span
+                    class="block font-bold text-sm text-slate-900 dark:text-white"
+                    >ตัวเลข / สถิติ</span
+                  ><span
+                    class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
+                    >ชอบวิเคราะห์ข้อมูลและหาแพตเทิร์น</span
+                  ></span
+                >
+              </span>
+            </button>
+            <button
+              type="button"
+              data-path="web"
+              onclick="selectCareerPath('web')"
+              class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
+            >
+              <span class="relative z-10 flex items-center gap-3">
+                <span
+                  class="w-11 h-11 rounded-xl bg-orange-100 dark:bg-orange-950/60 flex items-center justify-center text-xl"
+                  >🎨</span
+                >
+                <span
+                  ><span
+                    class="block font-bold text-sm text-slate-900 dark:text-white"
+                    >ออกแบบ / สร้างเว็บ</span
+                  ><span
+                    class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
+                    >ชอบ UI, UX และการสร้างสิ่งที่คนใช้จริง</span
+                  ></span
+                >
+              </span>
+            </button>
+            <button
+              type="button"
+              data-path="cyber"
+              onclick="selectCareerPath('cyber')"
+              class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
+            >
+              <span class="relative z-10 flex items-center gap-3">
+                <span
+                  class="w-11 h-11 rounded-xl bg-yellow-100 dark:bg-yellow-950/60 flex items-center justify-center text-xl"
+                  >🛡️</span
+                >
+                <span
+                  ><span
+                    class="block font-bold text-sm text-slate-900 dark:text-white"
+                    >ความปลอดภัย / เจาะระบบ</span
+                  ><span
+                    class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
+                    >ชอบค้นหาช่องโหว่และป้องกันระบบ</span
+                  ></span
+                >
+              </span>
+            </button>
+            <button
+              type="button"
+              data-path="hardware"
+              onclick="selectCareerPath('hardware')"
+              class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
+            >
+              <span class="relative z-10 flex items-center gap-3">
+                <span
+                  class="w-11 h-11 rounded-xl bg-amber-100 dark:bg-amber-950/60 flex items-center justify-center text-xl"
+                  >🤖</span
+                >
+                <span
+                  ><span
+                    class="block font-bold text-sm text-slate-900 dark:text-white"
+                    >หุ่นยนต์ / ฮาร์ดแวร์</span
+                  ><span
+                    class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
+                    >ชอบอุปกรณ์ ระบบ และการทำงานเชิงกายภาพ</span
+                  ></span
+                >
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div id="career-path-result" class="hidden mt-6"></div>
+      </div>
+
+      <!-- Success Stories / Example Career Outcomes -->
+      <div class="mb-12">
+        <div
+          class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-5"
+        >
+          <div>
+            <span
+              class="text-[11px] font-bold tracking-[.18em] text-amber-600 dark:text-amber-400"
+              >SUCCESS STORIES</span
+            >
+            <h3
+              class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mt-1"
+            >
+              เส้นทางหลังเรียนจบที่ต่อยอดได้จริง
+            </h3>
+          </div>
+          <p
+            class="text-[10px] md:text-xs text-slate-400 dark:text-slate-500 max-w-md"
+          >
+            ตัวอย่างเส้นทางอาชีพเพื่อให้เห็นภาพการต่อยอดจากสายวิชา
+            ไม่ใช่ข้อมูลระบุศิษย์เก่ารายบุคคล
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-5">
+          <article class="glow-card rounded-2xl p-5 bg-white dark:bg-slate-900">
+            <div class="flex items-center justify-between">
+              <span class="text-2xl">📊</span
+              ><span
+                class="text-[10px] font-bold px-2 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300"
+                >DATA</span
+              >
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
+              สาย Data → งานวิเคราะห์ธุรกิจ
+            </h4>
+            <p
+              class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              ต่อยอดทักษะ Data Science และ Machine Learning
+              ไปสู่งานวิเคราะห์ข้อมูลในองค์กรขนาดใหญ่ เช่น
+              ธนาคารหรือธุรกิจดิจิทัล
+            </p>
+            <div
+              class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-amber-700 dark:text-amber-400 font-semibold"
+            >
+              เน้น: Data Science · Machine Learning
+            </div>
+          </article>
+          <article class="glow-card rounded-2xl p-5 bg-white dark:bg-slate-900">
+            <div class="flex items-center justify-between">
+              <span class="text-2xl">💻</span
+              ><span
+                class="text-[10px] font-bold px-2 py-1 rounded-full bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300"
+                >WEB</span
+              >
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
+              สาย Web → บริษัท Tech
+            </h4>
+            <p
+              class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              ใช้พื้นฐาน Software Engineering และ Web Application
+              สร้างเว็บไซต์หรือระบบที่ใช้งานจริง ตั้งแต่ Frontend ถึง Backend
+            </p>
+            <div
+              class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-orange-700 dark:text-orange-400 font-semibold"
+            >
+              เน้น: Software Engineering · Web App
+            </div>
+          </article>
+          <article class="glow-card rounded-2xl p-5 bg-white dark:bg-slate-900">
+            <div class="flex items-center justify-between">
+              <span class="text-2xl">🛡️</span
+              ><span
+                class="text-[10px] font-bold px-2 py-1 rounded-full bg-yellow-100 dark:bg-yellow-950 text-yellow-800 dark:text-yellow-300"
+                >CYBER</span
+              >
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
+              สาย Cyber → Security Team
+            </h4>
+            <p
+              class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              ต่อยอดด้าน Network, Information Security และ Cyber Forensics
+              ไปสู่งานดูแลและวิเคราะห์ความปลอดภัยของระบบ
+            </p>
+            <div
+              class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-yellow-700 dark:text-yellow-400 font-semibold"
+            >
+              เน้น: InfoSec · Cyber Forensics · Networks
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- อาชีพ 1 -->
+        <div
+          class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 flex items-center justify-center text-xl mb-4 shadow-sm"
+            >
+              💻
+            </div>
+            <h4 class="font-bold text-base text-slate-900 dark:text-white">
+              Full-Stack Developer
+            </h4>
+            <p
+              class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              นักพัฒนาเว็บไซต์และซอฟต์แวร์ทั้งฝั่งหน้าบ้าน (Frontend)
+              และหลังบ้าน (Backend)
+            </p>
+          </div>
+          <div
+            class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-amber-700 dark:text-amber-400 font-medium"
+          >
+            วิชาสำคัญ: Python, Java, Web App, Database
+          </div>
+        </div>
+
+        <!-- อาชีพ 2 -->
+        <div
+          class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-950/50 text-orange-700 dark:text-orange-400 flex items-center justify-center text-xl mb-4 shadow-sm"
+            >
+              📊
+            </div>
+            <h4 class="font-bold text-base text-slate-900 dark:text-white">
+              AI & Data Scientist
+            </h4>
+            <p
+              class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              นักวิทยาศาสตร์ข้อมูลและผู้ออกแบบโมเดลปัญญาประดิษฐ์ วิเคราะห์ Big
+              Data เพื่อธุรกิจ
+            </p>
+          </div>
+          <div
+            class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-orange-700 dark:text-orange-400 font-medium"
+          >
+            วิชาสำคัญ: AI, Machine Learning, Big Data, R
+          </div>
+        </div>
+
+        <!-- อาชีพ 3 -->
+        <div
+          class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-yellow-50 dark:bg-yellow-950/50 text-yellow-700 dark:text-yellow-400 flex items-center justify-center text-xl mb-4 shadow-sm"
+            >
+              🛡️
+            </div>
+            <h4 class="font-bold text-base text-slate-900 dark:text-white">
+              Cybersecurity Analyst
+            </h4>
+            <p
+              class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              ผู้เชี่ยวชาญความปลอดภัยไซเบอร์ ตรวจสอบ ป้องกัน
+              และกู้คืนข้อมูลจากการถูกโจมตี
+            </p>
+          </div>
+          <div
+            class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-yellow-700 dark:text-yellow-400 font-medium"
+          >
+            วิชาสำคัญ: InfoSec, Cyber Forensics, Networks
+          </div>
+        </div>
+
+        <!-- อาชีพ 4 -->
+        <div
+          class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 flex items-center justify-center text-xl mb-4 shadow-sm"
+            >
+              ⚙️
+            </div>
+            <h4 class="font-bold text-base text-slate-900 dark:text-white">
+              Cloud & DevOps Engineer
+            </h4>
+            <p
+              class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
+            >
+              วิศวกรผู้วางระบบโครงสร้างพื้นฐานบนคลาวด์ ดูแลเซิร์ฟเวอร์และการ
+              Deploy อัตโนมัติ
+            </p>
+          </div>
+          <div
+            class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-amber-700 dark:text-amber-300 font-medium"
+          >
+            วิชาสำคัญ: Computer Architecture, OS, Network
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Faculty Section (การ์ดมีขอบ Glow เรืองแสงคมชัด โดดเด่นขึ้นมาทันที) -->
+    <section
+      id="faculty"
+      class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
+    >
+      <div class="text-center mb-12">
+        <span
+          class="px-3 py-1 text-xs bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 rounded-full font-medium"
+          >🎓 คณาจารย์ผู้ทรงคุณวุฒิและเชี่ยวชาญเฉพาะทาง</span
+        >
+        <h2
+          class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-3"
+        >
+          คณาจารย์ประจำหลักสูตร
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-2">
+          ร่วมขับเคลื่อนการจัดการเรียนการสอนและนวัตกรรมใหม่
+        </p>
+      </div>
+
+      <!-- แถวบน: 3 ท่าน -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- อาจารย์ 1: ผศ.ดร.เจษฎา โพนแก้ว -->
+        <div
+          class="p-6 bg-white dark:bg-slate-900 rounded-3xl text-center flex flex-col items-center glow-card faculty-card"
+        >
+          <!-- TODO: เพื่อนเปลี่ยน src รูปภาพ -->
+          <div
+            class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
+          >
+            <img
+              src="https://via.placeholder.com/150"
+              alt="ผศ.ดร.เจษฎา โพนแก้ว"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h4 class="font-bold text-base text-slate-900 dark:text-white">
+            ผู้ช่วยศาสตราจารย์ ดร.เจษฎา โพนแก้ว
+          </h4>
+          <p class="text-xs text-slate-400 mt-0.5">Jessada Phonkaew</p>
+          <span
+            class="mt-3 px-4 py-1 text-[11px] bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700 font-medium"
+          >
+            อาจารย์ผู้รับผิดชอบหลักสูตร
+          </span>
+
+          <div class="mt-4 flex flex-col items-center">
+            <span class="text-xs text-slate-500 dark:text-slate-400"
+              >ความเชี่ยวชาญ</span
+            >
+            <span
+              class="mt-1 px-4 py-1 text-xs bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800/60 rounded-xl font-medium"
+            >
+              วิทยาการคอมพิวเตอร์
+            </span>
+          </div>
+
+          <button
+            onclick="openFacultyModal(1)"
+            class="mt-6 px-6 py-2 text-xs font-semibold border border-amber-500 text-amber-800 dark:text-amber-300 rounded-full hover:bg-amber-500 hover:text-slate-950 transition duration-200"
+          >
+            ดูประวัติและผลงานวิชาการ
+          </button>
+        </div>
+
+        <!-- อาจารย์ 2: ดร.เจษฎา ชาตรี -->
+        <div
+          class="p-6 bg-white dark:bg-slate-900 rounded-3xl text-center flex flex-col items-center glow-card faculty-card"
+        >
+          <!-- TODO: เพื่อนเปลี่ยน src รูปภาพ -->
+          <div
+            class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
+          >
+            <img
+              src="https://via.placeholder.com/150"
+              alt="ดร.เจษฎา ชาตรี"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h4 class="font-bold text-base text-slate-900 dark:text-white">
+            ดร.เจษฎา ชาตรี
+          </h4>
+          <p class="text-xs text-slate-400 mt-0.5">Jessada Chatree</p>
+          <span
+            class="mt-3 px-4 py-1 text-[11px] bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700 font-medium"
+          >
+            อาจารย์ผู้รับผิดชอบหลักสูตร
+          </span>
+
+          <div class="mt-4 flex flex-col items-center">
+            <span class="text-xs text-slate-500 dark:text-slate-400"
+              >ความเชี่ยวชาญ</span
+            >
+            <span
+              class="mt-1 px-4 py-1 text-xs bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800/60 rounded-xl font-medium"
+            >
+              Computer Science and Engineering
+            </span>
+          </div>
+
+          <button
+            onclick="openFacultyModal(2)"
+            class="mt-6 px-6 py-2 text-xs font-semibold border border-amber-500 text-amber-800 dark:text-amber-300 rounded-full hover:bg-amber-500 hover:text-slate-950 transition duration-200"
+          >
+            ดูประวัติและผลงานวิชาการ
+          </button>
+        </div>
+
+        <!-- อาจารย์ 3: ดร.กริชบดินทร์ ผิวหอม -->
+        <div
+          class="p-6 bg-white dark:bg-slate-900 rounded-3xl text-center flex flex-col items-center glow-card faculty-card"
+        >
+          <!-- TODO: เพื่อนเปลี่ยน src รูปภาพ -->
+          <div
+            class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
+          >
+            <img
+              src="https://via.placeholder.com/150"
+              alt="ดร.กริชบดินทร์ ผิวหอม"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h4 class="font-bold text-base text-slate-900 dark:text-white">
+            ดร.กริชบดินทร์ ผิวหอม
+          </h4>
+          <p class="text-xs text-slate-400 mt-0.5">Krichbodin Phewhom</p>
+          <span
+            class="mt-3 px-4 py-1 text-[11px] bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700 font-medium"
+          >
+            อาจารย์ผู้รับผิดชอบหลักสูตร
+          </span>
+
+          <div class="mt-4 flex flex-col items-center">
+            <span class="text-xs text-slate-500 dark:text-slate-400"
+              >ความเชี่ยวชาญ</span
+            >
+            <span
+              class="mt-1 px-4 py-1 text-xs bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800/60 rounded-xl font-medium"
+            >
+              วิศวกรรมคอมพิวเตอร์
+            </span>
+          </div>
+
+          <button
+            onclick="openFacultyModal(3)"
+            class="mt-6 px-6 py-2 text-xs font-semibold border border-amber-500 text-amber-800 dark:text-amber-300 rounded-full hover:bg-amber-500 hover:text-slate-950 transition duration-200"
+          >
+            ดูประวัติและผลงานวิชาการ
+          </button>
+        </div>
+      </div>
+
+      <!-- แถวล่าง: 2 ท่าน (จัดกึ่งกลาง Centered) -->
+      <div class="flex flex-wrap justify-center gap-6 mt-6">
+        <!-- อาจารย์ 4: ผศ.พิศาล สุขขี -->
+        <div
+          class="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-6 bg-white dark:bg-slate-900 rounded-3xl text-center flex flex-col items-center glow-card faculty-card"
+        >
+          <!-- TODO: เพื่อนเปลี่ยน src รูปภาพ -->
+          <div
+            class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
+          >
+            <img
+              src="https://via.placeholder.com/150"
+              alt="ผศ.พิศาล สุขขี"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h4 class="font-bold text-base text-slate-900 dark:text-white">
+            ผู้ช่วยศาสตราจารย์พิศาล สุขขี
+          </h4>
+          <p class="text-xs text-slate-400 mt-0.5">Phisan Sukkee</p>
+          <span
+            class="mt-3 px-4 py-1 text-[11px] bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700 font-medium"
+          >
+            อาจารย์ผู้รับผิดชอบหลักสูตร
+          </span>
+
+          <div class="mt-4 flex flex-col items-center">
+            <span class="text-xs text-slate-500 dark:text-slate-400"
+              >ความเชี่ยวชาญ</span
+            >
+            <span
+              class="mt-1 px-4 py-1 text-xs bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800/60 rounded-xl font-medium"
+            >
+              วิทยาการคอมพิวเตอร์
+            </span>
+          </div>
+
+          <button
+            onclick="openFacultyModal(4)"
+            class="mt-6 px-6 py-2 text-xs font-semibold border border-amber-500 text-amber-800 dark:text-amber-300 rounded-full hover:bg-amber-500 hover:text-slate-950 transition duration-200"
+          >
+            ดูประวัติและผลงานวิชาการ
+          </button>
+        </div>
+
+        <!-- อาจารย์ 5: ผศ.ดร.กนิษฐา อินธิชิต (ลบไอคอนวงกลมออกเรียบร้อย) -->
+        <div
+          class="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-6 bg-white dark:bg-slate-900 rounded-3xl text-center flex flex-col items-center glow-card faculty-card"
+        >
+          <!-- รูปโปรไฟล์ (ไม่มีไอคอนวงกลมมุมขวาแล้ว) -->
+          <div
+            class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
+          >
+            <!-- TODO: เพื่อนเปลี่ยน src รูปภาพ -->
+            <img
+              src="https://via.placeholder.com/150"
+              alt="ผศ.ดร.กนิษฐา อินธิชิต"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <h4 class="font-bold text-base text-slate-900 dark:text-white">
+            ผู้ช่วยศาสตราจารย์ ดร.กนิษฐา อินธิชิต
+          </h4>
+          <p class="text-xs text-slate-400 mt-0.5">Kanittha Inthichit</p>
+
+          <!-- ป้ายแคปซูล 2 ชั้น -->
+          <div class="flex flex-col items-center gap-1.5 mt-3">
+            <span
+              class="px-4 py-1 text-[11px] bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700 font-medium"
+            >
+              อาจารย์ผู้รับผิดชอบหลักสูตร
+            </span>
+            <span
+              class="px-4 py-1 text-[11px] bg-emerald-700 text-white rounded-full font-medium shadow-sm"
+            >
+              หัวหน้าสาขาวิชาฯ
+            </span>
+          </div>
+
+          <div class="mt-4 flex flex-col items-center">
+            <span class="text-xs text-slate-500 dark:text-slate-400"
+              >ความเชี่ยวชาญ</span
+            >
+            <span
+              class="mt-1 px-4 py-1 text-xs bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800/60 rounded-xl font-medium"
+            >
+              เทคโนโลยีสารสนเทศ
+            </span>
+          </div>
+
+          <button
+            onclick="openFacultyModal(5)"
+            class="mt-6 px-6 py-2 text-xs font-semibold border border-amber-500 text-amber-800 dark:text-amber-300 rounded-full hover:bg-amber-500 hover:text-slate-950 transition duration-200"
+          >
+            ดูประวัติและผลงานวิชาการ
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Download Section (Accordion) -->
+    <section
+      id="download"
+      class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
+    >
+      <div class="text-center mb-8">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white"
+        >
+          ดาวน์โหลดเอกสารสาขาวิชาฯ
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-2">
+          รวบรวมเอกสารวิชาการ เอกสารแผนประชาสัมพันธ์แนะนำการขึ้นทะเบียน
+          และข้อมูลสำคัญต่าง ๆ เพื่อสนับสนุนนักศึกษา
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Accordion Item 1: มคอ.2 -->
+        <div
+          id="accordion-item-1"
+          class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card transition-all"
+        >
+          <button
+            onclick="toggleAccordion(1)"
+            class="w-full p-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800/50 transition"
+          >
+            <span
+              id="accordion-title-1"
+              class="font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-200"
+            >
+              เล่มหลักสูตรวิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์ (มคอ.2)
+            </span>
+            <span
+              id="accordion-icon-1"
+              class="text-slate-400 text-xs transform transition-transform duration-200"
+              >⌃</span
+            >
+          </button>
+          <div
+            id="accordion-body-1"
+            class="px-5 pb-5 pt-1 border-t border-slate-100 dark:border-slate-800"
+          >
+            <p
+              class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed"
+            >
+              รายละเอียดวิชาเรียน โครงสร้างจำนวนหน่วยกิตทั้งหมด
+              และแผนการเรียนตลอด 4 ปีฉบับสมบูรณ์ (หลักสูตรปรับปรุง พ.ศ. 2568)
+            </p>
+            <button
+              class="mt-4 px-5 py-2 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl transition flex items-center gap-2 shadow-sm"
+            >
+              📥 ดาวน์โหลดเอกสาร PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Accordion Item 2: คู่มือขึ้นทะเบียน -->
+        <div
+          id="accordion-item-2"
+          class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card transition-all"
+        >
+          <button
+            onclick="toggleAccordion(2)"
+            class="w-full p-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800/50 transition"
+          >
+            <span
+              id="accordion-title-2"
+              class="font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-200"
+            >
+              คู่มือการขึ้นทะเบียนและขั้นตอนการรายงานตัวนักศึกษาใหม่
+            </span>
+            <span
+              id="accordion-icon-2"
+              class="text-slate-400 text-xs transform transition-transform duration-200"
+              >⌄</span
+            >
+          </button>
+          <div
+            id="accordion-body-2"
+            class="hidden px-5 pb-5 pt-1 border-t border-slate-100 dark:border-slate-800"
+          >
+            <p
+              class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed"
+            >
+              คู่มือระบุการเตรียมเอกสารสำหรับการรับนักศึกษาใหม่ ทุกรอบ TCAS
+              ของมหาวิทยาลัยราชภัฏศรีสะเกษ
+            </p>
+            <button
+              class="mt-4 px-5 py-2 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl transition flex items-center gap-2 shadow-sm"
+            >
+              📥 ดาวน์โหลดเอกสาร PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. รายงานความสำเร็จและคุณภาพหลักสูตร -->
+    <section
+      class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
+    >
+      <div class="text-center mb-10">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white"
+        >
+          รายงานความสำเร็จและคุณภาพหลักสูตร
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-2">
+          เอกสารสรุปผลการประเมินคุณภาพการศึกษาระดับหลักสูตรตามมาตรฐานและการสร้างคุณค่าระดับสากล
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <!-- AUN-QA -->
+        <div
+          class="p-6 bg-slate-900 text-white rounded-2xl flex flex-col justify-between glow-card"
+        >
+          <div>
+            <span
+              class="px-2.5 py-1 text-[11px] bg-slate-800 text-amber-400 rounded-full border border-slate-700"
+              >🏆 การรับรองมาตรฐาน AUN-QA</span
+            >
+            <h4 class="font-bold text-lg mt-4 mb-2">
+              ผลการประเมินคุณภาพสาขาวิชาฯ ปีการศึกษา 2568
+            </h4>
+            <p class="text-xs text-slate-300">
+              ระดับคะแนนความพึงพอใจดีเยี่ยม ได้รับการประเมินคุณภาพครบทุกเกณฑ์
+            </p>
+            <div class="text-[11px] text-slate-400 mt-4 space-y-1">
+              <p>📅 ประเมินเมื่อ: 16 – 17 สิงหาคม 2568</p>
+              <p>📍 คณะศิลปศาสตร์และวิทยาศาสตร์ มรภ.ศรีสะเกษ</p>
+            </div>
+          </div>
+          <button
+            class="mt-6 px-4 py-2 text-xs border border-slate-700 hover:border-slate-500 text-slate-200 rounded-xl transition w-fit"
+          >
+            อ่านสรุปเล่มประเมินฉบับเต็ม →
+          </button>
+        </div>
+
+        <!-- หุ่นยนต์ศรีสะเกษโรโบติกส์ -->
+        <div
+          class="p-6 bg-amber-950/40 text-white rounded-2xl flex flex-col justify-between glow-card"
+        >
+          <div>
+            <span
+              class="px-2.5 py-1 text-[11px] bg-amber-900/60 text-amber-300 rounded-full border border-amber-800"
+              >🤖 กิจกรรมเด่นเพื่อพัฒนาเยาวชน</span
+            >
+            <h4 class="font-bold text-lg mt-4 mb-2">
+              การแข่งขันหุ่นยนต์ศรีสะเกษโรโบติกส์
+            </h4>
+            <p class="text-xs text-amber-100">
+              จัดแข่งขันหุ่นยนต์เยาวชนชิงถ้วยเกียรติยศสูงสุด รวมทั้งสิ้น 33
+              รายการ สำหรับระดับการศึกษาขั้นพื้นฐาน อาชีวศึกษา
+              และอุดมศึกษาทั่วประเทศ
+            </p>
+            <div class="text-[11px] text-amber-300 mt-4 space-y-1">
+              <p>📅 วันที่จัดงาน: 27 – 28 มิถุนายน 2569</p>
+              <p>📍 มหาวิทยาลัยราชภัฏศรีสะเกษ</p>
+            </div>
+          </div>
+          <div class="flex gap-2 mt-6">
+            <button
+              class="px-3.5 py-2 text-xs bg-amber-400 text-slate-950 font-bold rounded-xl hover:bg-amber-500 transition"
+            >
+              🖼️ ภาพกิจกรรม
+            </button>
+            <button
+              class="px-3.5 py-2 text-xs border border-amber-400/40 hover:bg-amber-900/40 rounded-xl transition"
+            >
+              🌐 เว็บไซต์กิจกรรม
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. ช่องทางการติดต่อ & โซเชียลมีเดีย -->
+    <section id="final-cta" class="max-w-7xl mx-auto px-6 py-8">
+      <div
+        class="relative overflow-hidden rounded-[2rem] bg-slate-950 dark:bg-[#111923] border border-amber-500/30 p-8 md:p-12 shadow-2xl shadow-amber-950/10"
+      >
+        <div
+          class="absolute -right-24 -top-24 w-80 h-80 rounded-full bg-amber-500/20 blur-3xl"
+        ></div>
+        <div
+          class="absolute -left-20 -bottom-32 w-72 h-72 rounded-full bg-orange-500/10 blur-3xl"
+        ></div>
+        <div
+          class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-7"
+        >
+          <div>
+            <span class="text-[10px] font-bold tracking-[.22em] text-amber-400"
+              >START YOUR JOURNEY</span
+            >
+            <h2 class="text-2xl md:text-4xl font-bold text-white mt-2">
+              พร้อมสร้างอนาคตของคุณหรือยัง?
+            </h2>
+            <p class="text-xs md:text-sm text-slate-300 mt-3 max-w-2xl">
+              สำรวจหลักสูตร ดูแผนการเรียน และค้นหาสายที่เหมาะกับคุณ
+              ก่อนก้าวเข้าสู่โลกของวิทยาการคอมพิวเตอร์
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3 shrink-0">
+            <a
+              href="#careers"
+              class="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition shadow-lg shadow-amber-500/20"
+              >ค้นหา Career Path →</a
+            ><a
+              href="https://www.oass.sskru.ac.th/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-5 py-3 rounded-xl border border-slate-600 hover:border-amber-400 text-white font-semibold text-sm transition"
+              >สมัครเข้าศึกษา ↗</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="contact"
+      class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
+    >
+      <div class="text-center mb-10">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white"
+        >
+          ช่องทางการติดต่อเรา
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-2">
+          มีข้อสงสัยเกี่ยวกับหลักสูตร โควตาการรับสมัคร
+          หรือสอบถามรายละเอียดเพิ่มเติม ได้ตลอดเวลา
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-6 items-stretch mb-8">
+        <!-- ฝั่งซ้าย 3 กล่อง -->
+        <div class="lg:col-span-5 flex flex-col justify-between gap-4">
+          <!-- กล่อง 1: เบอร์โทร -->
+          <div
+            class="p-5 bg-white dark:bg-slate-900 rounded-2xl flex items-center gap-4 glow-card"
+          >
+            <div
+              class="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 text-xl shadow-sm"
+            >
+              📞
+            </div>
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                เบอร์โทรติดต่อสาขาวิชาฯ
+              </h5>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                043-009700 ต่อ 50528
+              </p>
+              <p
+                class="text-xs text-amber-600 dark:text-amber-400 font-semibold mt-0.5"
+              >
+                สายด่วน: 084-298-2456
+              </p>
+            </div>
+          </div>
+
+          <!-- กล่อง 2: อีเมล -->
+          <div
+            class="p-5 bg-white dark:bg-slate-900 rounded-2xl flex items-center gap-4 glow-card"
+          >
+            <div
+              class="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 text-xl shadow-sm"
+            >
+              ✉️
+            </div>
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                อีเมลติดต่อสาขาวิชาฯ
+              </h5>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                phisan.s@sskru.ac.th
+              </p>
+              <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
+                หัวหน้าสาขาวิชาฯ (ผศ.ดร.กนิษฐา อินธิชิต)
+              </p>
+            </div>
+          </div>
+
+          <!-- กล่อง 3: ที่ตั้ง -->
+          <div
+            class="p-5 bg-white dark:bg-slate-900 rounded-2xl flex items-start gap-4 glow-card"
+          >
+            <div
+              class="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 text-xl shadow-sm"
+            >
+              📍
+            </div>
+            <div>
+              <h5 class="font-bold text-sm text-slate-900 dark:text-white">
+                ที่ตั้งอาคารเรียน
+              </h5>
+              <p
+                class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed"
+              >
+                สาขาวิชาฯ ตั้งอยู่ที่: ชั้น 5 อาคารสำนักงานคณบดี
+                คณะศิลปศาสตร์และวิทยาศาสตร์ (LASC)
+              </p>
+              <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
+                มรภ.ศรีสะเกษ ถ.ไทยพันทา อ.เมือง จ.ศรีสะเกษ
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ฝั่งขวา แผนที่ -->
+        <div
+          class="lg:col-span-7 h-[320px] lg:h-auto min-h-[300px] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm"
+        >
+          <iframe
+            class="w-full h-full border-0"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3854.2384976722883!2d104.3093259758784!3d15.093414985452796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3116999a4e320f77%3A0xbbbf16599b5311f9!2z4LiV4Li24LiB4LiE4LiT4Liw4Lio4Li04Lil4Lib4Lio4Liy4Liq4LiV4Lij4LmM4LmA4Lil4Liw4Lin4Li04LiX4Lii4Liy4Lio4Liy4Liq4LiV4Lij4LmM!5e0!3m2!1sth!2sth!4v1700000000000!5m2!1sth!2sth"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- แถบ Social Channels & Bot ทั้ง 3 แถบ -->
+      <div class="space-y-4 max-w-6xl mx-auto">
+        <!-- 1. LINE AI Chatbot -->
+        <div
+          class="p-6 bg-[#0f172a] text-white rounded-2xl flex flex-col md:flex-row justify-between items-center gap-6 glow-card"
+        >
+          <div class="flex items-center gap-4 text-left">
+            <div
+              class="w-12 h-12 bg-amber-500 rounded-2xl flex items-center justify-center font-bold text-lg text-slate-950 shrink-0 shadow-md"
+            >
+              LINE
+            </div>
+            <div>
+              <h4
+                class="font-bold text-sm md:text-base flex items-center gap-2"
+              >
+                ติดต่อสอบถามข้อมูลด้วย LINE AI Chatbot
+                <span
+                  class="text-[10px] bg-slate-800 text-amber-400 px-2 py-0.5 rounded-full border border-amber-500/30"
+                  >🤖 ระบบตอบรับอัจฉริยะ Gemini</span
+                >
+              </h4>
+              <p class="text-xs text-slate-400 mt-1">
+                สอบถามรายละเอียดการรับสมัคร ทุนการศึกษา กติกาโครงงาน
+                วิธีการขึ้นทะเบียนนักศึกษา และแนวทางการชำระเงินของ
+                สาขาวิชาวิทยาการคอมพิวเตอร์ ได้คำตอบรวดเร็วทันใจตลอด 24 ชั่วโมง
+              </p>
+            </div>
+          </div>
+          <button
+            class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl transition whitespace-nowrap shadow-sm"
+          >
+            ➕ เพิ่มเพื่อนใน LINE
+          </button>
+        </div>
+
+        <!-- 2. Facebook Fanpage -->
+        <div
+          class="p-6 bg-[#0e1726] rounded-2xl flex flex-col md:flex-row justify-between items-center gap-6 shadow-md text-white border border-blue-500/30"
+        >
+          <div class="flex items-center gap-4 text-left">
+            <div
+              class="w-12 h-12 bg-blue-600/20 border border-blue-500/30 rounded-2xl flex items-center justify-center text-blue-500 font-bold text-xl shrink-0"
+            >
+              f
+            </div>
+            <div>
+              <h4
+                class="font-bold text-sm md:text-base flex items-center gap-2"
+              >
+                ติดตามข่าวสารผ่าน Facebook Fanpage
+                <span
+                  class="text-[10px] bg-blue-900/40 text-blue-400 px-2 py-0.5 rounded-full border border-blue-500/30"
+                  >📢 ประชาสัมพันธ์กิจกรรม</span
+                >
+              </h4>
+              <p class="text-xs text-slate-400 mt-1">
+                ติดตามข่าวสารความเคลื่อนไหว กิจกรรมสาขาฯ ผลงานนักศึกษา
+                ทุนการศึกษา การแข่งขันวิชาการ
+                และภาพบรรยากาศการเรียนการสอนอย่างเป็นกันเองของพวกเราได้ทางเฟซบุ๊กแฟนเพจ
+              </p>
+            </div>
+          </div>
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition whitespace-nowrap shadow-sm"
+          >
+            🌐 ติดตามแฟนเพจบน Facebook
+          </a>
+        </div>
+
+        <!-- 3. TikTok -->
+        <div
+          class="p-6 bg-[#0f111a] rounded-2xl flex flex-col md:flex-row justify-between items-center gap-6 shadow-md text-white border border-pink-500/30"
+        >
+          <div class="flex items-center gap-4 text-left">
+            <div
+              class="w-12 h-12 bg-pink-600/20 border border-pink-500/30 rounded-2xl flex items-center justify-center text-pink-500 font-bold text-xl shrink-0"
+            >
+              🎵
+            </div>
+            <div>
+              <h4
+                class="font-bold text-sm md:text-base flex items-center gap-2"
+              >
+                ติดตามคลิปประชาสัมพันธ์ผ่าน TikTok
+                <span
+                  class="text-[10px] bg-pink-900/40 text-pink-400 px-2 py-0.5 rounded-full border border-pink-500/30"
+                  >🔴 คลิปสั้น วิดีโอแนะนำหลักสูตร</span
+                >
+              </h4>
+              <p class="text-xs text-slate-400 mt-1">
+                ชมคลิปแนะนำบรรยากาศการเรียน กิจกรรมของนักศึกษา ผลงานโครงงาน
+                และไฮไลท์สาขาวิชาฯ ในรูปแบบวิดีโอสั้นที่เข้าใจง่าย
+                อัปเดตอยู่เสมอบนช่อง TikTok ของเรา
+              </p>
+            </div>
+          </div>
+          <a
+            href="https://tiktok.com"
+            target="_blank"
+            class="px-5 py-2.5 bg-gradient-to-r from-pink-600 to-rose-600 hover:opacity-90 text-white font-bold text-xs rounded-xl transition whitespace-nowrap shadow-sm"
+          >
+            🎵 ติดตามบน TikTok
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Footer Section -->
+    <footer
+      class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#070d19] py-12 px-6 transition-colors"
+    >
+      <div
+        class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 text-xs"
+      >
+        <!-- Col 1: Brand & Details -->
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <div
+              class="w-6 h-6 rounded-lg bg-amber-50 dark:bg-slate-800 border border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400 font-bold text-[10px]"
+            >
+              CS
+            </div>
+            <span class="font-bold text-sm text-slate-900 dark:text-white"
+              >COM-SCI SSKRU</span
+            >
+          </div>
+          <p class="text-slate-500 dark:text-slate-400 italic mb-2">
+            "ก้าวสู่อนาคตทางเทคโนโลยี สร้างสรรค์ซอฟต์แวร์แห่งนวัตกรรม"
+          </p>
+          <p class="text-slate-500 dark:text-slate-400 leading-relaxed">
+            สาขาวิชาวิทยาการคอมพิวเตอร์ คณะศิลปศาสตร์และวิทยาศาสตร์
+            มหาวิทยาลัยราชภัฏศรีสะเกษ 319 ถ.ไทยพันทา ต.โพธิ์ อ.เมือง จ.ศรีสะเกษ
+            33000
+          </p>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <h5 class="font-bold text-slate-900 dark:text-white mb-3">
+            ลิงก์ที่ใช้งานบ่อย
+          </h5>
+          <ul class="space-y-2 text-slate-500 dark:text-slate-400">
+            <li>
+              <a href="#hero" class="hover:text-amber-500 transition"
+                >หน้าแรก</a
+              >
+            </li>
+            <li>
+              <a href="#about" class="hover:text-amber-500 transition"
+                >เกี่ยวกับสาขาฯ</a
+              >
+            </li>
+            <li>
+              <a href="#courses" class="hover:text-amber-500 transition"
+                >วิชาในหลักสูตร</a
+              >
+            </li>
+            <li>
+              <a href="#study-plan" class="hover:text-amber-500 transition"
+                >แผนการเรียนรายภาค</a
+              >
+            </li>
+            <li>
+              <a href="#careers" class="hover:text-amber-500 transition"
+                >เส้นทางอาชีพ</a
+              >
+            </li>
+            <li>
+              <a href="#download" class="hover:text-amber-500 transition"
+                >ดาวน์โหลดคู่มือ</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Expertise -->
+        <div>
+          <h5 class="font-bold text-slate-900 dark:text-white mb-3">
+            ความเชี่ยวชาญพิเศษ
+          </h5>
+          <ul class="space-y-2 text-slate-500 dark:text-slate-400">
+            <li>ทฤษฎีวิทยาการคอม</li>
+            <li>การวิศวกรรมซอฟต์แวร์</li>
+            <li>ปัญญาประดิษฐ์และ Big Data</li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Contact Information -->
+        <div>
+          <h5 class="font-bold text-slate-900 dark:text-white mb-3">
+            ข้อมูลติดต่อหลักสูตร
+          </h5>
+          <ul class="space-y-2 text-slate-500 dark:text-slate-400">
+            <li>
+              📍 ชั้น 5 อาคาร LASC สวนเฉลิมพระเกียรติฯ (เกาะห้วยน้ำคำ) อ.เมือง
+              จ.ศรีสะเกษ 33000
+            </li>
+            <li>📞 043-009700 ต่อ 50528</li>
+            <li>✉️ phisan.s@sskru.ac.th</li>
+            <li>🕒 วันจันทร์ - ศุกร์: 8:30 AM - 4:30 PM</li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        class="max-w-6xl mx-auto pt-6 border-t border-slate-100 dark:border-slate-800/60 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500"
+      >
+        <div>
+          <p>หัวหน้าสาขาวิชาฯ: ผู้ช่วยศาสตราจารย์ ดร.กนิษฐา อินธิชิต</p>
+          <p class="mt-1">
+            © 2026 สาขาวิชาวิทยาการคอมพิวเตอร์ มรภ.ศรีสะเกษ. All rights
+            reserved.
+          </p>
+        </div>
+        <div>
+          <span>Developed & Redesigned by Computer Science SSKRU</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ⬆️ Scroll to Top Button (ลอยอยู่มุมขวาล่าง) -->
+    <button
+      id="scroll-top-btn"
+      onclick="scrollToTop()"
+      class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-amber-500 hover:bg-amber-600 text-slate-950 shadow-xl flex items-center justify-center text-sm font-bold opacity-0 pointer-events-none transition-all duration-300 transform translate-y-4"
+      aria-label="Scroll to top"
+    >
+      ▲
+    </button>
+
+    <!-- Modal Pop-up หน้าต่างประวัติอาจารย์ -->
+    <div
+      id="faculty-modal"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm hidden"
+    >
+      <div
+        class="relative w-full max-w-4xl bg-white dark:bg-[#0f172a] rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 max-h-[90vh] flex flex-col"
+      >
+        <!-- Modal Header -->
+        <div
+          class="bg-[#1f190e] dark:bg-[#181308] text-white p-6 sm:p-8 flex items-center justify-between relative shrink-0 border-b border-amber-500/20"
+        >
+          <div class="flex items-center gap-4">
+            <div
+              class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400/50 overflow-hidden bg-slate-800 shrink-0"
+            >
+              <img
+                id="modal-img"
+                src="https://via.placeholder.com/150"
+                alt="รูปอาจารย์"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h3
+                id="modal-name"
+                class="text-base sm:text-xl font-bold text-amber-100"
+              >
+                ชื่ออาจารย์
+              </h3>
+              <p id="modal-eng-name" class="text-xs text-slate-400 mt-0.5">
+                English Name
+              </p>
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span
+                  id="modal-role"
+                  class="px-2.5 py-0.5 text-[10px] bg-slate-800 text-slate-300 rounded-full border border-slate-700"
+                  >อาจารย์ผู้รับผิดชอบหลักสูตร</span
+                >
+                <span
+                  id="modal-expertise"
+                  class="px-2.5 py-0.5 text-[10px] bg-amber-500/20 text-amber-300 rounded-full border border-amber-500/30"
+                  >ความเชี่ยวชาญ</span
+                >
+              </div>
+            </div>
+          </div>
+          <button
+            onclick="closeFacultyModal()"
+            class="w-9 h-9 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition absolute top-6 right-6"
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 sm:p-8 overflow-y-auto space-y-8 text-xs sm:text-sm">
+          <div class="grid md:grid-cols-12 gap-8">
+            <div class="md:col-span-5 space-y-4">
+              <h4
+                class="font-bold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2"
+              >
+                <span class="text-amber-500">🎓</span> ประวัติการศึกษา
+              </h4>
+              <div
+                id="modal-education"
+                class="border-l-2 border-amber-500 pl-4 space-y-4 relative"
+              ></div>
+            </div>
+
+            <div class="md:col-span-7 space-y-6">
+              <div>
+                <h4
+                  class="font-bold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2 mb-3"
+                >
+                  <span class="text-amber-500">📖</span> รายวิชาที่สอนหลัก
+                </h4>
+                <div id="modal-courses" class="grid sm:grid-cols-2 gap-3"></div>
+              </div>
+
+              <div>
+                <h4
+                  class="font-bold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2 mb-3"
+                >
+                  <span class="text-amber-500">📑</span> ผลงานตีพิมพ์ทางวิชาการ
+                </h4>
+                <div
+                  id="modal-publication"
+                  class="p-4 bg-amber-50/40 dark:bg-slate-900/60 border border-amber-200/50 dark:border-slate-800 rounded-xl space-y-2"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div
+          class="bg-slate-50 dark:bg-slate-900/80 px-6 py-4 border-t border-slate-200 dark:border-slate-800 flex justify-end shrink-0"
+        >
+          <button
+            onclick="closeFacultyModal()"
+            class="px-5 py-2 bg-slate-600 hover:bg-slate-700 text-white font-medium text-xs rounded-xl transition"
+          >
+            ปิดหน้าต่างประวัติ
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts ทั้งหมด -->
+    <script>
+      // 1. Theme Toggle Logic
+      const toggleBtn = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-icon");
+      const html = document.documentElement;
+
+      if (
+        localStorage.getItem("theme") === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        html.classList.add("dark");
+        themeIcon.textContent = "☀️";
+      } else {
+        html.classList.remove("dark");
+        themeIcon.textContent = "🌙";
+      }
+
+      toggleBtn.addEventListener("click", () => {
+        if (html.classList.contains("dark")) {
+          html.classList.remove("dark");
+          localStorage.setItem("theme", "light");
+          themeIcon.textContent = "🌙";
+        } else {
+          html.classList.add("dark");
+          localStorage.setItem("theme", "dark");
+          themeIcon.textContent = "☀️";
+        }
+      });
+      
+      // Mobile Menu Toggle Logic
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const hamburgerIcon = document.getElementById("hamburger-icon");
+      const closeIcon = document.getElementById("close-icon");
+
+      function toggleMobileMenu() {
+        const isHidden = mobileMenu.classList.contains("hidden");
+        if (isHidden) {
+          mobileMenu.classList.remove("hidden");
+          // Trigger transition
+          setTimeout(() => {
+            mobileMenu.classList.remove("-translate-y-4", "opacity-0");
+          }, 10);
+          hamburgerIcon.classList.add("hidden");
+          closeIcon.classList.remove("hidden");
+        } else {
+          mobileMenu.classList.add("-translate-y-4", "opacity-0");
+          // Hide after transition
+          mobileMenu.addEventListener("transitionend", function handler() {
+            mobileMenu.classList.add("hidden");
+            mobileMenu.removeEventListener("transitionend", handler);
+          }, { once: true });
+          hamburgerIcon.classList.remove("hidden");
+          closeIcon.classList.add("hidden");
+        }
+      }
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", toggleMobileMenu);
+
+        // Close mobile menu on clicking any mobile menu link
+        document.querySelectorAll(".mobile-nav-link").forEach(link => {
+          link.addEventListener("click", () => {
+            if (!mobileMenu.classList.contains("hidden")) {
+              toggleMobileMenu();
+            }
+          });
+        });
+
+        // Close mobile menu on clicking outside
+        document.addEventListener("click", (e) => {
+          if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+            if (!mobileMenu.classList.contains("hidden")) {
+              toggleMobileMenu();
+            }
+          }
+        });
+      }
+
+      // ScrollSpy & Click Highlight Logic
+      const sections = document.querySelectorAll("section[id]");
+      const navLinks = document.querySelectorAll(".nav-link");
+      const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
+
+      function updateActiveState() {
+        let activeId = "";
+        
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            activeId = section.getAttribute("id");
+          }
+        });
+
+        if (window.scrollY < 100) {
+          activeId = "hero";
+        }
+        
+        if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50) {
+          activeId = "contact";
+        }
+
+        function highlight(links) {
+          links.forEach(link => {
+            const href = link.getAttribute("href");
+            const isActive = href === `#${activeId}`;
+
+            if (isActive) {
+              link.classList.remove("text-slate-600", "dark:text-slate-300", "border-transparent");
+              link.classList.add(
+                "text-amber-700",
+                "dark:text-amber-400",
+                "font-bold",
+                "bg-amber-100/60",
+                "dark:bg-amber-950/40",
+                "border-amber-200/50",
+                "dark:border-amber-800/30"
+              );
+            } else {
+              link.classList.add("text-slate-600", "dark:text-slate-300", "border-transparent");
+              link.classList.remove(
+                "text-amber-700",
+                "dark:text-amber-400",
+                "font-bold",
+                "bg-amber-100/60",
+                "dark:bg-amber-950/40",
+                "border-amber-200/50",
+                "dark:border-amber-800/30"
+              );
+            }
+          });
+        }
+
+        highlight(navLinks);
+        highlight(mobileNavLinks);
+      }
+
+      window.addEventListener("scroll", updateActiveState);
+      window.addEventListener("resize", updateActiveState);
+      // Trigger initially
+      updateActiveState();
+
+      // 2. Goal Structure Tab Switcher
+      function switchGoalTab(tabNum) {
+        for (let i = 1; i <= 4; i++) {
+          const content = document.getElementById(`goal-content-${i}`);
+          const btn = document.getElementById(`goal-tab-${i}`);
+          if (i === tabNum) {
+            content.classList.remove("hidden");
+            btn.className =
+              "px-4 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow-[0_0_12px_rgba(245,158,11,0.3)] transition";
+          } else {
+            content.classList.add("hidden");
+            btn.className =
+              "px-4 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition";
+          }
+        }
+      }
+
+      // 3. Course Curriculum Tab Switcher
+      function switchCourseTab(tabNum) {
+        for (let i = 1; i <= 3; i++) {
+          const content = document.getElementById(`course-content-${i}`);
+          const btn = document.getElementById(`course-tab-${i}`);
+          if (i === tabNum) {
+            content.classList.remove("hidden");
+            btn.className =
+              "px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow transition";
+          } else {
+            content.classList.add("hidden");
+            btn.className =
+              "px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition";
+          }
+        }
+      }
+
+      // 4. Study Plan Year Switcher
+      function switchYear(year) {
+        const year12 = document.getElementById("year-1-2");
+        const year34 = document.getElementById("year-3-4");
+        const btn1 = document.getElementById("btn-tab-1");
+        const btn2 = document.getElementById("btn-tab-2");
+
+        if (year === 1) {
+          year12.classList.remove("hidden");
+          year34.classList.add("hidden");
+          btn1.className =
+            "px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow transition";
+          btn2.className =
+            "px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition";
+        } else {
+          year12.classList.add("hidden");
+          year34.classList.remove("hidden");
+          btn2.className =
+            "px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow transition";
+          btn1.className =
+            "px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition";
+        }
+      }
+
+      // 5. 🔍 Real-time Course Search Logic
+      function filterCourses() {
+        const input = document.getElementById("course-search-input");
+        const filter = input.value.toLowerCase().trim();
+        const rows = document.querySelectorAll(".course-row");
+        const semesterCards = document.querySelectorAll(
+          ".course-semester-card",
+        );
+        const clearBtn = document.getElementById("clear-search-btn");
+        const statusText = document.getElementById("search-status");
+        const yearToggle = document.getElementById("year-toggle-container");
+        const year12 = document.getElementById("year-1-2");
+        const year34 = document.getElementById("year-3-4");
+
+        if (filter.length > 0) {
+          clearBtn.classList.remove("hidden");
+          yearToggle.classList.add("hidden");
+          year12.classList.remove("hidden");
+          year34.classList.remove("hidden");
+
+          let matchCount = 0;
+          rows.forEach((row) => {
+            const text = row.textContent.toLowerCase();
+            if (text.includes(filter)) {
+              row.style.display = "";
+              matchCount++;
+            } else {
+              row.style.display = "none";
+            }
+          });
+
+          semesterCards.forEach((card) => {
+            const visibleRows = card.querySelectorAll(
+              '.course-row:not([style*="display: none"])',
+            );
+            if (visibleRows.length > 0) {
+              card.style.display = "";
+            } else {
+              card.style.display = "none";
+            }
+          });
+
+          statusText.classList.remove("hidden");
+          statusText.textContent = `พบรายวิชาที่ตรงกับคำค้นหา ${matchCount} วิชา`;
+        } else {
+          clearSearch();
+        }
+      }
+
+      function clearSearch() {
+        const input = document.getElementById("course-search-input");
+        input.value = "";
+        document.getElementById("clear-search-btn").classList.add("hidden");
+        document.getElementById("search-status").classList.add("hidden");
+        document
+          .getElementById("year-toggle-container")
+          .classList.remove("hidden");
+
+        const rows = document.querySelectorAll(".course-row");
+        rows.forEach((row) => (row.style.display = ""));
+
+        const semesterCards = document.querySelectorAll(
+          ".course-semester-card",
+        );
+        semesterCards.forEach((card) => (card.style.display = ""));
+
+        switchYear(1);
+      }
+
+      // 6. ✦ Interactive Career Path Selector
+      const careerPaths = {
+        data: {
+          icon: "📊",
+          title: "คุณเหมาะกับสาย Data Science & AI",
+          summary:
+            "คุณน่าจะสนุกกับการวิเคราะห์ข้อมูล มองหาแพตเทิร์น และใช้คณิตศาสตร์หรือสถิติเพื่อช่วยตัดสินใจ",
+          courses: [
+            "วิทยาการข้อมูล (Data Science)",
+            "การเรียนรู้ของเครื่อง (Machine Learning)",
+            "การเขียนโปรแกรมสำหรับวิทยาการข้อมูล",
+            "ภูมิปัญญาประดิษฐ์ (Artificial Intelligence)",
+          ],
+          career:
+            "ต่อยอดสู่งาน Data Analyst, Data Scientist หรือ AI/ML Developer ได้",
+        },
+        web: {
+          icon: "🎨",
+          title: "คุณเหมาะกับสาย Software & Web Development",
+          summary:
+            "คุณน่าจะเหมาะกับการสร้างสิ่งที่ผู้ใช้มองเห็นและใช้งานจริง ตั้งแต่การออกแบบระบบไปจนถึงการพัฒนาเว็บแอป",
+          courses: [
+            "การสร้างซอฟต์แวร์ (Software Engineering)",
+            "การพัฒนาเว็บแอปพลิเคชันสมัยใหม่",
+            "การออกแบบและพัฒนาระบบฐานข้อมูล",
+            "การเขียนโปรแกรมเชิงวัตถุ (Java)",
+          ],
+          career:
+            "ต่อยอดสู่งาน Frontend, Backend, Full-Stack Developer หรือ Software Engineer ได้",
+        },
+        cyber: {
+          icon: "🛡️",
+          title: "คุณเหมาะกับสาย Cybersecurity",
+          summary:
+            "คุณน่าจะสนุกกับการคิดแบบนักสืบ ค้นหาจุดอ่อน และวางระบบเพื่อป้องกันการโจมตีทางไซเบอร์",
+          courses: [
+            "ความปลอดภัยของข้อมูล",
+            "ภูมิคุ้มกันและความเสียหายทางคอมฯ",
+            "โครงข่ายคอมพิวเตอร์",
+            "ความมั่นคงปลอดภัยสารสนเทศพื้นฐาน",
+          ],
+          career:
+            "ต่อยอดสู่งาน Cybersecurity Analyst, Security Engineer หรือ Digital Forensics ได้",
+        },
+        hardware: {
+          icon: "🤖",
+          title: "คุณเหมาะกับสาย Computer Engineering & Hardware",
+          summary:
+            "คุณน่าจะชอบเข้าใจว่าคอมพิวเตอร์ทำงานอย่างไรตั้งแต่ระดับอุปกรณ์ ระบบ ไปจนถึงการเชื่อมต่อระหว่างฮาร์ดแวร์และซอฟต์แวร์",
+          courses: [
+            "สถาปัตยกรรมคอมพิวเตอร์และระบบปฏิบัติการ",
+            "โครงข่ายคอมพิวเตอร์และการสื่อสาร",
+            "ดิจิตอลเบื้องต้น",
+            "การเขียนโปรแกรมคอมพิวเตอร์",
+          ],
+          career:
+            "ต่อยอดสู่งานด้านระบบคอมพิวเตอร์ เครือข่าย IoT หุ่นยนต์ หรือสาย Hardware/Embedded ได้",
+        },
+      };
+
+      function selectCareerPath(pathKey) {
+        const data = careerPaths[pathKey];
+        if (!data) return;
+
+        document.querySelectorAll(".path-option").forEach((btn) => {
+          btn.classList.toggle("selected", btn.dataset.path === pathKey);
+          btn.setAttribute(
+            "aria-pressed",
+            btn.dataset.path === pathKey ? "true" : "false",
+          );
+        });
+
+        const result = document.getElementById("career-path-result");
+        result.classList.remove("hidden");
+        result.classList.remove("path-result-enter");
+        void result.offsetWidth;
+        result.classList.add("path-result-enter");
+
+        result.innerHTML = `
+        <div class="rounded-2xl border border-amber-400/40 bg-gradient-to-br from-amber-50/80 via-white to-orange-50/60 dark:from-amber-950/30 dark:via-slate-900 dark:to-orange-950/20 p-5 md:p-6">
+          <div class="flex flex-col md:flex-row md:items-start gap-5">
+            <div class="w-14 h-14 shrink-0 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center text-2xl shadow-[0_0_24px_rgba(245,158,11,.35)]">${data.icon}</div>
+            <div class="flex-1">
+              <p class="text-[10px] font-bold tracking-widest text-amber-600 dark:text-amber-400 uppercase">Your recommended path</p>
+              <h4 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mt-1">${data.title}</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">${data.summary}</p>
+
+              <div class="grid md:grid-cols-2 gap-4 mt-5">
+                <div>
+                  <p class="text-[11px] font-bold text-slate-800 dark:text-slate-200 mb-2">📚 วิชาที่ควรเน้น</p>
+                  <div class="flex flex-wrap gap-2">
+                    ${data.courses.map((course) => `<span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-amber-200 dark:border-amber-800/50 text-[10px] text-slate-700 dark:text-slate-300">${course}</span>`).join("")}
+                  </div>
+                </div>
+                <div class="rounded-xl bg-white/80 dark:bg-slate-950/50 border border-slate-200/70 dark:border-slate-800 p-3">
+                  <p class="text-[11px] font-bold text-slate-800 dark:text-slate-200">🚀 แนวทางอาชีพ</p>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">${data.career}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // 7. ⬆️ Scroll to Top Logic
+      const scrollTopBtn = document.getElementById("scroll-top-btn");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 350) {
+          scrollTopBtn.classList.remove(
+            "opacity-0",
+            "pointer-events-none",
+            "translate-y-4",
+          );
+          scrollTopBtn.classList.add("opacity-100", "translate-y-0");
+        } else {
+          scrollTopBtn.classList.add(
+            "opacity-0",
+            "pointer-events-none",
+            "translate-y-4",
+          );
+          scrollTopBtn.classList.remove("opacity-100", "translate-y-0");
+        }
+      });
+
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // 7. Accordion System
+      function toggleAccordion(itemNum) {
+        const otherNum = itemNum === 1 ? 2 : 1;
+
+        const currentBody = document.getElementById(
+          `accordion-body-${itemNum}`,
+        );
+        const currentIcon = document.getElementById(
+          `accordion-icon-${itemNum}`,
+        );
+
+        const otherBody = document.getElementById(`accordion-body-${otherNum}`);
+        const otherIcon = document.getElementById(`accordion-icon-${otherNum}`);
+
+        otherBody.classList.add("hidden");
+        otherIcon.textContent = "⌄";
+
+        if (currentBody.classList.contains("hidden")) {
+          currentBody.classList.remove("hidden");
+          currentIcon.textContent = "⌃";
+        } else {
+          currentBody.classList.add("hidden");
+          currentIcon.textContent = "⌄";
+        }
+      }
+
+      // 8. Faculty Modal Database & Logic
+      const facultyData = {
+        1: {
+          name: "ผู้ช่วยศาสตราจารย์ ดร.เจษฎา โพนแก้ว",
+          engName: "Jessada Phonkaew",
+          role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
+          expertise: "วิทยาการคอมพิวเตอร์",
+          img: "https://via.placeholder.com/150",
+          education: [
+            {
+              degree: "ปร.ด. (วิทยาการคอมพิวเตอร์)",
+              uni: "มหาวิทยาลัยขอนแก่น",
+              year: "พ.ศ. 2557",
+            },
+            {
+              degree: "วท.ม. (วิทยาการคอมพิวเตอร์)",
+              uni: "มหาวิทยาลัยขอนแก่น",
+              year: "พ.ศ. 2548",
+            },
+            {
+              degree: "วศ.บ. (วิศวกรรมไฟฟ้าอิเล็กทรอนิกส์และคอมพิวเตอร์)",
+              uni: "มหาวิทยาลัยอุบลราชธานี",
+              year: "พ.ศ. 2543",
+            },
+          ],
+          courses: [
+            {
+              code: "4122706",
+              name: "สถาปัตยกรรมคอมพิวเตอร์",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4123652",
+              name: "การออกแบบและพัฒนาเกมคอมพิวเตอร์",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4124511",
+              name: "การประมวลผลภาพ",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+          ],
+          publication: {
+            title:
+              "การพัฒนาแอปพลิเคชันการเขียนโปรแกรมด้วยบล็อกภาพผ่านมือถือเพื่อการควบคุมหุ่นยนต์เดินตามเส้นขนาดเล็ก",
+            author: "เจษฎา โพนแก้ว",
+            year: "พ.ศ. 2566",
+            journal:
+              "วารสารวิชาการการจัดการเทคโนโลยี มหาวิทยาลัยราชภัฏมหาสารคาม ปีที่ 10 ฉบับที่ 1 หน้า 32-39",
+          },
+        },
+        2: {
+          name: "ดร.เจษฎา ชาตรี",
+          engName: "Jessada Chatree",
+          role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
+          expertise: "Computer Science and Engineering",
+          img: "https://via.placeholder.com/150",
+          education: [
+            {
+              degree: "Ph.D. (Computer Science and Engineering)",
+              uni: "University of North Texas (USA)",
+              year: "พ.ศ. 2014",
+            },
+            {
+              degree: "วท.ม. (การศึกษาวิทยาศาสตร์ (คอมพิวเตอร์))",
+              uni: "สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง",
+              year: "พ.ศ. 2547",
+            },
+            {
+              degree: "ค.บ. (คอมพิวเตอร์ศึกษา)",
+              uni: "มหาวิทยาลัยราชภัฏสุรินทร์",
+              year: "พ.ศ. 2538",
+            },
+          ],
+          courses: [
+            {
+              code: "4113501",
+              name: "การวิจัยดำเนินงาน",
+              credit: "หน่วยกิต: 3(3-0-6)",
+            },
+            {
+              code: "4124507",
+              name: "การทำเหมืองข้อมูล",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+          ],
+          publication: {
+            title:
+              'การพัฒนาแอปพลิเคชัน "น้องลำดวน" ไลน์แชทบอท เพื่อแนะนำสถานที่ท่องเที่ยวในจังหวัดศรีสะเกษ',
+            author: "พิศาล สุขขี, เจษฎา ชาตรี",
+            year: "พ.ศ. 2567",
+            journal:
+              "วารสารวิชาการการจัดการเทคโนโลยี มหาวิทยาลัยราชภัฏมหาสารคาม ปีที่ 10 ฉบับที่ 1 หน้า 32-39",
+          },
+        },
+        3: {
+          name: "ดร.กริชบดินทร์ ผิวหอม",
+          engName: "Krichbodin Phewhom",
+          role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
+          expertise: "วิศวกรรมคอมพิวเตอร์",
+          img: "https://via.placeholder.com/150",
+          education: [
+            {
+              degree: "ปร.ด. (วิศวกรรมคอมพิวเตอร์)",
+              uni: "มหาวิทยาลัยขอนแก่น",
+              year: "พ.ศ. 2564",
+            },
+            {
+              degree: "วท.ม. (วิทยาการคอมพิวเตอร์)",
+              uni: "มหาวิทยาลัยขอนแก่น",
+              year: "พ.ศ. 2555",
+            },
+            {
+              degree: "วท.บ. (วิทยาการคอมพิวเตอร์)",
+              uni: "มหาวิทยาลัยรามคำแหง",
+              year: "พ.ศ. 2544",
+            },
+          ],
+          courses: [
+            {
+              code: "4121206",
+              name: "การเขียนโปรแกรมคอมพิวเตอร์",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4121701",
+              name: "ดิจิตอลเบื้องต้น",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4124509",
+              name: "การสื่อสารระหว่างมนุษย์กับคอมพิวเตอร์",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4124501",
+              name: "ปัญญาประดิษฐ์",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+          ],
+          publication: {
+            title:
+              "การเปรียบเทียบประสิทธิภาพอัลกอริทึม Apriori และ FP-Growth ด้วยชุดข้อมูลร้านขายของชำ",
+            author: "กริชบดินทร์ ผิวหอม",
+            year: "พ.ศ. 2567",
+            journal:
+              "วารสารวิชาการการประยุกต์ใช้เทคโนโลยีสารสนเทศ ปีที่ 10 ฉบับที่ 1 หน้า 181-191",
+          },
+        },
+        4: {
+          name: "ผู้ช่วยศาสตราจารย์พิศาล สุขขี",
+          engName: "Phisan Sukkee",
+          role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
+          expertise: "วิทยาการคอมพิวเตอร์",
+          img: "https://via.placeholder.com/150",
+          education: [
+            {
+              degree: "วท.ม. (วิทยาการคอมพิวเตอร์)",
+              uni: "มหาวิทยาลัยศิลปากร",
+              year: "พ.ศ. 2554",
+            },
+            {
+              degree: "วท.บ. (วิทยาการคอมพิวเตอร์)",
+              uni: "มหาวิทยาลัยศิลปากร",
+              year: "พ.ศ. 2548",
+            },
+          ],
+          courses: [
+            {
+              code: "4121203",
+              name: "การเขียนโปรแกรมเชิงวัตถุ",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4122104",
+              name: "การออกแบบและพัฒนาเว็บ",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4123505",
+              name: "การเขียนโปรแกรมคอมพิวเตอร์ขั้นสูง",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4122204",
+              name: "โครงสร้างข้อมูลและอัลกอริทึม",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4124614",
+              name: "การพัฒนาแอปพลิเคชันบนมือถือ",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+          ],
+          publication: {
+            title:
+              'การพัฒนาแอปพลิเคชัน "น้องลำดวน" ไลน์แชทบอท เพื่อแนะนำสถานที่ท่องเที่ยวในจังหวัดศรีสะเกษ',
+            author: "พิศาล สุขขี, เจษฎา ชาตรี",
+            year: "พ.ศ. 2567",
+            journal:
+              "วารสารวิชาการการจัดการเทคโนโลยี มหาวิทยาลัยราชภัฏมหาสารคาม ปีที่ 10 ฉบับที่ 1 หน้า 32-39",
+          },
+        },
+        5: {
+          name: "ผู้ช่วยศาสตราจารย์ ดร.กนิษฐา อินธิชิต",
+          engName: "Kanittha Inthichit",
+          role: "หัวหน้าสาขาวิชาฯ / ผู้รับผิดชอบหลักสูตร",
+          expertise: "เทคโนโลยีสารสนเทศ",
+          img: "https://via.placeholder.com/150",
+          education: [
+            {
+              degree: "ปร.ด. (การจัดการเทคโนโลยี)",
+              uni: "มหาวิทยาลัยราชภัฏมหาสารคาม",
+              year: "พ.ศ. 2561",
+            },
+            {
+              degree: "วท.ม. (เทคโนโลยีสารสนเทศการเกษตรและพัฒนาชนบท)",
+              uni: "มหาวิทยาลัยอุบลราชธานี",
+              year: "พ.ศ. 2550",
+            },
+            {
+              degree: "วท.บ. (วิทยาการคอมพิวเตอร์)",
+              uni: "มหาวิทยาลัยราชภัฏมหาสารคาม",
+              year: "พ.ศ. 2546",
+            },
+          ],
+          courses: [
+            {
+              code: "4123202",
+              name: "ระบบฐานข้อมูล",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4122506",
+              name: "การวิเคราะห์และออกแบบระบบเชิงวัตถุ",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4123005",
+              name: "เทคโนโลยีท้องถิ่น",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+            {
+              code: "4124920",
+              name: "โครงงานทางวิทยาการคอมพิวเตอร์",
+              credit: "หน่วยกิต: 3(2-2-5)",
+            },
+          ],
+          publication: {
+            title:
+              "การพัฒนาแอปพลิเคชันช่วยตัดสินใจในการเลือกเรียนสาขาวิชาคอมพิวเตอร์ในมหาวิทยาลัยราชภัฏศรีสะเกษบนระบบปฏิบัติการแอนดรอยด์ โดยใช้เทคนิคต้นไม้ตัดสินใจ",
+            author: "กนิษฐา อินธิชิต, ทศวัฒน์ ปิยะวงษ์, สุภาพร สุขใส",
+            year: "พ.ศ. 2565",
+            journal:
+              "วารสารวิชาการการจัดการเทคโนโลยี มหาวิทยาลัยราชภัฏมหาสารคาม ปีที่ 9 ฉบับที่ 2 หน้า 97-107",
+          },
+        },
+      };
+
+      function openFacultyModal(id) {
+        const data = facultyData[id];
+        if (!data) return;
+
+        document.getElementById("modal-name").textContent = data.name;
+        document.getElementById("modal-eng-name").textContent = data.engName;
+        document.getElementById("modal-role").textContent = data.role;
+        document.getElementById("modal-expertise").textContent = data.expertise;
+        document.getElementById("modal-img").src = data.img;
+
+        let eduHtml = "";
+        data.education.forEach((item) => {
+          eduHtml += `
+          <div class="relative">
+            <div class="w-2.5 h-2.5 rounded-full bg-amber-500 absolute -left-[21px] top-1.5 border-2 border-white dark:border-slate-900"></div>
+            <p class="font-bold text-slate-900 dark:text-white">${item.degree}</p>
+            <p class="text-slate-500 dark:text-slate-400 text-[11px]">${item.uni}</p>
+            <span class="inline-block mt-1 px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded text-[10px]">${item.year}</span>
+          </div>
+        `;
+        });
+        document.getElementById("modal-education").innerHTML = eduHtml;
+
+        let courseHtml = "";
+        data.courses.forEach((item) => {
+          courseHtml += `
+          <div class="p-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl">
+            <span class="text-[10px] font-mono text-amber-600 dark:text-amber-400 font-bold">${item.code}</span>
+            <p class="font-semibold text-slate-900 dark:text-slate-100 text-xs mt-0.5">${item.name}</p>
+            <p class="text-[10px] text-slate-400 mt-1">${item.credit}</p>
+          </div>
+        `;
+        });
+        document.getElementById("modal-courses").innerHTML = courseHtml;
+
+        document.getElementById("modal-publication").innerHTML = `
+        <p class="font-medium text-slate-800 dark:text-slate-200 leading-relaxed text-xs">“${data.publication.title}”</p>
+        <p class="text-[11px] text-slate-500 dark:text-slate-400 pt-1">ผู้เขียน: ${data.publication.author} | ปีตีพิมพ์: ${data.publication.year}</p>
+        <div class="p-2 bg-amber-50/80 dark:bg-amber-950/30 text-amber-900 dark:text-amber-300 rounded-lg text-[10px] mt-2 font-medium border border-amber-200/50 dark:border-amber-900/30">
+          ${data.publication.journal}
+        </div>
+      `;
+
+        document.getElementById("faculty-modal").classList.remove("hidden");
+      }
+
+      function closeFacultyModal() {
+        document.getElementById("faculty-modal").classList.add("hidden");
+      }
+
+      document
+        .getElementById("faculty-modal")
+        .addEventListener("click", (e) => {
+          if (e.target.id === "faculty-modal") {
+            closeFacultyModal();
+          }
+        });
+
+      // 7. Four-Year Learning Journey
+      const journeyData = {
+        1: {
+          label: "YEAR 01 · FOUNDATION",
+          title: "สร้างพื้นฐานให้แน่นก่อนเลือกทาง",
+          text: "เริ่มจากพื้นฐานวิทยาการคอมพิวเตอร์ การเขียนโปรแกรม Python/Java และคณิตศาสตร์ที่ใช้ต่อยอดในวิชาเฉพาะทาง",
+          tags: ["Python", "Java", "Discrete Math"],
+        },
+        2: {
+          label: "YEAR 02 · CORE SKILLS",
+          title: "เริ่มเห็นภาพว่าคุณชอบสายไหน",
+          text: "เรียน Database, Software Engineering, Networks, Web Application, Information Security และคณิตศาสตร์สำหรับ AI",
+          tags: ["Database", "Web App", "Networks", "InfoSec"],
+        },
+        3: {
+          label: "YEAR 03 · SPECIALIZATION",
+          title: "เปลี่ยนความสนใจให้เป็นทักษะเฉพาะทาง",
+          text: "นำพื้นฐานไปต่อยอดกับวิชาและโครงงานที่สอดคล้องกับความสนใจ เช่น Software, AI/Data หรือ Cybersecurity",
+          tags: ["Specialization", "Projects", "AI / Data", "Cyber"],
+        },
+        4: {
+          label: "YEAR 04 · PROJECT & CAREER",
+          title: "เปลี่ยนทักษะให้เป็นผลงานพร้อมสู่การทำงาน",
+          text: "เน้นโครงงานวิทยาการคอมพิวเตอร์ สหกิจศึกษาหรือการฝึกประสบการณ์ และการเตรียมตัวสำหรับการทำงานจริง",
+          tags: ["Co-op / Internship", "Final Project", "Career"],
+        },
+      };
+      function showJourney(year) {
+        const d = journeyData[year];
+        if (!d) return;
+        document
+          .querySelectorAll(".journey-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById(`journey-btn-${year}`).classList.add("active");
+        const box = document.getElementById("journey-detail");
+        box.classList.remove("path-result-enter");
+        void box.offsetWidth;
+        box.classList.add("path-result-enter");
+        document.querySelector(
+          "#journey-detail > div > div:first-child span",
+        ).textContent = d.label;
+        document.getElementById("journey-title").textContent = d.title;
+        document.getElementById("journey-text").textContent = d.text;
+        document.getElementById("journey-tags").innerHTML = d.tags
+          .map((x) => `<span class="journey-tag">${x}</span>`)
+          .join("");
+      }
+    </script>
+  </body>
+</html>
