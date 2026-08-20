@@ -172,43 +172,36 @@
         }
       }
 
-      /* ===== Premium v2: softer dark mode + ambient depth ===== */
-      html {
-        background: #f8fafc;
+      /* คืนค่าพื้นหลัง Ambient Warm Glow แบบรูปที่ 2 */
+      html { 
+        background-color: #faf7f2; 
       }
+
       body {
-        background:
-          radial-gradient(
-            circle at 12% 8%,
-            rgba(245, 158, 11, 0.055),
-            transparent 28%
-          ),
-          radial-gradient(
-            circle at 88% 30%,
-            rgba(251, 146, 60, 0.045),
-            transparent 30%
-          ),
-          #f8fafc;
+        font-family: 'Prompt', sans-serif;
+        min-height: 100vh;
+        background-color: #faf7f2;
+        background-image: 
+          radial-gradient(circle at 10% 8%, rgba(245, 158, 11, 0.08) 0%, transparent 35%),
+          radial-gradient(circle at 90% 25%, rgba(251, 146, 60, 0.07) 0%, transparent 32%),
+          radial-gradient(circle at 50% 85%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+        background-attachment: fixed;
+        position: relative;
       }
+
+      /* ใส่ Grid ลายตาข่ายจางๆ เสริมมิติไม่ให้พื้นหลังดูโล่งแบน */
       body::before {
         content: "";
         position: fixed;
         inset: 0;
         pointer-events: none;
-        z-index: -2;
-        background-image:
-          linear-gradient(rgba(148, 163, 184, 0.055) 1px, transparent 1px),
-          linear-gradient(
-            90deg,
-            rgba(148, 163, 184, 0.055) 1px,
-            transparent 1px
-          );
+        z-index: -1;
+        background-image: 
+          linear-gradient(rgba(217, 119, 6, 0.04) 1px, transparent 1px), 
+          linear-gradient(90deg, rgba(217, 119, 6, 0.04) 1px, transparent 1px);
         background-size: 48px 48px;
-        mask-image: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.5),
-          transparent 70%
-        );
+        mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+        -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
       }
       body::after {
         content: "";
@@ -467,31 +460,34 @@
           scroll-margin-top: 80px;
         }
       }
-      @keyframes float-1 {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-8px); }
+      /* สร้างการเคลื่อนไหวลอยขึ้น-ลงนุ่มๆ */
+      @keyframes floatUpAndDown {
+        0% {
+          transform: translateY(0px);
+        }
+        100% {
+          transform: translateY(-10px);
+        }
       }
-      @keyframes float-2 {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-12px); }
-      }
-      @keyframes float-3 {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-6px); }
-      }
+
+      /* คลาสแอนิเมชันสำหรับกล่องลอย */
       .animate-float-1 {
-        animation: float-1 4s ease-in-out infinite;
+        animation: floatUpAndDown 3s ease-in-out infinite alternate;
       }
+
       .animate-float-2 {
-        animation: float-2 5s ease-in-out infinite;
+        animation: floatUpAndDown 3.6s ease-in-out infinite alternate;
+        animation-delay: -1.2s; /* เหลื่อมเวลาไม่ให้ขยับพร้อมกัน */
       }
+
       .animate-float-3 {
-        animation: float-3 4.5s ease-in-out infinite;
+        animation: floatUpAndDown 4.2s ease-in-out infinite alternate;
+        animation-delay: -2s;
       }
     </style>
   </head>
   <body
-    class="bg-slate-50 text-slate-800 dark:bg-[#0b0e17] dark:text-slate-100 transition-colors duration-300"
+    class="text-slate-800 dark:bg-[#0b0e17] dark:text-slate-100 transition-colors duration-300"
   >
     <!-- Navbar -->
     <nav
@@ -762,19 +758,22 @@
             </div>
 
             <div
-              class="absolute -top-3 -left-6 sm:-left-8 bg-white dark:bg-slate-800 border border-amber-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(245,158,11,0.25)] flex items-center gap-1.5 text-xs font-semibold text-amber-800 dark:text-amber-300 animate-float-1"
+              class="animate-float-1 absolute -top-3 -left-6 sm:-left-8 bg-white dark:bg-slate-800 border border-amber-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(245,158,11,0.25)] flex items-center gap-1.5 text-xs font-semibold text-amber-800 dark:text-amber-300"
+              style="animation: floatUpAndDown 3s ease-in-out infinite alternate;"
             >
               <span>&lt;/&gt;</span> Software Dev
             </div>
 
             <div
-              class="absolute top-1/3 -right-6 sm:-right-8 bg-white dark:bg-slate-800 border border-orange-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(249,115,22,0.25)] flex items-center gap-1.5 text-xs font-semibold text-orange-800 dark:text-orange-300 animate-float-2"
+              class="animate-float-2 absolute top-1/3 -right-6 sm:-right-8 bg-white dark:bg-slate-800 border border-orange-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(249,115,22,0.25)] flex items-center gap-1.5 text-xs font-semibold text-orange-800 dark:text-orange-300"
+              style="animation: floatUpAndDown 3.6s ease-in-out infinite alternate; animation-delay: -1.2s;"
             >
               <span>📊</span> Data Science
             </div>
 
             <div
-              class="absolute -bottom-3 -left-4 sm:-left-6 bg-white dark:bg-slate-800 border border-yellow-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(234,179,8,0.25)] flex items-center gap-1.5 text-xs font-semibold text-yellow-800 dark:text-yellow-300 animate-float-3"
+              class="animate-float-3 absolute -bottom-3 -left-4 sm:-left-6 bg-white dark:bg-slate-800 border border-yellow-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(234,179,8,0.25)] flex items-center gap-1.5 text-xs font-semibold text-yellow-800 dark:text-yellow-300"
+              style="animation: floatUpAndDown 4.2s ease-in-out infinite alternate; animation-delay: -2s;"
             >
               <span>🤖</span> Artificial Intelligence
             </div>
