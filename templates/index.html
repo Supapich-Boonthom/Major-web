@@ -1540,359 +1540,98 @@
   </div>
 </section>
 
-<!-- 6. Career Paths Section -->
-<section
-  id="careers"
-  class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
->
-  <div class="text-center mb-12">
-    <span
-      class="px-3 py-1 text-xs bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 rounded-full font-medium"
-      >🎯 เส้นทางสู่อนาคตวิชาชีพ</span
-    >
-    <h2
-      class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-3"
-    >
-      เรียนวิทย์คอม SSKRU จบไปทำอะไรได้บ้าง ?
-    </h2>
-    <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-2">
-      ตลาดงานระดับสากลเปิดกว้าง
-      พร้อมทักษะที่ตอบโจทย์อุตสาหกรรมเทคโนโลยีแห่งอนาคต
-    </p>
-  </div>
-
-  <!-- Interactive Career Path Selector -->
-  <div
-    class="mb-12 rounded-[2rem] border border-amber-400/30 bg-white dark:bg-slate-900/90 p-5 md:p-8 glow-card"
-  >
-    <div class="grid lg:grid-cols-[1fr_1.15fr] gap-8 items-start">
-      <div>
-        <span
-          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-[11px] font-bold border border-amber-300/50"
-        >
-          ✦ CAREER PATH SELECTOR
-        </span>
-        <h3
-          class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mt-4"
-        >
-          ลองค้นหาสายที่เหมาะกับคุณ
-        </h3>
-        <p
-          class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          เลือกสิ่งที่คุณชอบมากที่สุด
-          แล้วระบบจะจับคู่กับสายการเรียนและวิชาที่เกี่ยวข้องจากข้อมูลหลักสูตรบนเว็บไซต์
-        </p>
-        <div
-          class="mt-5 p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-800/40"
-        >
-          <p class="text-[11px] text-amber-800 dark:text-amber-300 font-medium">
-            💡 Tip
-          </p>
-          <p class="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
-            ไม่ต้องเลือกให้ถูกทุกข้อ เลือกจากสิ่งที่คุณ “อยากทำ” มากที่สุดก็พอ
-          </p>
-        </div>
-      </div>
-
-      <div class="grid sm:grid-cols-2 gap-3" id="career-path-options">
-        <button
-          type="button"
-          data-path="data"
-          onclick="selectCareerPath('data')"
-          class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
-        >
-          <span class="relative z-10 flex items-center gap-3">
-            <span
-              class="w-11 h-11 rounded-xl bg-amber-100 dark:bg-amber-950/60 flex items-center justify-center text-xl"
-              >📊</span
-            >
-            <span
-              ><span
-                class="block font-bold text-sm text-slate-900 dark:text-white"
-                >ตัวเลข / สถิติ</span
-              ><span
-                class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
-                >ชอบวิเคราะห์ข้อมูลและหาแพตเทิร์น</span
-              ></span
-            >
-          </span>
-        </button>
-        <button
-          type="button"
-          data-path="web"
-          onclick="selectCareerPath('web')"
-          class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
-        >
-          <span class="relative z-10 flex items-center gap-3">
-            <span
-              class="w-11 h-11 rounded-xl bg-orange-100 dark:bg-orange-950/60 flex items-center justify-center text-xl"
-              >🎨</span
-            >
-            <span
-              ><span
-                class="block font-bold text-sm text-slate-900 dark:text-white"
-                >ออกแบบ / สร้างเว็บ</span
-              ><span
-                class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
-                >ชอบ UI, UX และการสร้างสิ่งที่คนใช้จริง</span
-              ></span
-            >
-          </span>
-        </button>
-        <button
-          type="button"
-          data-path="cyber"
-          onclick="selectCareerPath('cyber')"
-          class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
-        >
-          <span class="relative z-10 flex items-center gap-3">
-            <span
-              class="w-11 h-11 rounded-xl bg-yellow-100 dark:bg-yellow-950/60 flex items-center justify-center text-xl"
-              >🛡️</span
-            >
-            <span
-              ><span
-                class="block font-bold text-sm text-slate-900 dark:text-white"
-                >ความปลอดภัย / เจาะระบบ</span
-              ><span
-                class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
-                >ชอบค้นหาช่องโหว่และป้องกันระบบ</span
-              ></span
-            >
-          </span>
-        </button>
-        <button
-          type="button"
-          data-path="hardware"
-          onclick="selectCareerPath('hardware')"
-          class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
-        >
-          <span class="relative z-10 flex items-center gap-3">
-            <span
-              class="w-11 h-11 rounded-xl bg-amber-100 dark:bg-amber-950/60 flex items-center justify-center text-xl"
-              >🤖</span
-            >
-            <span
-              ><span
-                class="block font-bold text-sm text-slate-900 dark:text-white"
-                >หุ่นยนต์ / ฮาร์ดแวร์</span
-              ><span
-                class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
-                >ชอบอุปกรณ์ ระบบ และการทำงานเชิงกายภาพ</span
-              ></span
-            >
-          </span>
-        </button>
-      </div>
-    </div>
-
-    <div id="career-path-result" class="hidden mt-6"></div>
-  </div>
-
-  <!-- Success Stories / Example Career Outcomes -->
-  <div class="mb-12">
-    <div
-      class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-5"
-    >
-      <div>
-        <span
-          class="text-[11px] font-bold tracking-[.18em] text-amber-600 dark:text-amber-400"
-          >SUCCESS STORIES</span
-        >
-        <h3
-          class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mt-1"
-        >
-          เส้นทางหลังเรียนจบที่ต่อยอดได้จริง
-        </h3>
-      </div>
-      <p
-        class="text-[10px] md:text-xs text-slate-400 dark:text-slate-500 max-w-md"
-      >
-        ตัวอย่างเส้นทางอาชีพเพื่อให้เห็นภาพการต่อยอดจากสายวิชา
-        ไม่ใช่ข้อมูลระบุศิษย์เก่ารายบุคคล
+<!-- Section: เส้นทางอาชีพในอนาคต (Career Paths) -->
+<section id="careers" class="py-16 border-t border-slate-200 dark:border-slate-800/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- หัวข้อหลัก -->
+    <div class="mb-10 text-center md:text-left">
+      <span class="text-xs font-bold tracking-wider text-amber-600 uppercase bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800">
+        CAREER PATHS
+      </span>
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-white mt-3">
+        เส้นทางอาชีพและตำแหน่งงานในอนาคต
+      </h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+        ตัวอย่างสายงานและทักษะที่สามารถต่อยอดได้จริงหลังสำเร็จการศึกษาจากหลักสูตร
       </p>
     </div>
-    <div class="grid md:grid-cols-3 gap-5">
-      <article class="glow-card rounded-2xl p-5 bg-white dark:bg-slate-900">
-        <div class="flex items-center justify-between">
-          <span class="text-2xl">📊</span
-          ><span
-            class="text-[10px] font-bold px-2 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300"
-            >DATA</span
-          >
-        </div>
-        <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
-          สาย Data → งานวิเคราะห์ธุรกิจ
-        </h4>
-        <p
-          class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          ต่อยอดทักษะ Data Science และ Machine Learning
-          ไปสู่งานวิเคราะห์ข้อมูลในองค์กรขนาดใหญ่ เช่น ธนาคารหรือธุรกิจดิจิทัล
-        </p>
-        <div
-          class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-amber-700 dark:text-amber-400 font-semibold"
-        >
-          เน้น: Data Science · Machine Learning
-        </div>
-      </article>
-      <article class="glow-card rounded-2xl p-5 bg-white dark:bg-slate-900">
-        <div class="flex items-center justify-between">
-          <span class="text-2xl">💻</span
-          ><span
-            class="text-[10px] font-bold px-2 py-1 rounded-full bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300"
-            >WEB</span
-          >
-        </div>
-        <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
-          สาย Web → บริษัท Tech
-        </h4>
-        <p
-          class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          ใช้พื้นฐาน Software Engineering และ Web Application
-          สร้างเว็บไซต์หรือระบบที่ใช้งานจริง ตั้งแต่ Frontend ถึง Backend
-        </p>
-        <div
-          class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-orange-700 dark:text-orange-400 font-semibold"
-        >
-          เน้น: Software Engineering · Web App
-        </div>
-      </article>
-      <article class="glow-card rounded-2xl p-5 bg-white dark:bg-slate-900">
-        <div class="flex items-center justify-between">
-          <span class="text-2xl">🛡️</span
-          ><span
-            class="text-[10px] font-bold px-2 py-1 rounded-full bg-yellow-100 dark:bg-yellow-950 text-yellow-800 dark:text-yellow-300"
-            >CYBER</span
-          >
-        </div>
-        <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
-          สาย Cyber → Security Team
-        </h4>
-        <p
-          class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          ต่อยอดด้าน Network, Information Security และ Cyber Forensics
-          ไปสู่งานดูแลและวิเคราะห์ความปลอดภัยของระบบ
-        </p>
-        <div
-          class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-yellow-700 dark:text-yellow-400 font-semibold"
-        >
-          เน้น: InfoSec · Cyber Forensics · Networks
-        </div>
-      </article>
-    </div>
-  </div>
 
-  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- อาชีพ 1 -->
-    <div
-      class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
-    >
-      <div>
-        <div
-          class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 flex items-center justify-center text-xl mb-4 shadow-sm"
-        >
-          💻
+    <!-- Grid การ์ด 4 เสาหลัก -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- Card 1: Full-Stack Developer -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 glow-card flex flex-col justify-between hover:border-amber-400/60 transition duration-300">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-2xl mb-4">
+            💻
+          </div>
+          <h3 class="font-bold text-slate-800 dark:text-white text-lg mb-2">
+            Full-Stack Developer
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+            นักพัฒนาเว็บไซต์และซอฟต์แวร์ทั้งฝั่งหน้าบ้าน (Frontend) และหลังบ้าน (Backend)
+          </p>
         </div>
-        <h4 class="font-bold text-base text-slate-900 dark:text-white">
-          Full-Stack Developer
-        </h4>
-        <p
-          class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          นักพัฒนาเว็บไซต์และซอฟต์แวร์ทั้งฝั่งหน้าบ้าน (Frontend) และหลังบ้าน
-          (Backend)
-        </p>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-amber-600 dark:text-amber-400 font-medium">
+          เน้น: Web App · Frontend · Backend
+        </div>
       </div>
-      <div
-        class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-amber-700 dark:text-amber-400 font-medium"
-      >
-        วิชาสำคัญ: Python, Java, Web App, Database
-      </div>
-    </div>
 
-    <!-- อาชีพ 2 -->
-    <div
-      class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
-    >
-      <div>
-        <div
-          class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-950/50 text-orange-700 dark:text-orange-400 flex items-center justify-center text-xl mb-4 shadow-sm"
-        >
-          📊
+      <!-- Card 2: AI & Data Scientist -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 glow-card flex flex-col justify-between hover:border-orange-400/60 transition duration-300">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-orange-500/10 flex items-center justify-center text-2xl mb-4">
+            📊
+          </div>
+          <h3 class="font-bold text-slate-800 dark:text-white text-lg mb-2">
+            AI & Data Scientist
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+            นักวิทยาศาสตร์ข้อมูลและผู้ออกแบบโมเดลปัญญาประดิษฐ์ วิเคราะห์ Big Data เพื่อธุรกิจ
+          </p>
         </div>
-        <h4 class="font-bold text-base text-slate-900 dark:text-white">
-          AI & Data Scientist
-        </h4>
-        <p
-          class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          นักวิทยาศาสตร์ข้อมูลและผู้ออกแบบโมเดลปัญญาประดิษฐ์ วิเคราะห์ Big Data
-          เพื่อธุรกิจ
-        </p>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-orange-600 dark:text-orange-400 font-medium">
+          เน้น: Machine Learning · Python · Data
+        </div>
       </div>
-      <div
-        class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-orange-700 dark:text-orange-400 font-medium"
-      >
-        วิชาสำคัญ: AI, Machine Learning, Big Data, R
-      </div>
-    </div>
 
-    <!-- อาชีพ 3 -->
-    <div
-      class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
-    >
-      <div>
-        <div
-          class="w-12 h-12 rounded-xl bg-yellow-50 dark:bg-yellow-950/50 text-yellow-700 dark:text-yellow-400 flex items-center justify-center text-xl mb-4 shadow-sm"
-        >
-          🛡️
+      <!-- Card 3: Cybersecurity Analyst -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 glow-card flex flex-col justify-between hover:border-blue-400/60 transition duration-300">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-2xl mb-4">
+            🛡️
+          </div>
+          <h3 class="font-bold text-slate-800 dark:text-white text-lg mb-2">
+            Cybersecurity Analyst
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+            ผู้เชี่ยวชาญความปลอดภัยไซเบอร์ ตรวจสอบ ป้องกัน และกู้คืนข้อมูลจากการถูกโจมตี
+          </p>
         </div>
-        <h4 class="font-bold text-base text-slate-900 dark:text-white">
-          Cybersecurity Analyst
-        </h4>
-        <p
-          class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          ผู้เชี่ยวชาญความปลอดภัยไซเบอร์ ตรวจสอบ ป้องกัน
-          และกู้คืนข้อมูลจากการถูกโจมตี
-        </p>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-blue-600 dark:text-blue-400 font-medium">
+          เน้น: InfoSec · Forensics · Networks
+        </div>
       </div>
-      <div
-        class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-yellow-700 dark:text-yellow-400 font-medium"
-      >
-        วิชาสำคัญ: InfoSec, Cyber Forensics, Networks
-      </div>
-    </div>
 
-    <!-- อาชีพ 4 -->
-    <div
-      class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
-    >
-      <div>
-        <div
-          class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 flex items-center justify-center text-xl mb-4 shadow-sm"
-        >
-          ⚙️
+      <!-- Card 4: Cloud & DevOps Engineer -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 glow-card flex flex-col justify-between hover:border-purple-400/60 transition duration-300">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-2xl mb-4">
+            ⚙️
+          </div>
+          <h3 class="font-bold text-slate-800 dark:text-white text-lg mb-2">
+            Cloud & DevOps
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+            วิศวกรผู้วางระบบโครงสร้างพื้นฐานบนคลาวด์ ดูแลเซิร์ฟเวอร์และการ Deploy อัตโนมัติ
+          </p>
         </div>
-        <h4 class="font-bold text-base text-slate-900 dark:text-white">
-          Cloud & DevOps Engineer
-        </h4>
-        <p
-          class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          วิศวกรผู้วางระบบโครงสร้างพื้นฐานบนคลาวด์ ดูแลเซิร์ฟเวอร์และการ Deploy
-          อัตโนมัติ
-        </p>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-purple-600 dark:text-purple-400 font-medium">
+          เน้น: Cloud Infrastructure · CI/CD · Linux
+        </div>
       </div>
-      <div
-        class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-amber-700 dark:text-amber-300 font-medium"
-      >
-        วิชาสำคัญ: Computer Architecture, OS, Network
-      </div>
+
     </div>
   </div>
 </section>
