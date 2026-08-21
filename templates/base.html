@@ -12,11 +12,15 @@
       <title>สาขาวิชาวิทยาการคอมพิวเตอร์</title>
 
       <!-- ใส่ Favicon โลโก้บนแท็บเบราว์เซอร์ -->
-      <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+      <link
+        rel="icon"
+        type="image/png"
+        href="{% static 'images/logo2.png' %}"
+      />
       <link
         rel="shortcut icon"
         type="image/png"
-        href="{% static 'images/logo.png' %}"
+        href="{% static 'images/logo2.png' %}"
       />
 
       <!-- สไตล์และสคริปต์อื่นๆ -->
@@ -43,8 +47,22 @@
       rel="stylesheet"
     />
     <style>
+      html {
+        font-size: 18px;
+      }
+
       body {
         font-family: "Prompt", sans-serif;
+      }
+
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
       }
 
       /* สไตล์การ์ดเรืองแสงขอบทอง-ส้มอำพัน */
@@ -536,7 +554,7 @@
             class="w-10 h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform duration-200"
           >
             <img
-              src="{% static 'images/logo.png' %}"
+              src="{% static 'images/logo2.png' %}"
               alt="CS Logo"
               class="w-full h-full object-contain p-0.5"
             />
@@ -688,8 +706,7 @@
       >
     </div>
 
-    {% block content %}
-    {% endblock %}
+    {% block content %} {% endblock %}
     <!-- 11. Footer Section -->
     <footer
       class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#070d19] py-12 px-6 transition-colors"
@@ -1119,26 +1136,33 @@
       }
 
       // 4. Study Plan Year Switcher
-      function switchYear(year) {
-        const year12 = document.getElementById("year-1-2");
-        const year34 = document.getElementById("year-3-4");
-        const btn1 = document.getElementById("btn-tab-1");
-        const btn2 = document.getElementById("btn-tab-2");
+      function switchYear(yearId) {
+        if (typeof yearId === "number") {
+          yearId = "year" + yearId;
+        }
 
-        if (year === 1) {
-          year12.classList.remove("hidden");
-          year34.classList.add("hidden");
-          btn1.className =
-            "px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow transition";
-          btn2.className =
-            "px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition";
-        } else {
-          year12.classList.add("hidden");
-          year34.classList.remove("hidden");
-          btn2.className =
-            "px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow transition";
-          btn1.className =
-            "px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition";
+        // 1. ซ่อนเนื้อหาทุกชั้นปีก่อน
+        document.querySelectorAll(".year-content").forEach((el) => {
+          el.classList.add("hidden");
+        });
+
+        // 2. แสดงเฉพาะชั้นปีที่เลือก
+        const targetEl = document.getElementById(yearId);
+        if (targetEl) {
+          targetEl.classList.remove("hidden");
+        }
+
+        // 3. รีเซ็ตสีปุ่มทั้งหมดกลับเป็นสีปกติ
+        document.querySelectorAll(".year-btn").forEach((btn) => {
+          btn.className =
+            "year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-200";
+        });
+
+        // 4. ไฮไลต์สีปุ่มที่กำลังเลือกเป็นสีส้ม/ทอง
+        const activeBtn = document.getElementById("btn-" + yearId);
+        if (activeBtn) {
+          activeBtn.className =
+            "year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-500 text-white shadow-md";
         }
       }
 
@@ -1153,14 +1177,12 @@
         const clearBtn = document.getElementById("clear-search-btn");
         const statusText = document.getElementById("search-status");
         const yearToggle = document.getElementById("year-toggle-container");
-        const year12 = document.getElementById("year-1-2");
-        const year34 = document.getElementById("year-3-4");
+        const yearContents = document.querySelectorAll(".year-content");
 
         if (filter.length > 0) {
           clearBtn.classList.remove("hidden");
           yearToggle.classList.add("hidden");
-          year12.classList.remove("hidden");
-          year34.classList.remove("hidden");
+          yearContents.forEach((el) => el.classList.remove("hidden"));
 
           let matchCount = 0;
           rows.forEach((row) => {
@@ -1208,7 +1230,7 @@
         );
         semesterCards.forEach((card) => (card.style.display = ""));
 
-        switchYear(1);
+        switchYear("year1");
       }
 
       // 6. ✦ Interactive Career Path Selector
@@ -1376,7 +1398,7 @@
           engName: "Jessada Phonkaew",
           role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
           expertise: "วิทยาการคอมพิวเตอร์",
-          img: "https://via.placeholder.com/150",
+          img: "{% static '/images/Jessada.png' %}",
           education: [
             {
               degree: "ปร.ด. (วิทยาการคอมพิวเตอร์)",
@@ -1425,7 +1447,7 @@
           engName: "Jessada Chatree",
           role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
           expertise: "Computer Science and Engineering",
-          img: "https://via.placeholder.com/150",
+          img: "{% static '/images/Chatree.png' %}",
           education: [
             {
               degree: "Ph.D. (Computer Science and Engineering)",
@@ -1469,7 +1491,7 @@
           engName: "Krichbodin Phewhom",
           role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
           expertise: "วิศวกรรมคอมพิวเตอร์",
-          img: "https://via.placeholder.com/150",
+          img: "{% static '/images/Krichbodin.png' %}",
           education: [
             {
               degree: "ปร.ด. (วิศวกรรมคอมพิวเตอร์)",
@@ -1523,7 +1545,7 @@
           engName: "Phisan Sukkee",
           role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
           expertise: "วิทยาการคอมพิวเตอร์",
-          img: "https://via.placeholder.com/150",
+          img: "{% static '/images/Phisan.png' %}",
           education: [
             {
               degree: "วท.ม. (วิทยาการคอมพิวเตอร์)",
@@ -1577,7 +1599,7 @@
           engName: "Kanittha Inthichit",
           role: "หัวหน้าสาขาวิชาฯ / ผู้รับผิดชอบหลักสูตร",
           expertise: "เทคโนโลยีสารสนเทศ",
-          img: "https://via.placeholder.com/150",
+          img: "{% static '/images/Kanittha.png' %}",
           education: [
             {
               degree: "ปร.ด. (การจัดการเทคโนโลยี)",

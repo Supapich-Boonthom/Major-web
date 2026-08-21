@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
 <!-- 1. Hero Section -->
 <section id="hero" class="max-w-7xl mx-auto px-6 pt-12 pb-20">
@@ -97,17 +97,11 @@
         class="relative w-72 sm:w-80 h-72 sm:h-80 bg-white dark:bg-slate-900 rounded-3xl glow-card flex items-center justify-center p-6 transition-transform hover:scale-[1.02] duration-300"
       >
         <!-- TODO: เพื่อนนำภาพโลโก้มาใส่ตรงนี้แทนกรอบ dashed -->
-        <div
-          class="w-52 h-52 sm:w-60 sm:h-60 border-2 border-dashed border-amber-400/60 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center text-center p-4 bg-amber-50/40 dark:bg-slate-950/40"
-        >
-          <span class="text-3xl mb-2">🖼️</span>
-          <span class="text-xs font-semibold text-amber-800 dark:text-amber-300"
-            >[ ใส่รูปตราสัญลักษณ์สาขาที่นี่ ]</span
-          >
-          <span class="text-[10px] text-slate-400 dark:text-slate-500 mt-1"
-            >ขนาดแนะนำ ~250x250 px</span
-          >
-        </div>
+        <img
+          src="{% static 'images/logo2.png' %}"
+          alt="ตราสัญลักษณ์สาขาวิชา"
+          class="w-52 h-52 sm:w-60 sm:h-60 object-contain drop-shadow-md rounded-2xl"
+        />
 
         <div
           class="animate-float-1 absolute -top-3 -left-6 sm:-left-8 bg-white dark:bg-slate-800 border border-amber-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(245,158,11,0.25)] flex items-center gap-1.5 text-xs font-semibold text-amber-800 dark:text-amber-300"
@@ -948,25 +942,42 @@
     ></p>
   </div>
 
-  <div id="year-toggle-container" class="flex justify-center gap-3 mb-8">
+  <div
+    id="year-toggle-container"
+    class="flex justify-center gap-2 sm:gap-3 my-6"
+  >
     <button
-      id="btn-tab-1"
-      onclick="switchYear(1)"
-      class="px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow-[0_0_12px_rgba(245,158,11,0.3)] transition"
+      onclick="switchYear('year1')"
+      id="btn-year1"
+      class="year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-500 text-white shadow-md"
     >
-      ปีที่ 1 และ ปีที่ 2
+      ชั้นปีที่ 1
     </button>
     <button
-      id="btn-tab-2"
-      onclick="switchYear(2)"
-      class="px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition"
+      onclick="switchYear('year2')"
+      id="btn-year2"
+      class="year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-200"
     >
-      ปีที่ 3 และ ปีที่ 4
+      ชั้นปีที่ 2
+    </button>
+    <button
+      onclick="switchYear('year3')"
+      id="btn-year3"
+      class="year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-200"
+    >
+      ชั้นปีที่ 3
+    </button>
+    <button
+      onclick="switchYear('year4')"
+      id="btn-year4"
+      class="year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-200"
+    >
+      ชั้นปีที่ 4
     </button>
   </div>
 
-  <!-- Year 1 & 2 Container -->
-  <div id="year-1-2" class="grid md:grid-cols-2 gap-6">
+  <!-- กล่องชั้นปีที่ 1 (แสดงเริ่มต้น) -->
+  <div id="year1" class="year-content grid grid-cols-1 md:grid-cols-2 gap-6">
     <div
       class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
     >
@@ -1052,7 +1063,13 @@
         </tbody>
       </table>
     </div>
+  </div>
 
+  <!-- กล่องชั้นปีที่ 2 (ซ่อนไว้ก่อน) -->
+  <div
+    id="year2"
+    class="year-content hidden grid grid-cols-1 md:grid-cols-2 gap-6"
+  >
     <div
       class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
     >
@@ -1140,8 +1157,11 @@
     </div>
   </div>
 
-  <!-- Year 3 & 4 Container -->
-  <div id="year-3-4" class="hidden grid md:grid-cols-2 gap-6">
+  <!-- กล่องชั้นปีที่ 3 (ซ่อนไว้ก่อน) -->
+  <div
+    id="year3"
+    class="year-content hidden grid grid-cols-1 md:grid-cols-2 gap-6"
+  >
     <div
       class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
     >
@@ -1227,7 +1247,13 @@
         </tbody>
       </table>
     </div>
+  </div>
 
+  <!-- กล่องชั้นปีที่ 4 (ซ่อนไว้ก่อน) -->
+  <div
+    id="year4"
+    class="year-content hidden grid grid-cols-1 md:grid-cols-2 gap-6"
+  >
     <div
       class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
     >
@@ -1414,12 +1440,12 @@
       มองภาพรวมการเติบโตของทักษะตลอด 4 ปีได้ในไม่กี่คลิก
     </p>
   </div>
-  <div class="grid md:grid-cols-4 gap-4">
+  <div class="flex overflow-x-auto no-scrollbar md:grid md:grid-cols-4 gap-3 md:gap-4 mb-6 pb-2">
     <button
       type="button"
       onclick="showJourney(1)"
       id="journey-btn-1"
-      class="journey-btn active rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-amber-300/50 dark:border-amber-700/40 glow-card"
+      class="journey-btn active rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-amber-300/50 dark:border-amber-700/40 glow-card min-w-[240px] md:min-w-0 shrink-0"
     >
       <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400"
         >YEAR 01</span
@@ -1435,7 +1461,7 @@
       type="button"
       onclick="showJourney(2)"
       id="journey-btn-2"
-      class="journey-btn rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-slate-200 dark:border-slate-800 glow-card"
+      class="journey-btn rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-slate-200 dark:border-slate-800 glow-card min-w-[240px] md:min-w-0 shrink-0"
     >
       <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400"
         >YEAR 02</span
@@ -1451,7 +1477,7 @@
       type="button"
       onclick="showJourney(3)"
       id="journey-btn-3"
-      class="journey-btn rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-slate-200 dark:border-slate-800 glow-card"
+      class="journey-btn rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-slate-200 dark:border-slate-800 glow-card min-w-[240px] md:min-w-0 shrink-0"
     >
       <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400"
         >YEAR 03</span
@@ -1467,7 +1493,7 @@
       type="button"
       onclick="showJourney(4)"
       id="journey-btn-4"
-      class="journey-btn rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-slate-200 dark:border-slate-800 glow-card"
+      class="journey-btn rounded-2xl p-5 text-left bg-white dark:bg-[#141d27] border border-slate-200 dark:border-slate-800 glow-card min-w-[240px] md:min-w-0 shrink-0"
     >
       <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400"
         >YEAR 04</span
@@ -1514,359 +1540,158 @@
   </div>
 </section>
 
-<!-- 6. Career Paths Section -->
-<section
-  id="careers"
-  class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-800/80"
->
-  <div class="text-center mb-12">
-    <span
-      class="px-3 py-1 text-xs bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 rounded-full font-medium"
-      >🎯 เส้นทางสู่อนาคตวิชาชีพ</span
-    >
-    <h2
-      class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-3"
-    >
-      เรียนวิทย์คอม SSKRU จบไปทำอะไรได้บ้าง ?
-    </h2>
-    <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm mt-2">
-      ตลาดงานระดับสากลเปิดกว้าง
-      พร้อมทักษะที่ตอบโจทย์อุตสาหกรรมเทคโนโลยีแห่งอนาคต
-    </p>
-  </div>
-
-  <!-- Interactive Career Path Selector -->
-  <div
-    class="mb-12 rounded-[2rem] border border-amber-400/30 bg-white dark:bg-slate-900/90 p-5 md:p-8 glow-card"
-  >
-    <div class="grid lg:grid-cols-[1fr_1.15fr] gap-8 items-start">
-      <div>
-        <span
-          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-[11px] font-bold border border-amber-300/50"
-        >
-          ✦ CAREER PATH SELECTOR
-        </span>
-        <h3
-          class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mt-4"
-        >
-          ลองค้นหาสายที่เหมาะกับคุณ
-        </h3>
-        <p
-          class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          เลือกสิ่งที่คุณชอบมากที่สุด
-          แล้วระบบจะจับคู่กับสายการเรียนและวิชาที่เกี่ยวข้องจากข้อมูลหลักสูตรบนเว็บไซต์
-        </p>
-        <div
-          class="mt-5 p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-800/40"
-        >
-          <p class="text-[11px] text-amber-800 dark:text-amber-300 font-medium">
-            💡 Tip
-          </p>
-          <p class="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
-            ไม่ต้องเลือกให้ถูกทุกข้อ เลือกจากสิ่งที่คุณ “อยากทำ” มากที่สุดก็พอ
-          </p>
-        </div>
-      </div>
-
-      <div class="grid sm:grid-cols-2 gap-3" id="career-path-options">
-        <button
-          type="button"
-          data-path="data"
-          onclick="selectCareerPath('data')"
-          class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
-        >
-          <span class="relative z-10 flex items-center gap-3">
-            <span
-              class="w-11 h-11 rounded-xl bg-amber-100 dark:bg-amber-950/60 flex items-center justify-center text-xl"
-              >📊</span
-            >
-            <span
-              ><span
-                class="block font-bold text-sm text-slate-900 dark:text-white"
-                >ตัวเลข / สถิติ</span
-              ><span
-                class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
-                >ชอบวิเคราะห์ข้อมูลและหาแพตเทิร์น</span
-              ></span
-            >
-          </span>
-        </button>
-        <button
-          type="button"
-          data-path="web"
-          onclick="selectCareerPath('web')"
-          class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
-        >
-          <span class="relative z-10 flex items-center gap-3">
-            <span
-              class="w-11 h-11 rounded-xl bg-orange-100 dark:bg-orange-950/60 flex items-center justify-center text-xl"
-              >🎨</span
-            >
-            <span
-              ><span
-                class="block font-bold text-sm text-slate-900 dark:text-white"
-                >ออกแบบ / สร้างเว็บ</span
-              ><span
-                class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
-                >ชอบ UI, UX และการสร้างสิ่งที่คนใช้จริง</span
-              ></span
-            >
-          </span>
-        </button>
-        <button
-          type="button"
-          data-path="cyber"
-          onclick="selectCareerPath('cyber')"
-          class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
-        >
-          <span class="relative z-10 flex items-center gap-3">
-            <span
-              class="w-11 h-11 rounded-xl bg-yellow-100 dark:bg-yellow-950/60 flex items-center justify-center text-xl"
-              >🛡️</span
-            >
-            <span
-              ><span
-                class="block font-bold text-sm text-slate-900 dark:text-white"
-                >ความปลอดภัย / เจาะระบบ</span
-              ><span
-                class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
-                >ชอบค้นหาช่องโหว่และป้องกันระบบ</span
-              ></span
-            >
-          </span>
-        </button>
-        <button
-          type="button"
-          data-path="hardware"
-          onclick="selectCareerPath('hardware')"
-          class="path-option glow-card text-left p-4 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
-        >
-          <span class="relative z-10 flex items-center gap-3">
-            <span
-              class="w-11 h-11 rounded-xl bg-amber-100 dark:bg-amber-950/60 flex items-center justify-center text-xl"
-              >🤖</span
-            >
-            <span
-              ><span
-                class="block font-bold text-sm text-slate-900 dark:text-white"
-                >หุ่นยนต์ / ฮาร์ดแวร์</span
-              ><span
-                class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"
-                >ชอบอุปกรณ์ ระบบ และการทำงานเชิงกายภาพ</span
-              ></span
-            >
-          </span>
-        </button>
-      </div>
-    </div>
-
-    <div id="career-path-result" class="hidden mt-6"></div>
-  </div>
-
-  <!-- Success Stories / Example Career Outcomes -->
-  <div class="mb-12">
-    <div
-      class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-5"
-    >
-      <div>
-        <span
-          class="text-[11px] font-bold tracking-[.18em] text-amber-600 dark:text-amber-400"
-          >SUCCESS STORIES</span
-        >
-        <h3
-          class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mt-1"
-        >
-          เส้นทางหลังเรียนจบที่ต่อยอดได้จริง
-        </h3>
-      </div>
-      <p
-        class="text-[10px] md:text-xs text-slate-400 dark:text-slate-500 max-w-md"
-      >
-        ตัวอย่างเส้นทางอาชีพเพื่อให้เห็นภาพการต่อยอดจากสายวิชา
-        ไม่ใช่ข้อมูลระบุศิษย์เก่ารายบุคคล
+<!-- Section: เส้นทางอาชีพในอนาคต (Career Paths) -->
+<section id="careers" class="py-16 border-t border-slate-200 dark:border-slate-800/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- หัวข้อหลัก -->
+    <div class="mb-10 text-center md:text-left">
+      <span class="text-xs font-bold tracking-wider text-amber-600 uppercase bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800">
+        CAREER PATHS
+      </span>
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-white mt-3">
+        เส้นทางอาชีพและตำแหน่งงานในอนาคต
+      </h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+        ตัวอย่างสายงานและทักษะที่สามารถต่อยอดได้จริงหลังสำเร็จการศึกษาจากหลักสูตร
       </p>
     </div>
-    <div class="grid md:grid-cols-3 gap-5">
-      <article class="glow-card rounded-2xl p-5 bg-white dark:bg-slate-900">
-        <div class="flex items-center justify-between">
-          <span class="text-2xl">📊</span
-          ><span
-            class="text-[10px] font-bold px-2 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300"
-            >DATA</span
-          >
+
+    <!-- Grid การ์ด 4 เสาหลัก -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- Card 1: Full-Stack Developer -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 glow-card flex flex-col justify-between hover:border-amber-400/60 transition duration-300">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-2xl mb-4">
+            💻
+          </div>
+          <h3 class="font-bold text-slate-800 dark:text-white text-lg mb-2">
+            Full-Stack Developer
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+            นักพัฒนาเว็บไซต์และซอฟต์แวร์ทั้งฝั่งหน้าบ้าน (Frontend) และหลังบ้าน (Backend)
+          </p>
         </div>
-        <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
-          สาย Data → งานวิเคราะห์ธุรกิจ
-        </h4>
-        <p
-          class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          ต่อยอดทักษะ Data Science และ Machine Learning
-          ไปสู่งานวิเคราะห์ข้อมูลในองค์กรขนาดใหญ่ เช่น ธนาคารหรือธุรกิจดิจิทัล
-        </p>
-        <div
-          class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-amber-700 dark:text-amber-400 font-semibold"
-        >
-          เน้น: Data Science · Machine Learning
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-amber-600 dark:text-amber-400 font-medium">
+          เน้น: Web App · Frontend · Backend
         </div>
-      </article>
-      <article class="glow-card rounded-2xl p-5 bg-white dark:bg-slate-900">
-        <div class="flex items-center justify-between">
-          <span class="text-2xl">💻</span
-          ><span
-            class="text-[10px] font-bold px-2 py-1 rounded-full bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300"
-            >WEB</span
-          >
+      </div>
+
+      <!-- Card 2: AI & Data Scientist -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 glow-card flex flex-col justify-between hover:border-orange-400/60 transition duration-300">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-orange-500/10 flex items-center justify-center text-2xl mb-4">
+            📊
+          </div>
+          <h3 class="font-bold text-slate-800 dark:text-white text-lg mb-2">
+            AI & Data Scientist
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+            นักวิทยาศาสตร์ข้อมูลและผู้ออกแบบโมเดลปัญญาประดิษฐ์ วิเคราะห์ Big Data เพื่อธุรกิจ
+          </p>
         </div>
-        <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
-          สาย Web → บริษัท Tech
-        </h4>
-        <p
-          class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          ใช้พื้นฐาน Software Engineering และ Web Application
-          สร้างเว็บไซต์หรือระบบที่ใช้งานจริง ตั้งแต่ Frontend ถึง Backend
-        </p>
-        <div
-          class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-orange-700 dark:text-orange-400 font-semibold"
-        >
-          เน้น: Software Engineering · Web App
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-orange-600 dark:text-orange-400 font-medium">
+          เน้น: Machine Learning · Python · Data
         </div>
-      </article>
-      <article class="glow-card rounded-2xl p-5 bg-white dark:bg-slate-900">
-        <div class="flex items-center justify-between">
-          <span class="text-2xl">🛡️</span
-          ><span
-            class="text-[10px] font-bold px-2 py-1 rounded-full bg-yellow-100 dark:bg-yellow-950 text-yellow-800 dark:text-yellow-300"
-            >CYBER</span
-          >
+      </div>
+
+      <!-- Card 3: Cybersecurity Analyst -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 glow-card flex flex-col justify-between hover:border-blue-400/60 transition duration-300">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-2xl mb-4">
+            🛡️
+          </div>
+          <h3 class="font-bold text-slate-800 dark:text-white text-lg mb-2">
+            Cybersecurity Analyst
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+            ผู้เชี่ยวชาญความปลอดภัยไซเบอร์ ตรวจสอบ ป้องกัน และกู้คืนข้อมูลจากการถูกโจมตี
+          </p>
         </div>
-        <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-4">
-          สาย Cyber → Security Team
-        </h4>
-        <p
-          class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          ต่อยอดด้าน Network, Information Security และ Cyber Forensics
-          ไปสู่งานดูแลและวิเคราะห์ความปลอดภัยของระบบ
-        </p>
-        <div
-          class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-yellow-700 dark:text-yellow-400 font-semibold"
-        >
-          เน้น: InfoSec · Cyber Forensics · Networks
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-blue-600 dark:text-blue-400 font-medium">
+          เน้น: InfoSec · Forensics · Networks
         </div>
-      </article>
-    </div>
+      </div>
+
+      <!-- Card 4: Cloud & DevOps Engineer -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 glow-card flex flex-col justify-between hover:border-purple-400/60 transition duration-300">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-2xl mb-4">
+            ⚙️
+          </div>
+          <h3 class="font-bold text-slate-800 dark:text-white text-lg mb-2">
+            Cloud & DevOps
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+            วิศวกรผู้วางระบบโครงสร้างพื้นฐานบนคลาวด์ ดูแลเซิร์ฟเวอร์และการ Deploy อัตโนมัติ
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-purple-600 dark:text-purple-400 font-medium">
+          เน้น: Cloud Infrastructure · CI/CD · Linux
+        </div>
+      </div>
+
   </div>
+</section>
 
-  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- อาชีพ 1 -->
-    <div
-      class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
-    >
+<!-- Section: ค่าธรรมเนียมการศึกษา & ทุน -->
+<section
+  id="tuition"
+  class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-t border-slate-200 dark:border-slate-800/80"
+>
+  <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-transparent border border-amber-400/30 glow-card">
+    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+      
+      <!-- ฝั่งซ้าย: ข้อมูลและสิทธิประโยชน์ -->
       <div>
-        <div
-          class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 flex items-center justify-center text-xl mb-4 shadow-sm"
-        >
-          💻
-        </div>
-        <h4 class="font-bold text-base text-slate-900 dark:text-white">
-          Full-Stack Developer
-        </h4>
-        <p
-          class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          นักพัฒนาเว็บไซต์และซอฟต์แวร์ทั้งฝั่งหน้าบ้าน (Frontend) และหลังบ้าน
-          (Backend)
+        <span class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider bg-amber-100 dark:bg-amber-950/60 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800">
+          TUITION & FINANCIAL AID
+        </span>
+        <h3 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white mt-2">
+          ค่าธรรมเนียมการศึกษาที่เข้าถึงได้
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
+          โอกาสทางการศึกษาที่เท่าเทียม พร้อมระบบสนับสนุนทุนและการกู้ยืมตลอดหลักสูตร
         </p>
+        
+        <!-- แท็กสิทธิประโยชน์ กยศ. -->
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="text-xs font-medium bg-white dark:bg-slate-800 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 px-3 py-1.5 rounded-xl shadow-sm flex items-center gap-1.5">
+            <span>✅</span> กู้ยืมกองทุน กยศ. / กรอ. ได้
+          </span>
+          <span class="text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-xl shadow-sm flex items-center gap-1.5">
+            <span>🎓</span> มีทุนการศึกษาประจำปี
+          </span>
+        </div>
       </div>
-      <div
-        class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-amber-700 dark:text-amber-400 font-medium"
-      >
-        วิชาสำคัญ: Python, Java, Web App, Database
-      </div>
-    </div>
 
-    <!-- อาชีพ 2 -->
-    <div
-      class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
-    >
-      <div>
-        <div
-          class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-950/50 text-orange-700 dark:text-orange-400 flex items-center justify-center text-xl mb-4 shadow-sm"
-        >
-          📊
+      <!-- ฝั่งขวา: กล่องแสดงตัวเลขค่าใช้จ่าย -->
+      <div class="grid grid-cols-2 gap-3 w-full lg:w-auto shrink-0">
+        
+        <!-- กล่องแรกเข้า -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm">
+          <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">ภาคเรียนแรกเข้า</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-slate-800 dark:text-white my-1">
+            12,280 <span class="text-xs font-normal text-slate-500">บาท</span>
+          </div>
+          <div class="text-[10px] text-slate-400">รวมค่าธรรมเนียมแรกเข้า</div>
         </div>
-        <h4 class="font-bold text-base text-slate-900 dark:text-white">
-          AI & Data Scientist
-        </h4>
-        <p
-          class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          นักวิทยาศาสตร์ข้อมูลและผู้ออกแบบโมเดลปัญญาประดิษฐ์ วิเคราะห์ Big Data
-          เพื่อธุรกิจ
-        </p>
-      </div>
-      <div
-        class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-orange-700 dark:text-orange-400 font-medium"
-      >
-        วิชาสำคัญ: AI, Machine Learning, Big Data, R
-      </div>
-    </div>
 
-    <!-- อาชีพ 3 -->
-    <div
-      class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
-    >
-      <div>
-        <div
-          class="w-12 h-12 rounded-xl bg-yellow-50 dark:bg-yellow-950/50 text-yellow-700 dark:text-yellow-400 flex items-center justify-center text-xl mb-4 shadow-sm"
-        >
-          🛡️
+        <!-- กล่องค่าเทอมปกติ -->
+        <div class="bg-white dark:bg-slate-900 border border-amber-400/50 rounded-2xl p-4 text-center shadow-sm relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-amber-500 text-white text-[9px] px-2 py-0.5 rounded-bl-lg font-bold">
+            เทอมถัดไป
+          </div>
+          <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">ค่าเทอมปกติ</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-amber-600 dark:text-amber-400 my-1">
+            9,000 <span class="text-xs font-normal text-slate-500">บาท/เทอม</span>
+          </div>
+          <div class="text-[10px] text-slate-400">เหมาจ่ายตามหลักสูตร</div>
         </div>
-        <h4 class="font-bold text-base text-slate-900 dark:text-white">
-          Cybersecurity Analyst
-        </h4>
-        <p
-          class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          ผู้เชี่ยวชาญความปลอดภัยไซเบอร์ ตรวจสอบ ป้องกัน
-          และกู้คืนข้อมูลจากการถูกโจมตี
-        </p>
-      </div>
-      <div
-        class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-yellow-700 dark:text-yellow-400 font-medium"
-      >
-        วิชาสำคัญ: InfoSec, Cyber Forensics, Networks
-      </div>
-    </div>
 
-    <!-- อาชีพ 4 -->
-    <div
-      class="p-6 bg-white dark:bg-slate-900 rounded-2xl glow-card flex flex-col justify-between"
-    >
-      <div>
-        <div
-          class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 flex items-center justify-center text-xl mb-4 shadow-sm"
-        >
-          ⚙️
-        </div>
-        <h4 class="font-bold text-base text-slate-900 dark:text-white">
-          Cloud & DevOps Engineer
-        </h4>
-        <p
-          class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed"
-        >
-          วิศวกรผู้วางระบบโครงสร้างพื้นฐานบนคลาวด์ ดูแลเซิร์ฟเวอร์และการ Deploy
-          อัตโนมัติ
-        </p>
       </div>
-      <div
-        class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-amber-700 dark:text-amber-300 font-medium"
-      >
-        วิชาสำคัญ: Computer Architecture, OS, Network
-      </div>
+
     </div>
   </div>
 </section>
@@ -1902,7 +1727,7 @@
         class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
       >
         <img
-          src="https://via.placeholder.com/150"
+          src="{% static '/images/Jessada.png' %}"
           alt="ผศ.ดร.เจษฎา โพนแก้ว"
           class="w-full h-full object-cover"
         />
@@ -1945,7 +1770,7 @@
         class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
       >
         <img
-          src="https://via.placeholder.com/150"
+          src="{% static '/images/Chatree.png' %}"
           alt="ดร.เจษฎา ชาตรี"
           class="w-full h-full object-cover"
         />
@@ -1988,7 +1813,7 @@
         class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
       >
         <img
-          src="https://via.placeholder.com/150"
+          src="{% static '/images/Krichbodin.png' %}"
           alt="ดร.กริชบดินทร์ ผิวหอม"
           class="w-full h-full object-cover"
         />
@@ -2034,7 +1859,7 @@
         class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
       >
         <img
-          src="https://via.placeholder.com/150"
+          src="{% static '/images/Phisan.png' %}"
           alt="ผศ.พิศาล สุขขี"
           class="w-full h-full object-cover"
         />
@@ -2078,7 +1903,7 @@
       >
         <!-- TODO: เพื่อนเปลี่ยน src รูปภาพ -->
         <img
-          src="https://via.placeholder.com/150"
+          src="{% static '/images/Kanittha.png' %}"
           alt="ผศ.ดร.กนิษฐา อินธิชิต"
           class="w-full h-full object-cover"
         />
@@ -2097,7 +1922,7 @@
           อาจารย์ผู้รับผิดชอบหลักสูตร
         </span>
         <span
-          class="px-4 py-1 text-[11px] bg-emerald-700 text-white rounded-full font-medium shadow-sm"
+          class="px-4 py-1 text-[11px] bg-orange-600 text-white rounded-full font-medium shadow-sm"
         >
           หัวหน้าสาขาวิชาฯ
         </span>
@@ -2169,11 +1994,14 @@
           รายละเอียดวิชาเรียน โครงสร้างจำนวนหน่วยกิตทั้งหมด และแผนการเรียนตลอด 4
           ปีฉบับสมบูรณ์ (หลักสูตรปรับปรุง พ.ศ. 2568)
         </p>
-        <button
-          class="mt-4 px-5 py-2 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl transition flex items-center gap-2 shadow-sm"
+        <a
+          href="https://drive.google.com/file/d/1VjG1c3__p96kEBRSGuFNJtZXXD9A3SjB/view"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-4 inline-flex items-center gap-2 px-5 py-2 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl transition shadow-sm"
         >
           📥 ดาวน์โหลดเอกสาร PDF
-        </button>
+        </a>
       </div>
     </div>
 
@@ -2206,11 +2034,14 @@
           คู่มือระบุการเตรียมเอกสารสำหรับการรับนักศึกษาใหม่ ทุกรอบ TCAS
           ของมหาวิทยาลัยราชภัฏศรีสะเกษ
         </p>
-        <button
-          class="mt-4 px-5 py-2 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl transition flex items-center gap-2 shadow-sm"
+        <a
+          href="https://drive.google.com/file/d/1VjG1c3__p96kEBRSGuFNJtZXXD9A3SjB/view"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-4 inline-flex items-center gap-2 px-5 py-2 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl transition shadow-sm"
         >
           📥 ดาวน์โหลดเอกสาร PDF
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -2284,7 +2115,7 @@
       <div class="flex gap-2 mt-6">
         <a
           class="px-3.5 py-2 text-xs bg-amber-400 text-slate-950 font-bold rounded-xl hover:bg-amber-500 transition"
-          href = "https://onedrive.live.com/?qt=allmyphotos&photosData=%2Fshare%2F60D253DC06C08D13%2116266%3Fithint%3Dalbum%26migratedtospo%3Dtrue&cid=60D253DC06C08D13&id=60D253DC06C08D13%2116266&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2EvYy82MGQyNTNkYzA2YzA4ZDEzL0lnQVRqY0FHM0ZQU0lJQmdpajhBQUFBQUFha1NOaWRWcW92NDB4RkxzYmEyb3hn&v=photos"
+          href="https://onedrive.live.com/?qt=allmyphotos&photosData=%2Fshare%2F60D253DC06C08D13%2116266%3Fithint%3Dalbum%26migratedtospo%3Dtrue&cid=60D253DC06C08D13&id=60D253DC06C08D13%2116266&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2EvYy82MGQyNTNkYzA2YzA4ZDEzL0lnQVRqY0FHM0ZQU0lJQmdpajhBQUFBQUFha1NOaWRWcW92NDB4RkxzYmEyb3hn&v=photos"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -2292,7 +2123,7 @@
         </a>
         <a
           class="px-3.5 py-2 text-xs border border-amber-400/40 hover:bg-amber-900/40 rounded-xl transition"
-          href = "https://www.ssk-robotics.com/"
+          href="https://www.ssk-robotics.com/"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -2334,7 +2165,7 @@
       <div>
         <div class="flex items-center justify-between mb-4">
           <div
-            class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-500/30 flex items-center justify-center text-[#06C755] font-bold text-sm shrink-0 shadow-sm"
+            class="w-12 h-12 rounded-2xl bg-[#06C755] dark:bg-emerald-950/50 border border-emerald-500/30 flex items-center justify-center text-white font-bold text-sm shrink-0 shadow-sm"
           >
             LINE
           </div>
@@ -2372,9 +2203,13 @@
       <div>
         <div class="flex items-center justify-between mb-4">
           <div
-            class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/50 border border-blue-500/30 flex items-center justify-center text-[#1877F2] font-bold text-xl shrink-0 shadow-sm"
+            class="w-12 h-12 rounded-2xl bg-[#1877F2] flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20"
           >
-            f
+            <svg class="w-7 h-7 fill-white" viewBox="0 0 24 24">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+              />
+            </svg>
           </div>
           <span
             class="text-[10px] font-bold bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-300 px-2.5 py-1 rounded-full border border-blue-300 dark:border-blue-800"
@@ -2410,9 +2245,13 @@
       <div>
         <div class="flex items-center justify-between mb-4">
           <div
-            class="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-500/30 flex items-center justify-center text-[#FE2C55] font-bold text-xl shrink-0 shadow-sm"
+            class="w-12 h-12 rounded-2xl bg-black flex items-center justify-center shrink-0 shadow-md shadow-slate-900/20"
           >
-            🎵
+            <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24">
+              <path
+                d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 2.89 3.5 2.77 1.81-.02 3.32-1.43 3.48-3.23.08-2.48.03-4.96.03-7.44V.02z"
+              />
+            </svg>
           </div>
           <span
             class="text-[10px] font-bold bg-rose-50 dark:bg-rose-950 text-rose-600 dark:text-rose-300 px-2.5 py-1 rounded-full border border-rose-300 dark:border-rose-800"
