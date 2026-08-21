@@ -12,11 +12,15 @@
       <title>สาขาวิชาวิทยาการคอมพิวเตอร์</title>
 
       <!-- ใส่ Favicon โลโก้บนแท็บเบราว์เซอร์ -->
-      <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+      <link
+        rel="icon"
+        type="image/png"
+        href="{% static 'images/logo2.png' %}"
+      />
       <link
         rel="shortcut icon"
         type="image/png"
-        href="{% static 'images/logo.png' %}"
+        href="{% static 'images/logo2.png' %}"
       />
 
       <!-- สไตล์และสคริปต์อื่นๆ -->
@@ -43,6 +47,10 @@
       rel="stylesheet"
     />
     <style>
+      html {
+        font-size: 18px;
+      }
+
       body {
         font-family: "Prompt", sans-serif;
       }
@@ -1119,30 +1127,32 @@
 
       // 4. Study Plan Year Switcher
       function switchYear(yearId) {
-        if (typeof yearId === 'number') {
-          yearId = 'year' + yearId;
+        if (typeof yearId === "number") {
+          yearId = "year" + yearId;
         }
 
         // 1. ซ่อนเนื้อหาทุกชั้นปีก่อน
-        document.querySelectorAll('.year-content').forEach(el => {
-          el.classList.add('hidden');
+        document.querySelectorAll(".year-content").forEach((el) => {
+          el.classList.add("hidden");
         });
 
         // 2. แสดงเฉพาะชั้นปีที่เลือก
         const targetEl = document.getElementById(yearId);
         if (targetEl) {
-          targetEl.classList.remove('hidden');
+          targetEl.classList.remove("hidden");
         }
 
         // 3. รีเซ็ตสีปุ่มทั้งหมดกลับเป็นสีปกติ
-        document.querySelectorAll('.year-btn').forEach(btn => {
-          btn.className = 'year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-200';
+        document.querySelectorAll(".year-btn").forEach((btn) => {
+          btn.className =
+            "year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-200";
         });
 
         // 4. ไฮไลต์สีปุ่มที่กำลังเลือกเป็นสีส้ม/ทอง
-        const activeBtn = document.getElementById('btn-' + yearId);
+        const activeBtn = document.getElementById("btn-" + yearId);
         if (activeBtn) {
-          activeBtn.className = 'year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-500 text-white shadow-md';
+          activeBtn.className =
+            "year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-500 text-white shadow-md";
         }
       }
 
@@ -1210,7 +1220,7 @@
         );
         semesterCards.forEach((card) => (card.style.display = ""));
 
-        switchYear('year1');
+        switchYear("year1");
       }
 
       // 6. ✦ Interactive Career Path Selector
@@ -1378,7 +1388,7 @@
           engName: "Jessada Phonkaew",
           role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
           expertise: "วิทยาการคอมพิวเตอร์",
-          img: "https://via.placeholder.com/150",
+          img: "{% static '/images/Jessada.png' %}",
           education: [
             {
               degree: "ปร.ด. (วิทยาการคอมพิวเตอร์)",
@@ -1427,7 +1437,7 @@
           engName: "Jessada Chatree",
           role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
           expertise: "Computer Science and Engineering",
-          img: "https://via.placeholder.com/150",
+          img: "{% static '/images/Chatree.png' %}",
           education: [
             {
               degree: "Ph.D. (Computer Science and Engineering)",
@@ -1471,7 +1481,7 @@
           engName: "Krichbodin Phewhom",
           role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
           expertise: "วิศวกรรมคอมพิวเตอร์",
-          img: "https://via.placeholder.com/150",
+          img: "{% static '/images/Krichbodin.png' %}",
           education: [
             {
               degree: "ปร.ด. (วิศวกรรมคอมพิวเตอร์)",
@@ -1525,7 +1535,7 @@
           engName: "Phisan Sukkee",
           role: "อาจารย์ผู้รับผิดชอบหลักสูตร",
           expertise: "วิทยาการคอมพิวเตอร์",
-          img: "https://via.placeholder.com/150",
+          img: "{% static '/images/Phisan.png' %}",
           education: [
             {
               degree: "วท.ม. (วิทยาการคอมพิวเตอร์)",
@@ -1579,7 +1589,7 @@
           engName: "Kanittha Inthichit",
           role: "หัวหน้าสาขาวิชาฯ / ผู้รับผิดชอบหลักสูตร",
           expertise: "เทคโนโลยีสารสนเทศ",
-          img: "https://via.placeholder.com/150",
+          img: "{% static '/images/Kanittha.png' %}",
           education: [
             {
               degree: "ปร.ด. (การจัดการเทคโนโลยี)",
