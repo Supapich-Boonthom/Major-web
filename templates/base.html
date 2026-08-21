@@ -6,6 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>สาขาวิชาวิทยาการคอมพิวเตอร์ มหาวิทยาลัยราชภัฏศรีสะเกษ</title>
     <!-- Tailwind CSS CDN -->
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>สาขาวิชาวิทยาการคอมพิวเตอร์</title>
+
+      <!-- ใส่ Favicon โลโก้บนแท็บเบราว์เซอร์ -->
+      <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+      <link
+        rel="shortcut icon"
+        type="image/png"
+        href="{% static 'images/logo.png' %}"
+      />
+
+      <!-- สไตล์และสคริปต์อื่นๆ -->
+    </head>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -102,6 +117,7 @@
             transparent 42%
           ),
           linear-gradient(145deg, rgba(15, 23, 42, 1), rgba(11, 14, 23, 1));
+      }
       .faculty-avatar {
         box-shadow:
           0 0 0 4px rgba(245, 158, 11, 0.08),
@@ -173,18 +189,30 @@
       }
 
       /* คืนค่าพื้นหลัง Ambient Warm Glow แบบรูปที่ 2 */
-      html { 
-        background-color: #faf7f2; 
+      html {
+        background-color: #faf7f2;
       }
 
       body {
-        font-family: 'Prompt', sans-serif;
+        font-family: "Prompt", sans-serif;
         min-height: 100vh;
         background-color: #faf7f2;
-        background-image: 
-          radial-gradient(circle at 10% 8%, rgba(245, 158, 11, 0.08) 0%, transparent 35%),
-          radial-gradient(circle at 90% 25%, rgba(251, 146, 60, 0.07) 0%, transparent 32%),
-          radial-gradient(circle at 50% 85%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+        background-image:
+          radial-gradient(
+            circle at 10% 8%,
+            rgba(245, 158, 11, 0.08) 0%,
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at 90% 25%,
+            rgba(251, 146, 60, 0.07) 0%,
+            transparent 32%
+          ),
+          radial-gradient(
+            circle at 50% 85%,
+            rgba(245, 158, 11, 0.05) 0%,
+            transparent 40%
+          );
         background-attachment: fixed;
         position: relative;
       }
@@ -196,12 +224,20 @@
         inset: 0;
         pointer-events: none;
         z-index: -1;
-        background-image: 
-          linear-gradient(rgba(217, 119, 6, 0.04) 1px, transparent 1px), 
+        background-image:
+          linear-gradient(rgba(217, 119, 6, 0.04) 1px, transparent 1px),
           linear-gradient(90deg, rgba(217, 119, 6, 0.04) 1px, transparent 1px);
         background-size: 48px 48px;
-        mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-        -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+        mask-image: radial-gradient(
+          ellipse at center,
+          black 40%,
+          transparent 80%
+        );
+        -webkit-mask-image: radial-gradient(
+          ellipse at center,
+          black 40%,
+          transparent 80%
+        );
       }
       body::after {
         content: "";
@@ -494,17 +530,22 @@
       class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-[#0f172a]/90 border-b border-amber-500/20 px-6 py-3.5 transition-colors"
     >
       <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <a href="#hero" class="flex items-center gap-3">
-          <!-- TODO: เพื่อนใส่แท็ก <img> รูปโลโก้ตรงนี้ -->
+        <!-- โลโก้สาขา + ชื่อสาขา -->
+        <a href="#hero" class="flex items-center gap-3 group">
           <div
-            class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-500/50 flex items-center justify-center text-amber-700 dark:text-amber-400 font-bold text-xs shadow-[0_0_12px_rgba(245,158,11,0.3)]"
+            class="w-10 h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform duration-200"
           >
-            CS
+            <img
+              src="{% static 'images/logo.png' %}"
+              alt="CS Logo"
+              class="w-full h-full object-contain p-0.5"
+            />
           </div>
           <span
-            class="font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg tracking-tight"
-            >วิทยาการคอมพิวเตอร์</span
+            class="font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg tracking-tight group-hover:text-amber-600 transition-colors"
           >
+            วิทยาการคอมพิวเตอร์
+          </span>
         </a>
 
         <div
@@ -672,7 +713,9 @@
             หลักสูตรที่มุ่งผลิตนักวิทยาศาสตร์คอมพิวเตอร์ โปรแกรมเมอร์
             และนักวิเคราะห์ข้อมูล เพื่อเข้าสู่ตลาดงานยุคดิจิทัลระดับโลก
           </p>
-          <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-12">
+          <div
+            class="flex flex-wrap justify-center lg:justify-start gap-4 mb-12"
+          >
             <a
               href="https://www.oass.sskru.ac.th/"
               target="_blank"
@@ -759,21 +802,29 @@
 
             <div
               class="animate-float-1 absolute -top-3 -left-6 sm:-left-8 bg-white dark:bg-slate-800 border border-amber-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(245,158,11,0.25)] flex items-center gap-1.5 text-xs font-semibold text-amber-800 dark:text-amber-300"
-              style="animation: floatUpAndDown 3s ease-in-out infinite alternate;"
+              style="
+                animation: floatUpAndDown 3s ease-in-out infinite alternate;
+              "
             >
               <span>&lt;/&gt;</span> Software Dev
             </div>
 
             <div
               class="animate-float-2 absolute top-1/3 -right-6 sm:-right-8 bg-white dark:bg-slate-800 border border-orange-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(249,115,22,0.25)] flex items-center gap-1.5 text-xs font-semibold text-orange-800 dark:text-orange-300"
-              style="animation: floatUpAndDown 3.6s ease-in-out infinite alternate; animation-delay: -1.2s;"
+              style="
+                animation: floatUpAndDown 3.6s ease-in-out infinite alternate;
+                animation-delay: -1.2s;
+              "
             >
               <span>📊</span> Data Science
             </div>
 
             <div
               class="animate-float-3 absolute -bottom-3 -left-4 sm:-left-6 bg-white dark:bg-slate-800 border border-yellow-300 dark:border-slate-700 px-3.5 py-1.5 rounded-xl shadow-[0_0_12px_rgba(234,179,8,0.25)] flex items-center gap-1.5 text-xs font-semibold text-yellow-800 dark:text-yellow-300"
-              style="animation: floatUpAndDown 4.2s ease-in-out infinite alternate; animation-delay: -2s;"
+              style="
+                animation: floatUpAndDown 4.2s ease-in-out infinite alternate;
+                animation-delay: -2s;
+              "
             >
               <span>🤖</span> Artificial Intelligence
             </div>
@@ -3492,7 +3543,7 @@
           themeIcon.textContent = "☀️";
         }
       });
-      
+
       // Mobile Menu Toggle Logic
       const mobileMenuBtn = document.getElementById("mobile-menu-btn");
       const mobileMenu = document.getElementById("mobile-menu");
@@ -3512,10 +3563,14 @@
         } else {
           mobileMenu.classList.add("-translate-y-4", "opacity-0");
           // Hide after transition
-          mobileMenu.addEventListener("transitionend", function handler() {
-            mobileMenu.classList.add("hidden");
-            mobileMenu.removeEventListener("transitionend", handler);
-          }, { once: true });
+          mobileMenu.addEventListener(
+            "transitionend",
+            function handler() {
+              mobileMenu.classList.add("hidden");
+              mobileMenu.removeEventListener("transitionend", handler);
+            },
+            { once: true },
+          );
           hamburgerIcon.classList.remove("hidden");
           closeIcon.classList.add("hidden");
         }
@@ -3525,7 +3580,7 @@
         mobileMenuBtn.addEventListener("click", toggleMobileMenu);
 
         // Close mobile menu on clicking any mobile menu link
-        document.querySelectorAll(".mobile-nav-link").forEach(link => {
+        document.querySelectorAll(".mobile-nav-link").forEach((link) => {
           link.addEventListener("click", () => {
             if (!mobileMenu.classList.contains("hidden")) {
               toggleMobileMenu();
@@ -3535,7 +3590,10 @@
 
         // Close mobile menu on clicking outside
         document.addEventListener("click", (e) => {
-          if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+          if (
+            !mobileMenuBtn.contains(e.target) &&
+            !mobileMenu.contains(e.target)
+          ) {
             if (!mobileMenu.classList.contains("hidden")) {
               toggleMobileMenu();
             }
@@ -3550,8 +3608,8 @@
 
       function updateActiveState() {
         let activeId = "";
-        
-        sections.forEach(section => {
+
+        sections.forEach((section) => {
           const rect = section.getBoundingClientRect();
           if (rect.top <= 150 && rect.bottom >= 150) {
             activeId = section.getAttribute("id");
@@ -3561,18 +3619,25 @@
         if (window.scrollY < 100) {
           activeId = "hero";
         }
-        
-        if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50) {
+
+        if (
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 50
+        ) {
           activeId = "contact";
         }
 
         function highlight(links) {
-          links.forEach(link => {
+          links.forEach((link) => {
             const href = link.getAttribute("href");
             const isActive = href === `#${activeId}`;
 
             if (isActive) {
-              link.classList.remove("text-slate-600", "dark:text-slate-300", "border-transparent");
+              link.classList.remove(
+                "text-slate-600",
+                "dark:text-slate-300",
+                "border-transparent",
+              );
               link.classList.add(
                 "text-amber-700",
                 "dark:text-amber-400",
@@ -3580,10 +3645,14 @@
                 "bg-amber-100/60",
                 "dark:bg-amber-950/40",
                 "border-amber-200/50",
-                "dark:border-amber-800/30"
+                "dark:border-amber-800/30",
               );
             } else {
-              link.classList.add("text-slate-600", "dark:text-slate-300", "border-transparent");
+              link.classList.add(
+                "text-slate-600",
+                "dark:text-slate-300",
+                "border-transparent",
+              );
               link.classList.remove(
                 "text-amber-700",
                 "dark:text-amber-400",
@@ -3591,7 +3660,7 @@
                 "bg-amber-100/60",
                 "dark:bg-amber-950/40",
                 "border-amber-200/50",
-                "dark:border-amber-800/30"
+                "dark:border-amber-800/30",
               );
             }
           });
