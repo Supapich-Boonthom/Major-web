@@ -1118,26 +1118,31 @@
       }
 
       // 4. Study Plan Year Switcher
-      function switchYear(year) {
-        const year12 = document.getElementById("year-1-2");
-        const year34 = document.getElementById("year-3-4");
-        const btn1 = document.getElementById("btn-tab-1");
-        const btn2 = document.getElementById("btn-tab-2");
+      function switchYear(yearId) {
+        if (typeof yearId === 'number') {
+          yearId = 'year' + yearId;
+        }
 
-        if (year === 1) {
-          year12.classList.remove("hidden");
-          year34.classList.add("hidden");
-          btn1.className =
-            "px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow transition";
-          btn2.className =
-            "px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition";
-        } else {
-          year12.classList.add("hidden");
-          year34.classList.remove("hidden");
-          btn2.className =
-            "px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow transition";
-          btn1.className =
-            "px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition";
+        // 1. ซ่อนเนื้อหาทุกชั้นปีก่อน
+        document.querySelectorAll('.year-content').forEach(el => {
+          el.classList.add('hidden');
+        });
+
+        // 2. แสดงเฉพาะชั้นปีที่เลือก
+        const targetEl = document.getElementById(yearId);
+        if (targetEl) {
+          targetEl.classList.remove('hidden');
+        }
+
+        // 3. รีเซ็ตสีปุ่มทั้งหมดกลับเป็นสีปกติ
+        document.querySelectorAll('.year-btn').forEach(btn => {
+          btn.className = 'year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-200';
+        });
+
+        // 4. ไฮไลต์สีปุ่มที่กำลังเลือกเป็นสีส้ม/ทอง
+        const activeBtn = document.getElementById('btn-' + yearId);
+        if (activeBtn) {
+          activeBtn.className = 'year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-500 text-white shadow-md';
         }
       }
 
@@ -1152,14 +1157,12 @@
         const clearBtn = document.getElementById("clear-search-btn");
         const statusText = document.getElementById("search-status");
         const yearToggle = document.getElementById("year-toggle-container");
-        const year12 = document.getElementById("year-1-2");
-        const year34 = document.getElementById("year-3-4");
+        const yearContents = document.querySelectorAll(".year-content");
 
         if (filter.length > 0) {
           clearBtn.classList.remove("hidden");
           yearToggle.classList.add("hidden");
-          year12.classList.remove("hidden");
-          year34.classList.remove("hidden");
+          yearContents.forEach((el) => el.classList.remove("hidden"));
 
           let matchCount = 0;
           rows.forEach((row) => {
@@ -1207,7 +1210,7 @@
         );
         semesterCards.forEach((card) => (card.style.display = ""));
 
-        switchYear(1);
+        switchYear('year1');
       }
 
       // 6. ✦ Interactive Career Path Selector

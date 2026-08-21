@@ -942,25 +942,42 @@
     ></p>
   </div>
 
-  <div id="year-toggle-container" class="flex justify-center gap-3 mb-8">
+  <div
+    id="year-toggle-container"
+    class="flex justify-center gap-2 sm:gap-3 my-6"
+  >
     <button
-      id="btn-tab-1"
-      onclick="switchYear(1)"
-      class="px-5 py-2 text-xs font-semibold bg-amber-500 text-slate-950 rounded-lg shadow-[0_0_12px_rgba(245,158,11,0.3)] transition"
+      onclick="switchYear('year1')"
+      id="btn-year1"
+      class="year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-500 text-white shadow-md"
     >
-      ปีที่ 1 และ ปีที่ 2
+      ชั้นปีที่ 1
     </button>
     <button
-      id="btn-tab-2"
-      onclick="switchYear(2)"
-      class="px-5 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded-lg transition"
+      onclick="switchYear('year2')"
+      id="btn-year2"
+      class="year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-200"
     >
-      ปีที่ 3 และ ปีที่ 4
+      ชั้นปีที่ 2
+    </button>
+    <button
+      onclick="switchYear('year3')"
+      id="btn-year3"
+      class="year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-200"
+    >
+      ชั้นปีที่ 3
+    </button>
+    <button
+      onclick="switchYear('year4')"
+      id="btn-year4"
+      class="year-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-200"
+    >
+      ชั้นปีที่ 4
     </button>
   </div>
 
-  <!-- Year 1 & 2 Container -->
-  <div id="year-1-2" class="grid md:grid-cols-2 gap-6">
+  <!-- กล่องชั้นปีที่ 1 (แสดงเริ่มต้น) -->
+  <div id="year1" class="year-content grid grid-cols-1 md:grid-cols-2 gap-6">
     <div
       class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
     >
@@ -1046,7 +1063,13 @@
         </tbody>
       </table>
     </div>
+  </div>
 
+  <!-- กล่องชั้นปีที่ 2 (ซ่อนไว้ก่อน) -->
+  <div
+    id="year2"
+    class="year-content hidden grid grid-cols-1 md:grid-cols-2 gap-6"
+  >
     <div
       class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
     >
@@ -1134,8 +1157,11 @@
     </div>
   </div>
 
-  <!-- Year 3 & 4 Container -->
-  <div id="year-3-4" class="hidden grid md:grid-cols-2 gap-6">
+  <!-- กล่องชั้นปีที่ 3 (ซ่อนไว้ก่อน) -->
+  <div
+    id="year3"
+    class="year-content hidden grid grid-cols-1 md:grid-cols-2 gap-6"
+  >
     <div
       class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
     >
@@ -1221,7 +1247,13 @@
         </tbody>
       </table>
     </div>
+  </div>
 
+  <!-- กล่องชั้นปีที่ 4 (ซ่อนไว้ก่อน) -->
+  <div
+    id="year4"
+    class="year-content hidden grid grid-cols-1 md:grid-cols-2 gap-6"
+  >
     <div
       class="course-semester-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden glow-card"
     >
@@ -1896,7 +1928,7 @@
         class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
       >
         <img
-          src="https://via.placeholder.com/150"
+          src="{% static '/images/Jessada.png' %}"
           alt="ผศ.ดร.เจษฎา โพนแก้ว"
           class="w-full h-full object-cover"
         />
@@ -1939,7 +1971,7 @@
         class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
       >
         <img
-          src="https://via.placeholder.com/150"
+          src="{% static '/images/Chatree.png' %}"
           alt="ดร.เจษฎา ชาตรี"
           class="w-full h-full object-cover"
         />
@@ -1982,7 +2014,7 @@
         class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
       >
         <img
-          src="https://via.placeholder.com/150"
+          src="{% static '/images/Krichbodin.png' %}"
           alt="ดร.กริชบดินทร์ ผิวหอม"
           class="w-full h-full object-cover"
         />
@@ -2028,7 +2060,7 @@
         class="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4 border-2 border-amber-400/80 flex items-center justify-center text-slate-400 shadow-sm faculty-avatar"
       >
         <img
-          src="https://via.placeholder.com/150"
+          src="{% static '/images/Phisan.png' %}"
           alt="ผศ.พิศาล สุขขี"
           class="w-full h-full object-cover"
         />
@@ -2072,7 +2104,7 @@
       >
         <!-- TODO: เพื่อนเปลี่ยน src รูปภาพ -->
         <img
-          src="https://via.placeholder.com/150"
+          src="{% static '/images/Kanittha.png' %}"
           alt="ผศ.ดร.กนิษฐา อินธิชิต"
           class="w-full h-full object-cover"
         />
